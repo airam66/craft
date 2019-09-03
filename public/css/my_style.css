@@ -1,0 +1,68 @@
+.mi_factura{
+
+	background:none;
+	border:none;
+}
+
+.row-table{
+
+	margin-right: -2px;
+    margin-left: -2px;
+
+}
+
+input[type=number]::webkit-outer-spin-button,
+input[type=number]::webkit-inner-spin-button{
+	-webkit-appearance:none !important;
+	margin:0;
+}
+
+input[type=number]{
+	-moz-appearance:textfield !important;
+}
+
+.boton{
+	margin:0;
+}
+
+.widget-user-2 .widget-user-header {
+    padding-top: 30px !important;
+    padding-bottom: 50px !important;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.widget-user-2 .widget-user-image>img {
+    width: 120px !important;
+    height: 120px !important;
+    float: left;
+}
+
+.widget-user-2 .widget-user-username, .widget-user-2 .widget-user-desc {
+    margin-left: 140px !important;
+}
+
+.box-admin{
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+select .color-rojo{
+   background-color:red !important;
+}
+
+.azul{
+    color:blue;
+}
+
+.input-group-addon .btn{
+padding: 1px 12px !important;
+}
+
+.table-bordered > tbody > tr > th, {
+    border: 1px solid #5ba4f6 !important;
+}
+
+.total_table{
+  background-color: #d8d4d4;
+}
