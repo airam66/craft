@@ -48,9 +48,9 @@
               
               <div class="content-wrap">
                 <div class="heading text-center">
-                   <h1>Vení y lleva lo que más te guste.</h1>
-                      <h3>Tenemos diversos productos personalizados.<br> 
-                     Hace de tu fiesta un recuerdo inolvidable.</h3>
+                   <div class="titulo"> Vení y lleva lo que más te guste.</div>
+                      <div class="contenido"> Tenemos diversos productos personalizados.<br> 
+                     Hace de tu fiesta un recuerdo inolvidable.</div>
 
             </div>
             </div>
