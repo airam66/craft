@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{asset('plugins/chosen/chosen.css')}}">
    <!-- Date Picker -->
   <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+@yield('style') 
 
 <style>
 body{

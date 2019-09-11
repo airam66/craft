@@ -1,5 +1,9 @@
 @extends('layouts.my_template')
 
+@section('style')
+  <link rel="stylesheet" href="{{asset('css/carousel.css')}}">
+@endsection
+
 @section('content')
 
  <section class="home" id="home">
@@ -11,30 +15,21 @@
             <div>
               <!--inicio carrucel-->
          
-      <div class="banner">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-@foreach($imagenes as $imagen)
-
-      
-    
-    @if($imagen->id==1)
-    <div class="item active">
-      <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}" alt="" class="">
-      </div>
+<div class="banner">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+    @foreach($imagenes as $imagen)
+      @if($imagen->id==1)
+        <div class="item active text-center">
       @else
-      <div class="item">
-      <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}" alt="" class="">
-
+        <div class="item text-center">
+      @endif
+        <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}">
       </div>
-    @endif
-   
-@endforeach
-    
-  </div>
+    @endforeach
 
- 
+    </div>
   <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
   </a>
@@ -42,7 +37,7 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
   </a>
 </div>
-      </div>
+</div>
      
       
   
