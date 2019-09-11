@@ -116,7 +116,7 @@ font-family:'Playball',cursive;
 /* ==========================================================================
     Banner styles starts here
    ==========================================================================   */  
-    .banner{overflow: hidden; border-radius: 10px 0 10px 10px; box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1);}
+    .banner{overflow: hidden; border-radius: 10px 0 10px 10px; /*box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1);*/}
     .banner:hover { border-radius: 10px 0 10px 10px; box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1); transition:all 3s;}
     .carousel-caption{padding-top: 0px; padding-bottom: 0px;}
    /* .banner .carousel-caption h1, h2{ opacity: 0; }*/

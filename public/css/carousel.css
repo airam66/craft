@@ -29,9 +29,10 @@
 }
 }
 /* ------------------- Carousel Styling ------------------- */
-
 .carousel-inner {
   border-radius: 15px;
+  position: relative;
+  width: 95%;
 }
 
 .carousel-caption {
