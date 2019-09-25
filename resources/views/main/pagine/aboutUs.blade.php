@@ -11,13 +11,17 @@
               <img src="{{ asset('images/line.png')}}" alt=""> 
             </div> 
             <div class="row">
-               @if ($cotillon->imagenNosotros)
+               @if ($cotillon && $cotillon->image_AboutUs)
                   <div id="image_about" align="center">
-                    <img src="{{asset('images/nosotros.jpg')}}" alt="70%" width="80%">
+                    <img src="{{asset('images/'.$cotillon->image_AboutUs)}}" alt="70%" width="80%">
+                  </div>
+              @else 
+                  <div id="image_about" align="center">
+                    <img src="{{asset('images/nosotros.jpg')}}" alt="50%" width="80%">
                   </div>
                @endif
                <div id="description_about">
-                 @if ($cotillon->description_AboutUs)
+                 @if ($cotillon && $cotillon->description_AboutUs)
                       
                       {!!$cotillon->description_AboutUs!!}
                     @else
@@ -29,7 +33,7 @@
                          En nuestro local de venta exclusiva hallará las últimas tendencias, manteniendo la atención y servicio en todo momento.<br>
                          Contamos con amplia experiencia que nos permitirá brindarle los mejores productos y servicios  a través de nuestro equipo especializado que le recomendarán e informarán las últimas tendencias del mercado y asi poder optimizar su compra.<br>
                          Nuestra misión consiste en trabajar, día a día para brindarle un excelente servicio y atención en base a la experiencia en  nuestra calidad.<br>
-                         Esperamos que disfrute de nuestro sitio y nos visite pronto en nuestro punto de venta.                       
+                         Esperamos que disfrute de nuestro sitio y nos visite pronto en nuestro punto de venta..                       
                       </p>
                     @endif
 

@@ -4,6 +4,14 @@
 	border:none;
 }
 
+a[title="Insert image"]{
+  display:none;
+}
+
+a[title="Insert link"]{
+  display:none;
+}
+
 .row-table{
 
 	margin-right: -2px;
