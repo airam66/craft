@@ -1,9 +1,5 @@
 @extends('layouts.my_template')
 
-@section('style')
-  <link rel="stylesheet" href="{{asset('css/carousel.css')}}">
-@endsection
-
 @section('content')
 
  <section class="home" id="home">

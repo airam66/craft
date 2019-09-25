@@ -614,6 +614,57 @@ img .user-image {
 
 }
 
+/*========================responsive===========================*/
+@media screen and (max-width:640px) {
+/*================mapa=============*/
+  .mapa{
+    width:380px; 
+    height:300px;
+  }
+/*===============foto=============*/
+  .imagen{
+    width:380px; 
+    height:300px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:380px;
+  }
+}
+@media screen and (max-width:1200px) and (min-width:640px) {
+/*================mapa=============*/
+  .mapa{
+    width:450px; 
+    height:380px;
+  }
+/*================foto=============*/
+  .imagen{
+    width:450px; 
+    height:380px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:450px;
+  }
+}
+@media screen and (min-width:1200px) {
+/*================mapa=============*/
+  .mapa{
+    width:520px; 
+    height:450px;
+  }
+/*================foto=============*/
+  .imagen{
+    width:520px; 
+    height:450px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:520px;
+  }
+}
+
+
 .list-group-item {
 
     position: relative;
