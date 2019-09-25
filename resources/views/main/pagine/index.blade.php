@@ -11,38 +11,32 @@
             <div>
               <!--inicio carrucel-->
          
-      <div class="banner">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-@foreach($imagenes as $imagen)
-
-      
-    
-    @if($imagen->id==1)
-    <div class="item active">
-      <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}" alt="" class="">
-      </div>
+<div class="banner">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div align="center">
+    <div class="carousel-inner row justify-content-center">
+    @foreach($imagenes as $imagen)
+      @if($imagen->id==1)
+        <div class="item active text-center">
       @else
-      <div class="item">
-      <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}" alt="" class="">
+        <div class="item text-center">
+      @endif
+        <img src="{{ asset('images/carrusel/'.$imagen->extension)  }}">
+        </div>
+    @endforeach
 
-      </div>
-    @endif
-   
-@endforeach
-    
+    </div>
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+
+    </div>
   </div>
-
- 
-  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
 </div>
-      </div>
      
       
   
@@ -50,9 +44,9 @@
               
               <div class="content-wrap">
                 <div class="heading text-center">
-                   <h1>Vení y lleva lo que más te guste.</h1>
-                      <h3>Tenemos diversos productos personalizados.<br> 
-                     Hace de tu fiesta un recuerdo inolvidable.</h3>
+                   <div class="titulo"> Vení y lleva lo que más te guste.</div>
+                      <div class="contenido"> Tenemos diversos productos personalizados.<br> 
+                     Hace de tu fiesta un recuerdo inolvidable.</div>
 
             </div>
             </div>

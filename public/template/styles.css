@@ -116,8 +116,8 @@ font-family:'Playball',cursive;
 /* ==========================================================================
     Banner styles starts here
    ==========================================================================   */  
-    .banner{overflow: hidden; border-radius: 10px 0 10px 10px; box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1);}
-    .banner:hover { border-radius: 10px 0 10px 10px; box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1); transition:all 3s;}
+    .banner{overflow: hidden; border-radius: 10px 0 10px 10px; /*box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1);*/}
+    .banner:hover { border-radius: 10px 0 10px 10px;/* box-shadow: -8px 8px 0px 1px rgba(0, 0, 0, 0.1);*/ transition:all 3s;}
     .carousel-caption{padding-top: 0px; padding-bottom: 0px;}
    /* .banner .carousel-caption h1, h2{ opacity: 0; }*/
     .banner .carousel-caption .btn{opacity: 0;}
@@ -613,6 +613,57 @@ img .user-image {
     padding: 10px;
 
 }
+
+/*========================responsive===========================*/
+@media screen and (max-width:640px) {
+/*================mapa=============*/
+  .mapa{
+    width:380px; 
+    height:300px;
+  }
+/*===============foto=============*/
+  .imagen{
+    width:380px; 
+    height:300px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:380px;
+  }
+}
+@media screen and (max-width:1200px) and (min-width:640px) {
+/*================mapa=============*/
+  .mapa{
+    width:450px; 
+    height:380px;
+  }
+/*================foto=============*/
+  .imagen{
+    width:450px; 
+    height:380px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:450px;
+  }
+}
+@media screen and (min-width:1200px) {
+/*================mapa=============*/
+  .mapa{
+    width:520px; 
+    height:450px;
+  }
+/*================foto=============*/
+  .imagen{
+    width:520px; 
+    height:450px;
+  }
+/*===============entrada=============*/
+  .get{
+    width:520px;
+  }
+}
+
 
 .list-group-item {
 

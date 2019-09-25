@@ -1,5 +1,9 @@
 @extends('layouts.my_template')
 
+@section('style')
+  <link rel="stylesheet" href="{{asset('css/carousel.css')}}">
+@endsection
+
 @section('content')
 
  <section id="contact" class="contact">
@@ -38,7 +42,7 @@
                    <h4><b>Ubicación</b></h4>
                     
 
-                 <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1808.2491391175377!2d-65.58028314418695!3d-24.98317925224448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x941be3e7acffcfa7%3A0x77dee1db783bbb8!2sRoque+S%C3%A1enz+Pe%C3%B1a+14%2C+A4405ARA+Rosario+de+Lerma%2C+Salta!3m2!1d-24.983213!2d-65.5802506!5e0!3m2!1ses-419!2sar!4v1494973548168" width="520" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                 <iframe class="mapa" src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1808.2491391175377!2d-65.58028314418695!3d-24.98317925224448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x941be3e7acffcfa7%3A0x77dee1db783bbb8!2sRoque+S%C3%A1enz+Pe%C3%B1a+14%2C+A4405ARA+Rosario+de+Lerma%2C+Salta!3m2!1d-24.983213!2d-65.5802506!5e0!3m2!1ses-419!2sar!4v1494973548168" frameborder="0" style="border:0" allowfullscreen></iframe>
 
                 </div>
      
@@ -47,12 +51,14 @@
 
 
     
-      <div class="col-md-6 mi_letter">
-
-                <div>
-              <img src="{{asset('images/portada.jpg')}}">
-               </div>
-            
+      <div class="col-md-5 mi_letter">
+          <br>
+              <div class="text-center">
+              <img  class="imagen" src="{{asset('images/portada.jpg')}}">
+              </div>
+               <br><br>
+            <div align="center">
+              <div>
                  <h3>Enviános tu consulta</h3>
 
                 @include('flash::message')
@@ -63,30 +69,31 @@
                   <div class="form-group">
 
                       <h4>  {!! Form::label('name','Nombre (*)')!!}</h4>
-                        {!! Form::text('name',null, ['class'=>'form-control','title'=>'El nombre es obligatorio','placeholder'=>'Ingrese un nombre..','required'])!!}
+                        {!! Form::text('name',null, ['class'=>'get form-control','title'=>'El nombre es obligatorio','placeholder'=>'Ingrese un nombre..','required'])!!}
                   </div>
                  
                 <div class="form-group">
 
                      <h4> {!! Form::label('email','Email (*)')!!}</h4>
-                      {!! Form::email('email',null, ['class'=>'form-control','placeholder'=>'ejemplo@gmail.com','required'])!!}
+                      {!! Form::email('email',null, ['class'=>'get form-control', 'placeholder'=>'ejemplo@gmail.com','required'])!!}
                 </div>
-                 <div class="form-group">
+                 <div class="form-group ">
                       <h4> {!! Form::label('subject','Asunto (*)')!!}</h4>
-                      {!! Form::text('subject',null, ['class'=>'form-control','placeholder'=>'Ingrese un asunto','required'])!!}
+                      {!! Form::text('subject',null, ['class'=>'get form-control','placeholder'=>'Ingrese un asunto','required'])!!}
                  </div>
                 <div class="form-group">
 
                      <h4> {!! Form::label('body','Mensaje')!!}</h4>
-                     {!! Form::textarea('body',null, ['class'=>'form-control'])!!}
+                     {!! Form::textarea('body',null, ['class'=>'get form-control'])!!}
                       
                 </div>
                  <div class="form-group">
-                     {!! Form::submit('Enviar',['class'=>'btn btn-success'])!!}
+                     {!! Form::submit('Enviar',['class'=>'btn btn-lg btn-success'])!!}
                  </div>
 
                 {!! Form::close()!!}
-
+                </div>
+              </div>
 
    
                 </div>
