@@ -16,12 +16,15 @@ class AddCotillonTable extends Migration
         Schema::create('cotillones', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description_AboutUs');         
+            $table->text('description_AboutUs');
+            $table->text('image_AboutUs');         
             $table->text('address');
+            $table->text('position');
             $table->string('phones');
             $table->string('email');
             $table->string('facebook');
             $table->string('business_hours');
+            $table->text('image_Contact');
 
             $table->timestamps();
         });
