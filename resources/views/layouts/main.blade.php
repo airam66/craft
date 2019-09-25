@@ -258,7 +258,7 @@
               </a>
                <ul class="treeview-menu">
                 <li class="active"><a href="{{route('carrusel.index')}}"><i class="fa fa-circle-o"></i> Lista de imagenes</a></li>
-                <li class="active"><a href="{{route('cotillon.create')}}"><i class="fa fa-circle-o"></i> Datos Generales</a></li>
+                <li class="active"><a href="{{route('cotillon.edit',1)}}"><i class="fa fa-circle-o"></i> Datos Generales</a></li>
               </ul>
             </li>
 
@@ -353,6 +353,8 @@
     <script src="{{asset('bower_components/EasyAutocomplete/dist/jquery.easy-autocomplete.js')}}"></script>
 
     <script src="{{asset('plugins/chosen/chosen.jquery.js')}}"></script>
+
+    <script src="{{asset('js/plantilla.js')}}"></script>
    
     
     @yield('js')
