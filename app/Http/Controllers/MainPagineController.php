@@ -55,10 +55,28 @@ class MainPagineController extends Controller
     	$cotillon=Cotillon::find($id);
 
     	$cotillon->fill($request->all());
+        if($request->file('fotoContacto')){
+          $file =$request->file('fotoContacto');
+          $extension=$file->getClientOriginalName();
+          if ($extension!=$cotillon->image_Contact){
+            $path=public_path().'/images/paginaWeb/';
+            $file->move($path,$extension);
+            $cotillon->image_Contact=$extension;
+          }
+        }
+        if($request->file('fotoNosotros')){
+          $file =$request->file('fotoNosotros');
+          $extension=$file->getClientOriginalName();
+          if ($extension!=$cotillon->image_AboutUs){
+            $path=public_path().'/images/paginaWeb/';
+            $file->move($path,$extension);
+            $cotillon->image_AboutUs=$extension;
+          }
+        }
 
     	$cotillon->save();
-
-        return redirect()->route('index');
+        flash("Los datos se han guardado con exito" , 'success')->important();
+        return redirect()->route('cotillon.edit',1);
     }
 
      

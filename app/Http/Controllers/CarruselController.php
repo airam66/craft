@@ -30,22 +30,17 @@ public function __construct()
        
       public function update(Request $request, $id)
     {
-    	
-
        $imagen=Carrusel::find($id);
-
-        $imagen->fill($request->all());
-
-
-         if($request->file('image')){
-                 $file =$request->file('image');
-                 $extension=$file->getClientOriginalName();
-                 if ($extension!=$imagen->extension){
-                       $path=public_path().'/images/carrusel/';
-                       $file->move($path,$extension);
-                      $imagen->extension=$extension;
-                    }
+       $imagen->fill($request->all());
+        if($request->file('image')){
+          $file =$request->file('image');
+          $extension=$file->getClientOriginalName();
+          if ($extension!=$imagen->extension){
+            $path=public_path().'/images/carrusel/';
+            $file->move($path,$extension);
+            $imagen->extension=$extension;
           }
+        }
              
 
         $imagen->save();
