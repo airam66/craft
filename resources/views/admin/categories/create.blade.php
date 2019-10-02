@@ -9,38 +9,40 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nueva categoria</h3>
+            <h3 class="text-center">NUEVA CATEGORÍA</h3>
           </div>
-          <div class="box-body">
+          <div class="box box-info">
+          <div class="box-body box-info">
             
             {!! Form::open(['route'=>'categories.store', 'method'=>'POST','files'=>true])!!}
 
              <div class="form-group">
-              {!! Field::text('name',null, ['class'=>'form-control'])!!}
+              <h4>{!! Field::text('name',null, ['class'=>'form-control'])!!}</h4>
              </div>
-
 
               <div class="form-group">
 
-              {!! Form::label('description','Descripcion')!!}
+              <h4>{!! Form::label('descriptin','Descripción')!!}</h4>
               {!! Form::text('description'," ", ['class'=>'form-control'])!!}
               </div>
               
-              {!! Field::file('image')!!}
+              <h4>{!! Field::file('image')!!}</h4>
             
               <div class= "form-group">
   
-              {!! Form::label('status','Estado')!!}
-              {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 
+             <h4> {!! Form::label('status','Estado')!!}
+              {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!}</h4>
               </div>
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('categories.index') }}">Cancelar</a>
               </div>
           
  
               {!! Form::close() !!}
 
           </div>
+        </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
