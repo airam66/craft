@@ -8,9 +8,9 @@ use App\Cotillon;
 class ContactUsController extends Controller
 {
 	public function contactUs(){
-	 $cotillones= Cotillon::orderBy('id','ASC')->paginate(1);
+	 $cotillon=Cotillon::find(1);
 	
-    return view('main.pagine.contactUs')->with('cotillones',$cotillones);
+    return view('main.pagine.contactUs')->with('cotillon',$cotillon);
     }
 
 
