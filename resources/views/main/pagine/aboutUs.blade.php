@@ -13,7 +13,7 @@
             <div class="row">
                @if ($cotillon && $cotillon->image_AboutUs)
                   <div id="image_about" align="center">
-                    <img src="{{asset('images/'.$cotillon->image_AboutUs)}}" alt="70%" width="80%">
+                    <img src="{{asset('images/paginaWeb/'.$cotillon->image_AboutUs)}}" alt="70%" width="80%">
                   </div>
               @else 
                   <div id="image_about" align="center">
@@ -22,8 +22,7 @@
                @endif
                <div id="description_about">
                  @if ($cotillon && $cotillon->description_AboutUs)
-                      
-                      {!!$cotillon->description_AboutUs!!}
+                     <p align="justify">{!!$cotillon->description_AboutUs!!}</p>    
                     @else
                       <p>
                          Cotillon Creatú es una tienda de compra de productos de cotillón para fiestas en Argentina.<br>
