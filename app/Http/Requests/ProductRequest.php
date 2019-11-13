@@ -28,14 +28,16 @@ class ProductRequest extends FormRequest
           'name'=> 'max:35|required|unique:products',
           'code'=> 'max:20|min:3|unique:products',
           'category_id'=>'required|exists:categories,id',
-          //'line_id'=>'required|exists:lines,id',
-          //'brand_id'=>'required|exists:brands,id',
+          'line_id'=>'required|exists:lines,id',
+          'brand_id'=>'required|exists:brands,id',
+           'events[]' =>'required',
           'description'=>'required',
-          //'stock'=>'required',
-          //'retail_price'=>'required',
-          'purchase_price'=>'required',        
-          //'image'=>'required',
-          //'wholesale_cant'=>'required'
+          'stock'=>'required',
+          'retail_price'=>'required',
+          'purchase_price'=>'required',
+           'wholesale_price'=>'required',       
+          'image'=>'required',
+          'wholesale_cant'=>'required'
         ];
     }
 }
