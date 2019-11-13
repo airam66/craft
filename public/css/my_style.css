@@ -1,3 +1,17 @@
+.titulo_h h2 {
+  font-size: 35px !important;
+  font-weight:bold !important;
+  text-align: center !important; 
+}
+.titulo_h4 {
+  font-size: 18px;
+}
+
+th{
+  font-size: 16px !important;
+  font-weight:bold !important;
+}
+
 .mi_factura{
 
 	background:none;
@@ -15,7 +29,7 @@ a[title="Insert link"]{
 .row-table{
 
 	margin-right: -2px;
-    margin-left: -2px;
+  margin-left: -2px;
 
 }
 

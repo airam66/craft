@@ -26,7 +26,7 @@ class CategoriesController extends Controller
     public function store(CategoryRequest $request)
     {
         $category= new Category($request->all());
-
+        $category->name=strtoupper($category->name);
         if($request->file('image')){
             $file =$request->file('image');
             $extension=$file->getClientOriginalName();//nombre de img
@@ -52,7 +52,7 @@ class CategoriesController extends Controller
         $category=Category::find($id);
 
         $category->fill($request->all());
-
+        $category->name=strtoupper($category->name);
         if($request->file('image')){
             $file =$request->file('image');
             $extension=$file->getClientOriginalName();

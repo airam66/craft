@@ -1,6 +1,4 @@
 <!--POPUP-->
-
-
  <div class="modal fade" id="favoritesModalProduct{{$product->id}}" tabindex="-1" 
 
       role="dialog" aria-labelledby="favoritesModalLabel">

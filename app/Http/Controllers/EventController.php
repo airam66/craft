@@ -6,6 +6,10 @@ use App\Http\Requests\EventRequest;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->events= new Event();
+    }
 
     public function index(Request $request)
     {
@@ -14,6 +18,13 @@ class EventController extends Controller
        
       return view('admin.events.index')->with('events',$events);
     }
+
+      public function searchNameLike(Request $request)
+    {
+      $events = Event::where('name', 'LIKE', '%'.$request->name.'%')->get();
+      return \response()->json($events);
+    }
+    
 
      public function create(){
         return view('admin.events.create');
@@ -24,6 +35,7 @@ class EventController extends Controller
     {
 
        $event= new Event($request->all());
+       $event->name=strtoupper($event->name);
        $event->save();
        flash("El evento  ". $event->name . " ha sido creado con éxito" , 'success')->important();
      
@@ -57,10 +69,13 @@ class EventController extends Controller
     public function update(Request $request,$id){
       $event=Event::find($id);
       $event->fill($request->all());
+      $event->name=strtoupper($event->name);
       $event->save();
       
       flash("El evento  ". $event->name . " ha sido modificado con éxito" , 'success')->important();
 
       return redirect()->route('events.index');
     }
+
+
 }

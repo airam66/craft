@@ -9,33 +9,28 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nueva Linea</h3>
-           
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
-                <i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Cerrar">
-                <i class="fa fa-times"></i></button>
-            </div>
+            <h3 class="titulo_h text-center">NUEVA LINEA</h3>
           </div>
+          <div class="box box-info">
           <div class="box-body">
             
             {!! Form::open(['route'=>'lines.store', 'method'=>'POST'])!!}
 
-             <div class="form-group">
+             <div class="form-group titulo_h4">
               {!! Field::text('name',null, ['class'=>'form-control'])!!}
              </div>
 
 
-              <div class= "form-group">
+              <div class= "form-group titulo_h4">
   
               {!! Form::label('status','Estado')!!}
               {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 
               </div>
 
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+               <a class="btn btn-danger" href="{{ route('lines.index') }}">Cancelar</a>
+
               </div>
           
  
@@ -43,6 +38,7 @@
 
           </div>
           <!-- /.box-body -->
+        </div>
         </div>
         <!-- /.box -->
 

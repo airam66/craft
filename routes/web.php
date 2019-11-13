@@ -38,6 +38,7 @@ Route::group(['prefix'=>'admin','middleware' => 'auth'], function(){
   Route::resource('events','EventController');
   Route::get('/events/{id}/desable','EventController@desable')->name('events.desable');
   Route::get('/events/{id}/enable','EventController@enable')->name('events.enable');
+  Route::get('/searchNameLike','EventController@searchNameLike')->name('events.searchNameLike');
 
 
   //******************************Rutas para marcas******************************************
@@ -52,6 +53,7 @@ Route::group(['prefix'=>'admin','middleware' => 'auth'], function(){
   Route::get('products/{id}/desable','ProductsController@desable')->name('products.desable');
   Route::get('products/{id}/enable','ProductsController@enable')->name('products.enable');
   Route::post('products/updateStock','ProductsController@updateStock')->name('products.updateStock');
+  Route::get('/searchNameProduct', 'ProductsController@searchNameProduct')->name('products.searchNameProduct');
 
 
  //-------------para actualizar el stock de productos personalizados-------------------------------
