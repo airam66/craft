@@ -5,12 +5,17 @@
 <div class="box box-primary">
 
 <div class="box-header ">
-<h2 class="box-title col-md-5">Listado de Productos</h2>
-  
+<h2 class="text-center">LISTADO DE PRODUCTOS</h2>
+
+ <input type ='button' class="btn btn-success col-md-1 col-md-offset-0"   value = 'Agregar' onclick="location.href = '{{ route('products.create') }}'"/> 
                    <!-- search name form -->
-        <form route='admin.products.index'  method="GET" class="col-md-3 col-md-offset-1 ">
+      <form route='admin.products.index'  method="GET" class="col-md-3 col-md-offset-5">
             <div class="input-group">
-              <input type="text" name="name" class="form-control" placeholder="Nombre..."> 
+               @if($searchName !=null) 
+                  <input id="searchName" type="text" name="name" class="form-control" placeholder="Nombre..." value="{{$searchName}}">
+               @else 
+                  <input id="searchName" type="text" name="name" class="form-control" placeholder="Nombre...">
+               @endif 
               <span class="input-group-btn">
                 <button type="submit" name="searchName" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -21,31 +26,35 @@
      
         <form  'admin.products.index' method="GET" class="col-md-3 col-md-offset-0 ">
             <div class="input-group">
-              <input type="text" name="event" class="form-control" placeholder="Evento.."> 
+              @if($searchEvent !=null) 
+                <input type="text" id="searchEvent" name="event" class="form-control"  value="{{$searchEvent}}" placeholder="Evento.."> 
+              @else
+                <input type="text"  id="searchEvent" name="event" class="form-control" placeholder="Evento..">  
+              @endif 
               <span class="input-group-btn">
                 <button  type="submit"  name="searchEvent" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
         </form>
           <!-- /.search form -->
-        <input type ='button' class="btn btn-success"  value = 'Agregar' onclick="location.href = '{{ route('products.create') }}'"/> 
+        
           
       
 </div>
 <div class="box-body">
  @if($products->isNotEmpty())              
 
- <table id="tabla table-striped" class="display table table-hover" cellspacing="0" width="100%">
+ <table id="tabla" class="table table-responsive table-hover" cellspacing="0" >
        
         <thead>
             <tr>
-             <th style="width:10px">Codigo</th>
-                <th>Nombre</th>
+             <th>Codigo</th>
+                <th >Nombre</th>
                 <th>Stock</th>
+                <th>Evento</th>
                 <th>Categoría</th>
-               <th>Marca</th>
+                <th>Marca</th>
                 <th>Línea</th>
-                <th>Estado</th>
                 <th>Imagen</th> 
                 <th></th>
                    
@@ -65,15 +74,20 @@
             <td class="sorting_1">{{$product->code}}</td>
             <td>{{$product->name}}</td>
             <td>{{$product->stock}}</td>
+            <td style="width:15%">  @foreach($productEvent as $event)
+                    
+                    @if($event->product_id == $product->id)
+                       {{$event->event_name}}. <br>         
+                      
+                   @endif
+                  @endforeach</td>
             <td>{{$product->category->name}}</td>   
             <td>{{$product->brand->name}}</td>
             <td>{{$product->line->name}}</td>
-            <td>{{$product->status}}</td>
-
             <td> 
             @if($product->extension!=null)
                     
-                    <a  data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
+                    <a  data-toggle="modal" id="first" data-title="detail" title="Ver detalle.." data-target="#favoritesModalProduct{{$product->id}}">
                     <img src="{{asset('images/products/'.$product->extension)}}" width="40" height="40" >
                     </a>
                     
@@ -85,13 +99,13 @@
 
             @if ($product->status!='inactivo')
              
-                <a href="{{route('products.edit',$product->id)}}"  >
+                <a href="{{route('products.edit',$product->id)}}" title="Editar"  >
                         <button type="submit" class="btn btn-warning">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                             
                         </button>
                      </a>
-                <a href="{{route('products.desable',$product->id)}}" onclick="return confirm('¿Seguro dara de baja el producto?')">
+                <a href="{{route('products.desable',$product->id)}}" title="Deshabilitar" onclick="return confirm('¿Seguro dara de baja el producto?')">
                         <button type="submit" class="btn btn-danger">
                           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                         </button>
@@ -115,7 +129,7 @@
     </table>
 <div class="text-center">
 
-  {!!$products->render()!!}
+  {!!$products->appends(request()->input())->links()!!}
 
 </div>
 
@@ -149,4 +163,52 @@ function list($id){
   })
 }
 </script>
+<script type="text/javascript">
+ var options={
+    url: function(name){
+      return baseUrl('admin/searchNameLike?name='+name);
+         }, getValue:"name",
+            list: {
+                    match: {
+                        enabled: true
+                    },
+                    onClickEvent: function () { 
+                        var event = $("#searchEvent").getSelectedItemData();
+                          $('#searchEvent').val(event.name);
+                    },
+                    onKeyEnterEvent: function () { 
+                        var event = $("#searchEvent").getSelectedItemData();
+                          $('#searchEvent').val(event.name);
+
+                    }
+                }
+   };
+  
+  $("#searchEvent").easyAutocomplete(options);
+</script>
+
+<script type="text/javascript">
+ var options={
+    url: function(name){
+      return baseUrl('admin/searchNameProduct?name='+name);
+         }, getValue:"name",
+            list: {
+                    match: {
+                        enabled: true
+                    },
+                    onClickEvent: function () { 
+                        var product = $("#searchName").getSelectedItemData();
+                          $('#searchName').val(product.name);
+                    },
+                    onKeyEnterEvent: function () { 
+                        var product = $("#searchName").getSelectedItemData();
+                          $('#searchName').val(product.name);
+
+                    }
+                }
+   };
+  
+  $("#searchName").easyAutocomplete(options);
+</script>
+
 @endsection

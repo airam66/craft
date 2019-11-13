@@ -25,15 +25,13 @@ class ProductsController extends Controller
                 flash("Cargar variables de porcentaje para la venta mayor y menor" , 'danger')->important();
         }
         
-
        $products=Product::SearchProduct($request->name)->orderBy('name','ASC')->paginate(10);
 
         $productEvent=DB::table('events as e')
                           ->join('event_product as ep','e.id','=','ep.event_id')
                           ->select('ep.event_id','e.name as event_name','ep.product_id')
                           ->get();   
-         
- 
+
           if ($request->event!=''){
                $event= Event::SearchEventP($request->event)->first();          
 
@@ -49,6 +47,8 @@ class ProductsController extends Controller
         }                                           
        
       return view('admin.products.index')->with('products',$products)
+                                          ->with('searchName', $request->name)
+                                          ->with('searchEvent', $request->event)
                                            ->with('productEvent',$productEvent);
     
     }  
@@ -159,7 +159,7 @@ class ProductsController extends Controller
                       $products->extension=$extension;
                     }
           }
-
+        $products->name=strtoupper($products->name);
         $products->save();
          if(!empty($request->events)){
 
@@ -307,8 +307,13 @@ class ProductsController extends Controller
    
        }
     }
-    
 
-   
+    public function searchNameProduct(Request $request)
+    {
+      $products = Product::where('name', 'LIKE', '%'.$request->name.'%')->get();
+      return \response()->json($products);
+    }
+ 
+  
 }
 
