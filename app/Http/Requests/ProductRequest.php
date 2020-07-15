@@ -30,12 +30,12 @@ class ProductRequest extends FormRequest
           'category_id'=>'required|exists:categories,id',
           'line_id'=>'required|exists:lines,id',
           'brand_id'=>'required|exists:brands,id',
-           'events[]' =>'required',
+          'events' =>'required',
           'description'=>'required',
           'stock'=>'required',
           'retail_price'=>'required',
           'purchase_price'=>'required',
-           'wholesale_price'=>'required',       
+          'wholesale_price'=>'required',       
           'image'=>'required',
           'wholesale_cant'=>'required'
         ];

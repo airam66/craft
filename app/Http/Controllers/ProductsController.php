@@ -96,9 +96,10 @@ class ProductsController extends Controller
         $products->brand_id= $request->brand_id;
 
         $products->save();
-        if(!empty($request->events)){
 
-        $products->event()->sync($request->events);}
+        if(!empty($request->events)){
+          $products->event()->sync($request->events);
+        }
 
         return redirect()->route('products.index');
 
