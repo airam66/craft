@@ -26,22 +26,21 @@ class ProductsTest extends DuskTestCase
 
     public function test_create_a_product()
     {
-        $user=factory(User::class)->create(['email'=>'gaby73@gmail.com',]);
+        $user=factory(User::class)->create(['email'=>'gaby@gmail.com',]);
         $category= factory(\App\Category::class)->create(['name'=>'Tarjetas',]); 
         $brand= factory(\App\Brand::class)->create(['name'=>'Sprit',]);
         $line= factory(\App\Line::class)->create(['name'=>'Princesas',]);
         $event= factory(\App\Event::class)->create(['name'=>'Cumpleaños',]);
-        $product=factory(Product::class)->create(['name'=>'Bolsittas Frozen','code'=>'001001',]);
+        $product=factory(Product::class)->create(['name'=>'Bolsittas Frozen','code'=>'001002',]);
         $porcentage= factory(\App\Porcentage::class)->create();
 
         $this->browse(function (Browser $browser) use ($user,$category){
-
                      //When
-            $browser->visit('comercio/public/admin/products/create')
+            $browser->visit('craft/public/admin/products/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/products/create')
+                    ->assertPathIs('/craft/public/admin/products/create')
                      ->type('name',$this->name)
                     ->type('code',$this->code)
                     
@@ -59,7 +58,7 @@ class ProductsTest extends DuskTestCase
                     ->attach('image','D:\tar\001.png')
 
                     ->press('Registrar')
-                    ->assertPathIs('/comercio/public/admin/products')
+                    ->assertPathIs('/craft/public/admin/products')
                     ;
            });
 

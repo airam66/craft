@@ -2,16 +2,10 @@
    
 @section('content') 
     
-    
  <div class="content-wrap centering">
-      <div style="visibility: hidden;"><h6>
-      @foreach($shoppingcart->ShoppingCartProducts()->get() as $sc)
-              {{array_push($idproducts,$sc->product_id)}}
-      @endforeach</h6>
-      </div>
       <div class="mi_letter text-center">
-                  <h1>Nuestros productos</h1>
-                  <img src="{{ asset('images/line.png')}}" alt=""> 
+          <h1>Nuestros productos</h1>
+          <img src="{{ asset('images/line.png')}}" alt=""> 
       </div>
                      
        <div class="row">  
@@ -22,7 +16,6 @@
 
           <div class="col-md-9">
                
-
               <div>
                 @if(empty($products))
                    <p>No hay datos para mostrar</p>
