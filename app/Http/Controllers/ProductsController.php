@@ -97,6 +97,8 @@ class ProductsController extends Controller
 
         $products->save();
 
+        flash("El producto ". $products->name . " ha sido creado con éxito" , 'success')->important();
+
         if(!empty($request->events)){
           $products->event()->sync($request->events);
         }

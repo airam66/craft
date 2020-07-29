@@ -27,12 +27,12 @@
                      <div>
                        @if($product->extension!=null)
              
-                          <img src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
+                          <img class="img-prod" src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
             
                        @endif
                       </div>
                         <div class="text-center">
-                           <h5 style="height: 40px;"><b>{{strtoupper($product->name)}}</b></h5>
+                           <h5 class="name-prod" style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>
                            <div class="mi_letter">
                              <h5>${{$product->retail_price}}c/u</h5>
                            </div>
@@ -42,7 +42,7 @@
                             {!!Form::open(['url'=>'/shoppingcartsproducts', 'method'=>'POST', 'class'=>'inline-block'])!!}
                             <input type ='hidden' name='user_id' value="{{Auth::user()->id}}">
                               <input type ='hidden' name='product_id' value="{{$product->id}}">
-                              <button type ='submit' class="btn btn-success" value='Carrito' id="">
+                              <button type ='submit' class="btn btn-success btn-car" value='Carrito' id="">
                                Agregar al carrito
                               @if(in_array($product->id,$idproducts))
                               <span class="glyphicon glyphicon-check"></span>
@@ -53,7 +53,7 @@
                             </div>
                         <div class="text-right" >
                             <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
-                              <img src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
+                              <img class="image-info" src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
                             </a>
                         
                         </div>
@@ -64,17 +64,17 @@
                      <div>
                        @if($product->extension!=null)
              
-                          <img src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
+                          <img class="image-prod" src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
             
                        @endif
                       </div>
                         <div class="text-center">
-                           <h5 style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>                        
+                           <h5 class="name-prod" style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>                        
                         </div>
                         <div class="text-right" >
 
                             <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
-                              <img src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
+                              <img class="image-info" src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
                             </a>
                         
                         </div>

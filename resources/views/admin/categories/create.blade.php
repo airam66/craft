@@ -9,29 +9,29 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="text-center">NUEVA CATEGORÍA</h3>
+            <h3 class="box-title">NUEVA CATEGORÍA</h3>
           </div>
-          <div class="box box-info">
-          <div class="box-body box-info">
+          
+          <div class="box-body">
             
             {!! Form::open(['route'=>'categories.store', 'method'=>'POST','files'=>true])!!}
 
              <div class="form-group">
-              <h4>{!! Field::text('name',null, ['class'=>'form-control'])!!}</h4>
+              {!! Field::text('name',null, ['class'=>'form-control'])!!}
              </div>
 
               <div class="form-group">
 
-              <h4>{!! Form::label('descriptin','Descripción')!!}</h4>
+              {!! Form::label('descriptin','Descripción')!!}
               {!! Form::text('description'," ", ['class'=>'form-control'])!!}
               </div>
               
-              <h4>{!! Field::file('image')!!}</h4>
+             {!! Field::file('image')!!}
             
               <div class= "form-group">
   
-             <h4> {!! Form::label('status','Estado')!!}
-              {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!}</h4>
+              {!! Form::label('status','Estado')!!}
+              {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!}
               </div>
               <div class="form-group text-center">
               {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}

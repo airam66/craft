@@ -23,12 +23,12 @@
            
            @foreach($categories as $category)
 
-              <div class="card product"style="width: 300px;height: 300px;margin-right:10px; margin-bottom:8px;margin-left: 10px;color:gray">
+              <div class="card product"style="width: 200px;height: 200px;margin-right:10px; margin-bottom:8px;margin-left: 10px;padding:10px;color:gray">
                  
-                  <div  style="background:url({{ asset('images/categories/'.$category->extension)  }}); height:100%;background-size: 300px 300px; " class="text-center">
+                  <div  style="background:url({{ asset('images/categories/'.$category->extension)  }}); height:100%;background-size: 200px 200px; " class="text-center image-cat">
                   <a href="{{ route('searchEventCategory', [$category->id ,  $name]) }}">
                     <button type="button"
-                    style="margin-top: 200px;"class="btn btn-success">VER
+                    style="margin-top: 120px;"class="btn btn-success btn-cat">VER
                       PRODUCTOS 
                     </button> 
                     </a>
