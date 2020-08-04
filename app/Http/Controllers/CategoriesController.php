@@ -13,8 +13,9 @@ class CategoriesController extends Controller
 
     public function index(Request $request)
     {
-        $categories=Category::SearchCategoryName($request->name)->orderBy('name','status','ASC')->paginate(10);
-        return view('admin.categories.index')->with('categories',$categories);
+        $categories=Category::SearchCategoryName($request->name)->orderBy('name','ASC')->paginate(10);
+        return view('admin.categories.index')->with('categories',$categories)
+                                            ->with('searchName', $request->name);
     }
 
      public function create()

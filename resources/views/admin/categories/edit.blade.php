@@ -17,16 +17,16 @@
             {!! Form::model($category,['route'=>['categories.update',$category->id], 'method'=>'PATCH', 'files'=>true])!!}
 
               <div class="form-group">
-              {!! Form::label('name','Nombre')!!}
-              {!! Form::text('name',$category->name, ['class'=>'form-control'])!!}
+         
+              {!! Field::text('name',$category->name,['disabled'])!!}
               </div>
 
               <div>
                    {!!form::label('Imagen Actual: ')!!} <img src="{{ asset('images/categories/'.$category->extension)  }}" width="40" height="40" > 
                 </div>
               <div class="form-group">
-              {!! Form::label('image','Nueva Imagen')!!}
-              {!! Form::file('image')!!}
+            
+              {!! Field::file('image')!!}
              </div>
 
               <div class="form-group">
@@ -34,8 +34,9 @@
               {!! Form::text('description',null, ['class'=>'form-control'])!!}
               </div>
               
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+               <a class="btn btn-danger" href="{{ route('categories.index') }}">Cancelar</a>
               </div>
  
               {!! Form::close() !!}

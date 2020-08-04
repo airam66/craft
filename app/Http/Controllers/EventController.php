@@ -16,7 +16,8 @@ class EventController extends Controller
 
       $events=Event::SearchEventP($request->name)->orderBy('name','ASC')->paginate(10);
        
-      return view('admin.events.index')->with('events',$events);
+      return view('admin.events.index')->with('events',$events)
+                                       ->with('searchName', $request->name);
     }
 
       public function searchNameLike(Request $request)

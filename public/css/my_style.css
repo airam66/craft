@@ -94,3 +94,12 @@ padding: 1px 12px !important;
     width: 100% !important;
     margin-bottom: 1rem;
 }
+
+.easy-autocomplete {
+    width: 100% !important;
+  }
+
+  .box-header .box-title {
+    font-size: 22px !important;
+}
+
