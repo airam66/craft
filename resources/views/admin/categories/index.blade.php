@@ -56,7 +56,7 @@
           @else
             <tr role="row" class="odd" style="background-color: rgb(247, 212, 212);">
           @endif
-            <td>{{$category->id}}</td>
+            <td class="text-center">{{$category->id}}</td>
             <td>{{$category->name}}</td>
             <td>{{$category->description}}</td>
 
@@ -101,7 +101,7 @@
   @endforeach
    @else
 
-    <tr><td class="text-center" colspan="4">No se encontraron resultados para {{$searchName}}</td></tr>
+    <tr><td class="text-center" colspan="4">No se encontraron resultados</td></tr>
 
    @endif
    </tbody>

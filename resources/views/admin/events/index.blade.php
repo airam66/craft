@@ -84,7 +84,7 @@
   @endforeach
   @else
 
- <tr> <td class="text-center" colspan="2">No se encontraron resultados para {{$searchName}}</td></tr>
+ <tr> <td class="text-center" colspan="2">No se encontraron resultados</td></tr>
 
 @endif
    </tbody>
