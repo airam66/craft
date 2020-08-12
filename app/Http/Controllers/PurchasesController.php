@@ -231,7 +231,7 @@ class PurchasesController extends Controller
    
       if($request->ajax()){
   
-      $providers=Provider::searchProvider($request->searchP)->where('status','=','activo')->get();
+      $providers=Provider::searchProvider($request->searchProvider)->where('status','=','activo')->get();
       $type="Provider";
       $result=popUpPeople($providers,$type);
       return Response($result);    

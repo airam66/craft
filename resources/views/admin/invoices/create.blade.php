@@ -240,11 +240,6 @@
 
 
 <script type="text/javascript">
-
-$('#favoritesModalClient').on('shown.bs.modal', function () {
-  $('#searchC').focus()
-})
-
 function productStockProvider(){
 }
 

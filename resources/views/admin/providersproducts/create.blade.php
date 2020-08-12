@@ -10,26 +10,28 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Cargar productos de un proveedor</h3>
+            <h3 class="box-title">Agregar productos de un proveedor</h3>
          </div>
           {!! Form::open(['route'=>'providersproducts.store', 'method'=>'POST', 'files'=>true])!!}
           <div class="box-body">
-          <section>
       
                 <div class="border">
                 <h3>Proveedor</h3>
                 <div class="row ">
                        
-                      <div class="col-md-3 pull-left" >
+                      <div class="col-md-3">
+                      
                            {!! form::label('CUIT')!!}
+                           <div class="input-group">
                            <input id="cuit" class="form-control" name="cuit" type="text" >
-                       </div>
-                       <div class="pull-left">
-                       <br>
-                            <button type="button" class="btn btn-primary " data-toggle="modal" id="second" data-title="Buscar" data-target="#favoritesModalProvider"><i class="fa fa-search"></i></button>
-                            @include('admin.providersproducts.buscarProvider')
+                     
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" id="second" title="ver proveedores" data-target="#favoritesModalClient"><i class="fa fa-search"></i></button>
+                            @include('partials.searchPeople')
+                      </span>
                       </div>
-                      <div class="col-md-6  col-md-offset-1">
+                      </div>
+                      <div class="col-md-4  col-md-offset-2">
                             <input id="provider_id" name="provider_id" class="form-control" type="hidden" >
                             {!!Field::text('nombre',null,['disabled'])!!}
                       </div>
@@ -85,9 +87,6 @@
                   </div>
                 </div>
 
-
-              </section>
-
              </div>
  
               {!! Form::close() !!}
@@ -134,25 +133,31 @@
 
 </script>
 <script type="text/javascript">
-  function completeC($id,$cuit,$name){
-    $('#cuit').val($cuit);
+  function completeC($id,$number,$name){
+    $('#cuit').val($number);
     $('#nombre').val($name);
     $('#provider_id').val($id);
-    $('#favoritesModalProvider').modal('hide');
+    $('#favoritesModalClient').modal('hide');
   };
-
 
 </script>
 
 <script type="text/javascript">
-$('#searchP').on('keyup', function(){
+
+$('#favoritesModalClient').on('shown.bs.modal', function () {
+  $('#searchC').focus()
+})
+</script>
+
+<script type="text/javascript">
+$('#searchC').on('keyup', function(){
   $value=$(this).val();
   $.ajax({
     type: 'get',
     url:  "{{ URL::to('admin/searchProvider')}}",
     data:{'searchProvider':$value},
     success: function(data){
-      $('#mostrarP').html(data);
+      $('#mostrarC').html(data);
     }
     
   })
@@ -208,6 +213,12 @@ function deletefila(index){
     $('#product_id').val('');
     $('#name').val('');
  }
+</script>
+
+
+<script>
+  function productStockProvider(){
+}
 </script>
 @endsection
  

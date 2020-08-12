@@ -50,6 +50,10 @@ class CategoriesController extends Controller
     
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+          'name'=>'required|max:120',
+        ]);
+
         $category=Category::find($id);
 
         $category->fill($request->all());

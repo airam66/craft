@@ -18,7 +18,7 @@
 
               <div class="form-group">
          
-              {!! Field::text('name',$category->name,['disabled'])!!}
+              {!! Field::text('name',$category->name)!!}
               </div>
 
               <div>

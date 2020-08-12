@@ -17,7 +17,7 @@
             
               {!! Field::text('name')!!}
 
-              {!! Field::number('cuit')!!}
+              {!! Field::number('cuil')!!}
               
               {!! Field::text('address')!!}
               <div class="col-md-6">
@@ -38,8 +38,9 @@
               {!! Form::label('status','Estado')!!}
               {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 
               </div>
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+               <a class="btn btn-danger" href="{{ route('providers.index') }}">Cancelar</a>
               </div>
           
  

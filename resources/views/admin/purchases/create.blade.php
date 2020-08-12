@@ -232,6 +232,14 @@
    $('#mostrar').html('');
   };
 </script>
+
+<script type="text/javascript">
+
+$('#favoritesModalClient').on('shown.bs.modal', function () {
+  $('#searchC').focus()
+})
+</script>
+
 <script >
 $('#searchC').on('keyup', function(){
   $value=$(this).val();
@@ -376,6 +384,7 @@ function calculateSubtotal(number){
   }
 </script>
 
+ 
 @endsection
  
 
