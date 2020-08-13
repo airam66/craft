@@ -18,7 +18,7 @@ class InvoicesController extends Controller
     {
        
         $this->products= new Product();
-        $this->clients=new Client();
+        $this->clients=new Client(); 
     }
     
 
