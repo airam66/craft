@@ -90,14 +90,16 @@ function popUpPeople($people,$type){
         foreach ($people as $key => $person) {
                  if($type!='Client'){
                   $numberPerson=$person->cuit;
+                  $infoPerson=$person->province;
                  }else{
                   $numberPerson=$person->cuil;
+                  $infoPerson=$person->phone;
                  }
                   $output.='<tr>'.
                         '<td>'.$numberPerson.'</td>'.
                         '<td>'.$person->name.'</td>'.
                         '<td>'.$person->address.'</td>'.
-                        '<td>'.$person->phone.'</td>'.
+                        '<td>'.$infoPerson.'</td>'.
                      
                          '<td><a onclick="completeC('.$comilla.$person->id.$comilla.','.$numberPerson.','.$comilla.$person->name.$comilla.'); productStockProvider() " type="button" class="btn btn-primary"> Agregar </a></td>'
                       

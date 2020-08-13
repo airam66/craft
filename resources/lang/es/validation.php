@@ -154,7 +154,8 @@ return [
     'datepicker'             =>         'Fecha',
     'type'                   =>         'Tipo',
     'concept'                =>         'Concepto',
-    'rode'                   =>         'Monto'
+    'rode'                   =>         'Monto',
+    'events[]'                   =>         'Evento/s'
     ],
 
 ];

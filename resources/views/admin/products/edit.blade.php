@@ -14,7 +14,7 @@
           <div class="box-body">
             
             {!! Form::model($product,['route'=>['products.update',$product->id], 'method'=>'PATCH', 'files'=>true])!!}
-
+             <div class="row">
               <div class= "col-md-4">
               {!!form::label('Producto: ')!!}
               {{ $product->name }}
@@ -29,6 +29,7 @@
               {!!form::label('Categoria: ')!!}
               {{$product->category->name}}
               </div>
+              </div>
 
               <div>
                    {!!form::label('Imagen Actual: ')!!} <img src="{{ asset('images/products/'.$product->extension)  }}" width="40" height="40" > 
@@ -41,7 +42,7 @@
               
               <div class= "form-group">
               {!! Form::label('events','Evento')!!}
-              {!! Form::select('events[]', $events ,$productEvent, ['class'=>'form-control select-tag','multiple'])!!}
+              {!! Form::select('events[]', $events ,$productEvent, ['class'=>'select-tag','multiple'])!!}
               </div> 
 
               <div class= "form-group">
@@ -55,13 +56,14 @@
               </div> 
 
               <div class="form-group">
-              {!! Form::label('description','Descripcion')!!}
-              {!! Form::text('description',$product->description, ['class'=>'form-control'])!!}
+             
+              {!! Field::text('description',$product->description)!!}
               </div>
 
-              @if($product->brand->name=="CREATÚ")
+              @if($product->brand->name=="CreaTu")
+              <div class="row">
 
-                  <div class="controls col-md-4">
+                  <div class="controls col-md-3">
                  {!! Field::number('purchase_price',$product->purchase_price, ['class'=>'form-control','step'=>'any'])!!}
                  </div>
 
@@ -71,17 +73,18 @@
                   <div class="col-md-3 col-md-offset-1">
                   {!! Field::number('retail_price',$product->retail_price, ['class'=>'form-control','step'=>'any'])!!}
                   </div>
+                </div>
               @endif
 
              {!! Field::number('stock')!!}
 
               <div class="form-group">
-              {!! Form::label('wholesale_cant','Cantidad de venta Mayorista')!!}
-              {!! Form::number('wholesale_cant',$product->wholesale_cant, ['class'=>'form-control'])!!}
+              {!! Field::number('wholesale_cant',$product->wholesale_cant)!!}
               </div>
 
-              <div class="form-group">
-              {!! Form::submit('Guardar Cambios',['class'=>'btn btn-primary'])!!}
+              <div class="form-group text-center">
+              {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('products.index') }}">Cancelar</a>
               </div>
           
  

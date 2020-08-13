@@ -22,8 +22,10 @@ class ProvidersProductsController extends Controller
     {
         $products=Product::where('status','=','activo')->orderBy('name','ASC')->get();
         $providers=Provider::where('status','=','activo')->orderBy('name','ASC')->get();
+        $title="BUSCAR PROVEEDOR";
         return view('admin.providersproducts.create')->with('products',$products)
-                                                     ->with('providers',$providers);
+                                                     ->with('providers',$providers)
+                                                     ->with('title',$title);
     }
 
     
@@ -84,4 +86,6 @@ class ProvidersProductsController extends Controller
     {
 
     }
+
+    
 }

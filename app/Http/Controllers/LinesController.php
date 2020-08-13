@@ -17,9 +17,10 @@ class LinesController extends Controller
     public function index(Request $request)
     {
 
-      $lines=Line::SearchLine($request->name)->orderBy('name','ASC')->paginate(10);
+      $lines=Line::SearchLine($request->name)->orderBy('name','ASC')->where('status','=','activo')->paginate(10);
        
-      return view('admin.lines.index')->with('lines',$lines);
+      return view('admin.lines.index')->with('lines',$lines)
+                                      ->with('searchName', $request->name);
     }
 
 

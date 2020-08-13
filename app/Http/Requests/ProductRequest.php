@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
           'category_id'=>'required|exists:categories,id',
           'line_id'=>'required|exists:lines,id',
           'brand_id'=>'required|exists:brands,id',
-          'events' =>'required',
+          'events[]' =>'array|min:1',
           'description'=>'required',
           'stock'=>'required',
           'retail_price'=>'required',

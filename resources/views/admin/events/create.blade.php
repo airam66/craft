@@ -9,21 +9,21 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="text-center titulo_h">NUEVO EVENTO</h3>
+            <h3 class="box-title">NUEVO EVENTO</h3>
           
           </div>
-          <div class="box box-info">
-          <div class="box-body box-info">
+          <div class="box-body">
+          
             
             {!! Form::open(['route'=>'events.store', 'method'=>'POST'])!!}
 
-             <div class="form-group titulo_h4">
+             <div class="form-group">
               {!! Field::text('name',null, ['class'=>'form-control'])!!}
              </div>
 
 
              
-              <div class= "form-group titulo_h4">
+              <div class= "form-group">
   
               {!! Form::label('status','Estado')!!}
               {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 

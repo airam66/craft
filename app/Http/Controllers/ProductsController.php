@@ -25,30 +25,31 @@ class ProductsController extends Controller
                 flash("Cargar variables de porcentaje para la venta mayor y menor" , 'danger')->important();
         }
         
-       $products=Product::SearchProduct($request->name)->orderBy('name','ASC')->paginate(10);
+      
 
         $productEvent=DB::table('events as e')
                           ->join('event_product as ep','e.id','=','ep.event_id')
                           ->select('ep.event_id','e.name as event_name','ep.product_id')
                           ->get();   
 
-          if ($request->event!=''){
-               $event= Event::SearchEventP($request->event)->first();          
+          if ($request->name!=''){
+               $event= Event::SearchEventP($request->name)->first();          
 
             if ($event != null){
                $products= $event->products()->paginate(10);
              }
              else{
        
-            $products = Collection::make();
+             $products=Product::SearchProduct($request->name)->orderBy('name','ASC')->paginate(10);
            
            }
       
-        }                                           
+        }  else{
+          $products=Product::SearchProduct($request->name)->orderBy('name','ASC')->paginate(10);
+        }                                         
        
       return view('admin.products.index')->with('products',$products)
                                           ->with('searchName', $request->name)
-                                          ->with('searchEvent', $request->event)
                                            ->with('productEvent',$productEvent);
     
     }  
@@ -97,6 +98,8 @@ class ProductsController extends Controller
 
         $products->save();
 
+        flash("El producto ". $products->name . " ha sido creado con éxito" , 'success')->important();
+
         if(!empty($request->events)){
           $products->event()->sync($request->events);
         }
@@ -142,6 +145,10 @@ class ProductsController extends Controller
           'brand_id'=>'required|exists:brands,id',
           'stock'=>'required',
           'wholesale_cant'=>'required',
+          'description'=>'required',
+          'retail_price'=>'required',
+          'purchase_price'=>'required',
+          'wholesale_price'=>'required',
         ]);
 
         $products= Product::find($id);
