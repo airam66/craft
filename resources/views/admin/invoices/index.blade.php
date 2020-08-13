@@ -9,7 +9,7 @@
         @if($fecha1 == $fecha2)
              <h2 class="box-title col-md-5">Listado de Ventas</h2>
          @else
-             <h2 class="box-title col-md-8">Listado de Ventas desde {{date("d-m-Y",strtotime($fecha1))}} hasta {{date("d-m-Y",strtotime($fecha2))}}.</h2>
+             <h2 class="box-title col-md-8">Listado de Ventas desde {{$fecha1}} hasta {{$fecha2}}.</h2>
          @endif
   </div>
       <div class="row">
@@ -36,7 +36,7 @@
                   <input type="text" class="form-control" name="fecha2" data-date-end-date="0d" placeholder="Seleccione una fecha">
                   <div class="input-group-addon">
                         <button type="submit" class="btn btn-primary">
-                                  <i class="fa fa-calendar"></i>
+                                  <i class="fa fa-search"></i>
                                   </button>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
 </div>
 
 <div class="box-body">              
- @if($invoices->isNotEmpty())
+
  <table id="tabla table-striped" class="display table table-hover" cellspacing="0" width="100%">
        
         <thead>
@@ -71,13 +71,14 @@
      
        
 <tbody id="mostrar">
+   @if($invoices->isNotEmpty())
    @foreach ($invoices as $key => $invoice) 
          
                 @if ($invoice->status!='inactivo')
                    <tr role="row" class="odd">
                 
                 @else
-                  <tr role="row" class="odd" style="background-color: rgb(255,96,96)">
+                  <tr role="row" class="odd" style="background-color: rgb(247, 212, 212);">
                 
                 @endif
                  
@@ -104,19 +105,19 @@
         </tr>
         @endforeach
 
+        @else
+
+           <tr> <td class="text-center" colspan="8">No se encontraron resultados</td></tr>
+
+        @endif
+
      </tbody>
     </table>
     <div class="text-center">
          {!!$invoices->render()!!}
     </div>
 
- @else
-        <div class="alert alert-dismissable alert-warning">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <p>No se encontró ninguna venta.</p>
-        </div>
 
-  @endif
 
 
 
@@ -131,7 +132,7 @@ $('.input-daterange input').each(function() {
     $(this).datepicker({
          language: "es",
          autoclose: true,
-         format:"yyyy/mm/dd"
+         format:"dd/mm/yyyy"
     });
 });
 </script>
