@@ -79,6 +79,30 @@ function popUpProductsPurchases($products){
    }
 }
 
+function popUpProductsProvider($products){
+  
+        $output="";
+        $comilla="'";
+        
+        if ($products) {
+        foreach ($products as $key => $product) {
+                   $output.='<tr>'.
+                        '<td>'.$product->product_name.'</td>'.
+                        '<td>'.$product->brand_name.'</td>'.
+                        '<td>'.$product->stock.'</td>'.
+
+                        '<td><a onclick="add_product('.$product->product_id.','.$product->code.','.$comilla.$product->product_name.$comilla.','.$comilla.$product->brand_name.$comilla.')'.'"'.' type="button" class="btn btn-primary"> Agregar </a></td>'
+
+
+                    .'</tr>';
+        }
+
+   
+        return $output;
+          
+   }
+}
+
 
 function popUpPeople($people,$type){
         

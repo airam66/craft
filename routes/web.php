@@ -79,6 +79,8 @@ Route::group(['middleware' => 'purchaseUser'],function(){
   Route::get('/listProducts','ProvidersController@listProducts');
   Route::get('/searchProvider','PurchasesController@searchProvider');
   Route::get('/searchProducts','PurchasesController@searchProducts');
+  Route::get('/searchProdName','ProvidersProductsController@searchProdName');
+  Route::get('/searchProdLetter','ProvidersProductsController@searchProdLetter');
   Route::resource('providersproducts','ProvidersProductsController');
   Route::get('providers/{id}/desable','ProvidersController@desable')->name('providers.desable');
   Route::get('providers/{id}/enable','ProvidersController@enable')->name('providers.enable');

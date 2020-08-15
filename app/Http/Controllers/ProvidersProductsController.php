@@ -7,6 +7,7 @@ use App\ProviderProduct;
 use App\Provider;
 use App\Product;
 use App\Http\Requests\ProviderRequest;
+use Illuminate\Support\Facades\DB;
 
 class ProvidersProductsController extends Controller
 {
@@ -43,49 +44,53 @@ class ProvidersProductsController extends Controller
                 $detalle->save();
                 $cont = $cont+1;
             }
+
+            flash("Los productos han sido agregados con éxito" , 'success')->important();
        
         return redirect()->route('providersproducts.create');
 
     }
 
-     
-    public function show($id)
-    {
-        //
+  public function searchProdName(Request $request){
+      if($request->ajax()){
+        $output="";
+        $comilla="'";
+
+      $products=DB::table('products as p')
+                   ->join('brands as b','p.brand_id','=','b.id')
+                   ->select('code','p.id as product_id','p.name as product_name','b.name as brand_name','stock','p.status','b.name')
+                   ->where('p.name','LIKE', "%".$request->searchProducts."%")
+                   ->where('p.status','=','activo')
+                   ->where('b.name',"<>","CreaTu")->get();
+        
+        $result=popUpProductsProvider($products);
+         return Response($result);       
+   
     }
+    }
+    
+     public function searchProdLetter(Request $request){
+   
+      if($request->ajax()){
+   
+         $output="";
+        $comilla="'";
+        $products=DB::table('products as p')
+                   ->join('brands as b','p.brand_id','=','b.id')
+                   ->select('code','p.id as product_id','p.name as product_name','b.name as brand_name','stock','p.status','b.name')
+                  ->where('p.name','LIKE', $request->searchL."%")
+                  ->where('p.status','=','activo')
+                  ->where('b.name',"<>","CreaTu")->get();
+                         
+         $result=popUpProductsProvider($products);
+         return Response($result);
+              
+   
+        }
+    }
+
 
    
-    public function edit($id)
-    {   
-    	/*$product= Product::find($id);
-
-
-        return view('admin.products.edit')->with('product',$product)*/
-
-
-    }
-
    
-    public function update(Request $request, $id)
-    {
-    }
-
-    public function desable($id)
-    {
-    }
-
-    public function enable($id)
-    {
-      /*  $product= Product::find($id);
-        $product->status='activo';
-        $product->save();
-        return redirect()->route('products.index');*/
-    }
-
-    public function destroy($id)
-    {
-
-    }
-
     
 }

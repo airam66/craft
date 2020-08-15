@@ -356,9 +356,9 @@
 
     <script src="{{asset('js/plantilla.js')}}"></script>
    
-    
-    @yield('js')
     @stack('scripts')
+    @yield('js')
+    
     
     <script>
       function baseUrl(url){

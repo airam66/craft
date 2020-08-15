@@ -47,10 +47,26 @@ $('#favoritesModalClient').on('shown.bs.modal', function () {
   
   $("#cuit").easyAutocomplete(options);
 
-
   function completeC($id,$number,$name){
     $('#cuit').val($number);
     $('#nombre').val($name);
     $('#provider_id').val($id);
     $('#favoritesModalClient').modal('hide');
+
   };
+
+
+$('#searchC').on('keyup', function(){
+  $value=$(this).val();
+  $url=baseUrl('admin/searchProvider');
+  $.ajax({
+    type: 'get',
+    url:  $url,
+    data:{'searchProvider':$value},
+    success: function(data){
+      $('#mostrarC').html(data);
+      console.log("hola");
+    }
+    
+  });
+});
