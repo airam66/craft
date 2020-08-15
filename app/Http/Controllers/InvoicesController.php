@@ -18,7 +18,7 @@ class InvoicesController extends Controller
     {
        
         $this->products= new Product();
-        $this->clients=new Client();
+        $this->clients=new Client(); 
     }
     
 
@@ -26,22 +26,16 @@ class InvoicesController extends Controller
 
       $fecha1=$request->fecha1;
       $fecha2=$request->fecha2;
-     $invoices=Invoice::orderBy('id','DESC')->paginate(15);
+      $invoices=Invoice::orderBy('id','DESC')->paginate(15);
 
       if ($request->searchClient!=''){
-         $client= Client::SearchClient($request->searchClient)->first();
-          if ($client != null){
-          $Invoices=$client->invoices()->paginate(15);
-         }
-         else{
-            $invoices = Collection::make();
-         }
+          $invoices=Invoice::SearchInvoiceClient($request->searchClient)->paginate(15);
       }
 
-      if($request->fecha1!='' and $request->fecha2!=''){
-         $fecha1=$request->fecha1;
-         $fecha2=$request->fecha2;
-         $invoices=Invoice::SearchInvoice($request->fecha1,$request->fecha2)
+      
+
+      if($fecha1!='' and $fecha2!=''){
+         $invoices=Invoice::SearchInvoice($fecha1,$fecha2)
                             ->orderBy('id','DESC')->paginate(15);
      }
       
@@ -231,7 +225,7 @@ public function searchDate(Request $request){
                     $product=Product::find($invoiceProduct->product_id);
                     $product->stock = $product->stock+$invoiceProduct->amount;
                     $product->save();
-                    $invoiceProduct->delete();
+                    //$invoiceProduct->delete();
                 }
 
         $invoice->status='inactivo';
@@ -258,7 +252,7 @@ public function searchDate(Request $request){
       $invoice= Invoice::find($id);
       $detalles= DB::table('invoices_products as d')
       ->join('products as p','d.product_id','=','p.id')
-      ->select('p.id','p.name','p.description','d.amount','d.subTotal')
+      ->select('p.id','p.name','p.description','d.price','d.amount','d.subTotal')
       ->where('d.invoice_id','=',$id)->get();
     
       return view ('admin.invoices.show')->with('invoice',$invoice)
