@@ -19,7 +19,7 @@
             <div class="input-group">
               <input type="text" name="searchClient" class="form-control" placeholder="Nombre..."> 
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                <button type="submit" name="search" title="Buscar comprobantes con el cliente seleccionado." id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
            </form>
@@ -35,7 +35,7 @@
                   <div class="input-group-addon">HASTA</div>
                   <input type="text" class="form-control" name="fecha2" data-date-end-date="0d" placeholder="Seleccione una fecha">
                   <div class="input-group-addon">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" title="Buscar comprobante entre las fechas seleccionadas.">
                                   <i class="fa fa-search"></i>
                                   </button>
                   </div>
@@ -89,17 +89,17 @@
                         <td>
                          
 
-                        <a href="{{route('invoices.show',$invoice->id)}}" > <button  type="button" class="btn btn-info "  >
+                        <a href="{{route('invoices.show',$invoice->id)}}" > <button  type="button" class="btn btn-info " title="Ver detalle del comprobante." >
                         <span class="fa fa-list" aria-hidden="true" ></span></button></a>
 
                           @if ($invoice->status!='inactivo')
                              <a href="{{route('invoices.desable',$invoice->id)}}" onclick="return confirm('¿Seguro dara de baja esta venta?')">
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger" title="Dar de baja un comprobante.">
                           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                         </button>
                      </a>
 
-                     <a href="{{route('invoices.pdf',$invoice->id)}}" target="_blank" > <button  type="button" class="btn btn-primary "  ><i class="fa fa-print"></i> 
+                     <a href="{{route('invoices.pdf',$invoice->id)}}" target="_blank" > <button  type="button" class="btn btn-primary " title="Imprimir comprobante."  ><i class="fa fa-print"></i> 
                       </button></a>
                        @endif     
         </tr>

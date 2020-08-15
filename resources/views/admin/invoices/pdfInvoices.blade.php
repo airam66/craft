@@ -35,9 +35,9 @@
         <p align="left">
             DE<br>
               <strong>Cotillón CreaTu</strong><br>
-              Direccion:Roque Saenz Peña Nro 14 bis 2 <br>
+              Dirección:Roque Saenz Peña Nro 14 bis 2 <br>
               B° San Martin,Rosario de Lerma, Salta<br>
-              Telefono: (387)59662005 - (387) 5910201<br>
+              Teléfono: (387)59662005 - (387) 5910201<br>
               Email:creatucotillon@gmail.com
         </p>
         </div>
@@ -48,7 +48,12 @@
         <p align="left">
             A<br>
             <strong>SR/A :  {{$invoice->client->name}}</strong><br>
-            CUIL/CUIT:{{$invoice->client->cuil}}<br>
+            @if($invoice->client_id != 1)
+              CUIL/CUIT:{{$invoice->client->cuil}}<br>
+              Dirección:{{$invoice->client->address}}<br>
+              Teléfono:{{$invoice->client->phone}}<br>
+              
+            @endif
         </p>
         </div>
       </th>
@@ -61,7 +66,7 @@
               <thead>
                <tr>
                 <th>Producto</th>
-                <th>Precio de Compra</th>
+                <th>Precio</th>
                 <th>Cantidad</th>
                 <th>Subtotal Estimado</th>
                 </tr>

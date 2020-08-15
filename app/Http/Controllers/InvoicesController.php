@@ -252,7 +252,7 @@ public function searchDate(Request $request){
       $invoice= Invoice::find($id);
       $detalles= DB::table('invoices_products as d')
       ->join('products as p','d.product_id','=','p.id')
-      ->select('p.id','p.name','p.description','d.amount','d.subTotal')
+      ->select('p.id','p.name','p.description','d.price','d.amount','d.subTotal')
       ->where('d.invoice_id','=',$id)->get();
     
       return view ('admin.invoices.show')->with('invoice',$invoice)
