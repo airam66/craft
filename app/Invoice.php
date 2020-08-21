@@ -31,6 +31,7 @@ class Invoice extends Model
     public function scopeSearchInvoiceClient($query,$client){
     
         return $query->join('clients', 'clients.id', '=' ,'invoices.client_id')
+            ->select('invoices.*')
             ->where('clients.name','LIKE',"%$client%");
     }
 

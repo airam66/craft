@@ -30,7 +30,7 @@ class InvoicesController extends Controller
 
       if ($request->searchClient!=''){
           $invoices=Invoice::SearchInvoiceClient($request->searchClient)->paginate(15);
-      }
+      } 
 
       
 
@@ -248,7 +248,6 @@ public function searchDate(Request $request){
 
 
     public function show($id){
-      
       $invoice= Invoice::find($id);
       $detalles= DB::table('invoices_products as d')
       ->join('products as p','d.product_id','=','p.id')

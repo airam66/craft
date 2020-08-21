@@ -99,7 +99,14 @@ padding: 1px 12px !important;
     width: 100% !important;
   }
 
-  .box-header .box-title {
+.box-header .box-title {
     font-size: 22px !important;
+}
+
+.mov-left{
+  padding-left: 0px !important;
+}
+.mov-right{
+  padding-right:0px !important;
 }
 
