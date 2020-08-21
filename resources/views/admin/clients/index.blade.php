@@ -31,9 +31,9 @@
             <tr>
                
                 <th>Nombre</th>
-                <th>Direccion</th>
+                <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Saldo</th>
+                <th>Saldo Pendiente</th>
                 
                 <th></th>
             </tr>
@@ -52,7 +52,7 @@
 		            <td>{{$client->name}}</td>
 		            <td>{{$client->address}}</td>
 		            <td>{{$client->phone}}</td>
-                <th>{{$client->bill}}</th>
+                <th>$ {{$client->bill}}</th>
 		           
                 <td>
                  @if ($client->status!='inactivo')

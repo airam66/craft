@@ -89,7 +89,7 @@ class ProductsController extends Controller
                 }
 
         $request->code=$products->newCode($request->category_id,$request->code);
-        $products->name=strtoupper($products->name);
+        $products->name=mb_strtoupper($products->name,'utf-8');
         $products->code=$request->code;
         $products->status=$request->status;
         $products->category_id= $request->category_id;

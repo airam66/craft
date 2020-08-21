@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nuevo cliente</h3>
+            <h3 class="box-title">NUEVO CLIENTE</h3>
           </div>
           <div class="box-body">
             
@@ -18,16 +18,16 @@
               {!! Field::text('name')!!}
 
               {!! Field::text('cuil')!!}
-              <div class="col-md-6">
+              <div class="col-md-6 mov-left">
               {!! Field::text('address')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-right">
               {!! Field:: text('location')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-left">
               {!! Field::text('email')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-right">
               {!! Field::number('phone')!!}
               </div>
               {!! Form::hidden('bill',0)!!}

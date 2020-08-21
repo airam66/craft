@@ -36,13 +36,13 @@ p{
 
 .navbar-inverse .navbar-toggle {
 
-    border-color: #c853da;
-    background-color: #cc68db;
+    border-color: #f7f6f6;
+    background-color: #cb2613;
 
 }
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-    background-color: #c527dd;
+    background-color: #cb2613;
 }
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
@@ -798,3 +798,4 @@ img .user-image {
 .name-event:hover{
     color: #ec5d8a !important;
 }
+
