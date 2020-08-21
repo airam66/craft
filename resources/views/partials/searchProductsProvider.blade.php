@@ -31,7 +31,6 @@
             <tr>
              <th width="35%">Nombre</th>
                 <th>Marca</th>
-                <th>Precio</th>
                 <th>Stock</th>
                 <th></th>
                    

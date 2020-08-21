@@ -8,6 +8,8 @@ $('#favoritesModalProduct').on('shown.bs.modal', function () {
   $('#searchProducts').focus();
 });
 
+
+
 $('#searchProducts').on('keyup', function(){
   $value=$(this).val();
   $url=baseUrl('admin/searchProdName');
@@ -22,7 +24,7 @@ $('#searchProducts').on('keyup', function(){
   });
 });
 
-//buscador por letras en e modal de productos
+//buscador por letras en el modal de productos
 
 function SearchLetter($letter){
   $value=$letter;

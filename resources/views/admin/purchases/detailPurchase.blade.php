@@ -64,7 +64,8 @@
                         <tr>
                           <th>Nombre</th>
                           <th>Marca</th>
-                          <th>Precio Compra</th>
+                           <th>Stock</th>
+                          <th>Precio Estimado</th>
                           <th>Cantidad</th>
                           <th>Subtotal Estimado</th>
                         </tr>
@@ -74,6 +75,7 @@
                         <tr>
                           <td>{{$detail->product_name}}</td>
                           <td>{{$detail->brand_name}}</td>
+                          <td>{{$detail->stock}}</td>
                           <td>${{$detail->price}}</td>
                           <td>{{$detail->amount}}</td>
                           <td>${{$detail->subTotal}}</td>

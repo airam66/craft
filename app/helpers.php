@@ -65,7 +65,9 @@ function popUpProductsPurchases($products){
                    $output.='<tr>'.
                         '<td>'.$product->product_name.'</td>'.
                         '<td>'.$product->brand_name.'</td>'.
+                        '<td>$'.$product->purchase_price.'</td>'.
                         '<td>'.$product->stock.'</td>'.
+                       
 
                         '<td><a onclick="complete('.$product->product_id.','.$product->code.','.$comilla.$product->brand_name.$comilla.','.$comilla.$product->product_name.$comilla.','.$product->purchase_price.','.$product->stock.')'.'"'.' type="button" class="btn btn-primary"> Agregar </a></td>'
 

@@ -12,42 +12,31 @@ use Illuminate\Support\Facades\DB;
 class ProvidersProductsController extends Controller
 {
     
-    public function index(Request $request)
-    {
-      
-       /* return view('admin.products.index')->with('products',$products)*/
-
-    }
-
-    public function create()
-    {
-        $products=Product::where('status','=','activo')->orderBy('name','ASC')->get();
-        $providers=Provider::where('status','=','activo')->orderBy('name','ASC')->get();
-        $title="BUSCAR PROVEEDOR";
-        return view('admin.providersproducts.create')->with('products',$products)
-                                                     ->with('providers',$providers)
-                                                     ->with('title',$title);
-    }
 
     
-    public function store(Request $request)
+    public function storeProducts(Request $request, $id)
     {
     	
-            $idarticulo = $request->get('dproduct_id');
-
+            $products = $request->get('dproduct_id');
+            $provider=Provider::find($id); 
+           // var_dump($provider->products);
             $cont = 0;
+
+            $idarticulo = array_values(array_unique($products));
 
             while ( $cont < count($idarticulo) ) {
                 $detalle = new ProviderProduct();
-                $detalle->provider_id=$request->provider_id; 
+                $detalle->provider_id= $provider->id;
                 $detalle->product_id=$idarticulo[$cont];
                 $detalle->save();
                 $cont = $cont+1;
             }
 
+
+
             flash("Los productos han sido agregados con éxito" , 'success')->important();
        
-        return redirect()->route('providersproducts.create');
+        return redirect()->route('providers.index');
 
     }
 

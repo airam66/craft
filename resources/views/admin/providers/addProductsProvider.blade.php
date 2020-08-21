@@ -12,7 +12,7 @@
             <h3 class="box-title">Agregar productos de un proveedor</h3>
          </div>
       <div class="box-body">
-          {!! Form::open(['route'=>'providersproducts.store', 'method'=>'POST'])!!}
+          {!! Form::model($provider,['route'=>['providersproducts.storeProducts',$provider->id], 'method'=>'POST'])!!}
           <section>
               
               <div>
@@ -21,16 +21,12 @@
                        
                       <div class="col-md-3" >
                            
-                           {!!Field::text('cuit',null)!!}
+                           {!!Field::text('cuit',$provider->cuit,['disabled'])!!}
                        </div>
-                       <div class="pull-left">
-                       <br>
-                            <button type="button" class="btn btn-primary " data-toggle="modal" id="second" data-title="Buscar" title="ver proveedores" data-target="#favoritesModalClient"><i class="fa fa-search"></i></button>
-                            @include('partials.searchPeople')
-                      </div>
+                      
                       <div class="col-md-6  col-md-offset-2">
-                            <input id="provider_id" name="provider_id" class="form-control" type="hidden" >
-                            {!!Field::text('nombre',null,['disabled'])!!}
+                            
+                            {!!Field::text('nombre',$provider->name,['disabled'])!!}
                       </div>
                 </div>
 
@@ -71,7 +67,7 @@
 
                       <div class="form-group text-center">
                         {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
-                        <a class="btn btn-danger" href="{{ route('providersproducts.create') }}">Cancelar</a>
+                        <a class="btn btn-danger" href="{{ route('providers.index') }}">Cancelar</a>
                       </div>
             
               </div>
@@ -90,7 +86,7 @@
     </div>
   </div>
 
- @include('partials.searchProductsPurchase')
+ @include('partials.searchProductsProvider')
 
 @endsection
 
@@ -103,48 +99,25 @@
 @section('js')
 <script>
   var cont=0;
-  var products=[];
+
   function add_product($id,$code,$prod_name,$brand_name){
     code=$code;
     product_id=$id; 
     prod_name=$prod_name;
-    brand_name=$brand_name;
-     
-
- console.log("entro al metodo");
-  if (product_id != ""){
-    console.log("entro al if");
-
-          var fila='<tr class="selected" id="fila'+cont+'"><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+prod_name+'</td> <td>'+brand_name+'</td><td><button type="button" title="eliminar" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td>  > </tr>';
-          cont++;
-          products.push({ id: product_id,
-                code: code,
-                prod_name: prod_name,
-                cont:cont
-                });
-          clear();
+    brand_name=$brand_name;     
+   
+    var fila='<tr class="selected" id="fila'+cont+'"><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+prod_name+'</td> <td>'+brand_name+'</td><td><button type="button" title="eliminar" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td>  > </tr>';
+       cont++;
+       clear();
         $('#details').append(fila);
-       
 
-  }else{
-       alert("Ya agrego este producto");
-  }
-
-for(var i = products.length -1; i >=0; i--){
- console.log(9878);
-
-  if(products.indexOf(products[i]) !== i) {
-   deletefila(products[i].cont);
-   console.log(products[i].cont);
-    
-}
-}
-
+         
    $('#favoritesModalProduct').modal('hide');
    $('#searchProducts').val('');
 }
 
 function deletefila(index){
+  console.log('#fila'+index);
   $('#fila'+index).remove();
  }
 

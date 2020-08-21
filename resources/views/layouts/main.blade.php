@@ -210,8 +210,7 @@
                   <ul class="treeview-menu">
                 <li class="active"><a href="{{route('clients.index')}}"><i class="fa fa-circle-o"></i>Lista de clientes</a></li>
                 <li class="active"><a href="{{route('providers.index')}}"><i class="fa fa-circle-o"></i> Lista de proveedores</a></li>
-                <li class="active"><a href="{{route('providersproducts.create')}}"><i class="fa fa-circle-o"></i> Proveedores por productos</a></li>
-               <!-- <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
+             
             </ul>
             </li>
             

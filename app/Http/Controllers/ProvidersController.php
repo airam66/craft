@@ -121,4 +121,14 @@ class ProvidersController extends Controller
     {
 
     }
+
+     public function addProducts($id)
+    {   
+      $provider= Provider::find($id);
+
+
+        return view('admin.providers.addProductsProvider')->with('provider',$provider);
+
+
+    }
 }
