@@ -77,12 +77,12 @@ Route::group(['middleware' => 'purchaseUser'],function(){
  //**************************Rutas para proveedores************************************************** 
   Route::resource('providers','ProvidersController');
   Route::get('/listProducts','ProvidersController@listProducts');
-  Route::get('/searchProvider','PurchasesController@searchProvider');
-  Route::get('/searchProducts','PurchasesController@searchProducts');
-  Route::resource('providersproducts','ProvidersProductsController');
+  Route::get('/searchProdName','ProvidersProductsController@searchProdName');
+  Route::get('/searchProdLetter','ProvidersProductsController@searchProdLetter');
   Route::get('providers/{id}/desable','ProvidersController@desable')->name('providers.desable');
   Route::get('providers/{id}/enable','ProvidersController@enable')->name('providers.enable');
-
+  Route::get('providers/{id}/addProducts','ProvidersController@addProducts')->name('providers.addProducts');
+  Route::post('providersproducts/{provider}/storeProducts','ProvidersProductsController@storeProducts')->name('providersproducts.storeProducts');
 
   //**************************** Rutas para compras**************************************************
   Route::resource('purchases','PurchasesController');
@@ -91,6 +91,7 @@ Route::group(['middleware' => 'purchaseUser'],function(){
   Route::get('/searchProducts','PurchasesController@searchProducts');
    Route::get('/searchLetter','PurchasesController@searchLetter');
   Route::get('/autocompleteProvider', 'PurchasesController@autocompleteProvider')->name('autocompleteProvider');
+  Route::get('/autocompleteProdProvider', 'PurchasesController@autocompleteProdProvider')->name('autocompleteProdProvider');
   Route::get('/purchases/{id}/desable','PurchasesController@desable')->name('purchases.desable');
       
   Route::get('/purchases/{id}/detailPurchaseOrder','PurchasesController@detailPurchaseOrder')->name('purchases.detailPurchaseOrder');

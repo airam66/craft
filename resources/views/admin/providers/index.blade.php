@@ -58,12 +58,20 @@
                       
                     
                      @if ($provider->status!='inactivo')
+                        <a href="{{route('providers.addProducts',$provider->id)}}" title="agregar productos" >
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-barcode"></i>
+                                
+                            </button>
+                        </a> 
                        <a href="{{route('providers.edit',$provider->id)}}"  >
                             <button type="submit" class="btn btn-warning">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                                 
                             </button>
-                        </a>  
+                        </a> 
+
+                        
 
                         <a href="{{route('providers.desable',$provider->id)}}" onclick="return confirm('¿Seguro dará de baja este proveedor?')">
                             <button type="submit" class="btn btn-danger">

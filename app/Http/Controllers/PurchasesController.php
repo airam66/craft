@@ -73,9 +73,7 @@ class PurchasesController extends Controller
             if ($purchase->total>0){
                  $purchase->save();
             }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'danger')->important();
-            }
+            
 
 
             //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE ordencompra//++++++++++++++++++
@@ -85,6 +83,8 @@ class PurchasesController extends Controller
             $price = $request->get('dprice');
 
             $cont =0;
+
+            if($idarticulo != null){
 
             while ( $cont <  count($idarticulo) ) {
                 //dd($cont);
@@ -105,10 +105,14 @@ class PurchasesController extends Controller
                 $cont = $cont+1;
 
             }
+          }else{
+            flash("Debe agregar por lo menos un producto ", 'danger')->important();
+              return redirect()->route('purchases.create');
+          }
 
 
 
-
+           flash("La orden de compra ha sido creada con exito" , 'success')->important();
             return redirect()->route('purchases.index');
     }
 
@@ -196,7 +200,7 @@ class PurchasesController extends Controller
               ->select('code','p.id as product_id','p.name as product_name','purchase_price','b.name as brand_name','stock','p.status','b.name')
               ->where('p.name','LIKE', "%".$request->searchProducts."%")
               ->where('p.status','=','activo')
-              ->where('b.name',"<>","CREATÚ")
+              ->where('b.name',"<>","CreaTu")
               ->where('pp.provider_id','=',$request->provider_id)->get();
         
         $result=popUpProductsPurchases($products);
@@ -217,7 +221,7 @@ class PurchasesController extends Controller
               ->select('code','p.id as product_id','p.name as product_name','purchase_price','b.name as brand_name','stock','p.status','b.name')
               ->where('p.name','LIKE', $request->searchL."%")
               ->where('p.status','=','activo')
-              ->where('b.name',"<>","CREATÚ")
+              ->where('b.name',"<>","CreaTu")
               ->where('pp.provider_id','=',$request->provider_id)->get();
          
          $result=popUpProductsPurchases($products);
@@ -264,7 +268,7 @@ public function detailPurchaseOrder($id){
       $details= DB::table('purchases_products as dp')
       ->join('products as p','dp.product_id','=','p.id')
       ->join('brands as b','b.id','=','p.brand_id')
-      ->select('p.id','p.name as product_name','b.name as brand_name','dp.price','dp.amount','dp.subTotal')
+      ->select('p.id','p.name as product_name','b.name as brand_name','dp.price','p.stock','dp.amount','dp.subTotal')
       ->where('dp.purchase_id','=',$id)->get();
 
       return view('admin.purchases.detailPurchase')->with('purchase',$purchase)
@@ -278,10 +282,11 @@ public function detailPurchaseOrder($id){
             return $this->provider->providerByCuit($request->input('p'));
     }
 
-    /* public function autocompleteProduct(Request $request){
-           
-            return $this->provider->productByCodeProvider($request->input('p'),$request->provider_id);
-    }*/
+    public function autocompleteProdProvider(Request $request){
+
+     
+           return $this->provider->productByCodeProvider($request->input('q'),$request->input('p'));
+    }
 
      public function detailPurchase(Request $request){
 
@@ -297,7 +302,7 @@ public function detailPurchaseOrder($id){
               ->join('brands as b','p.brand_id','=','b.id')
               ->select('code','p.id as product_id','p.name as product_name','purchase_price','b.name as brand_name','stock')
               ->where('p.stock','<',10)
-              ->where('b.name',"<>","CREATU")
+              ->where('b.name',"<>","CreaTu")
               ->where('pp.provider_id','=',$request->provider_id)->get();
 
      
@@ -311,6 +316,7 @@ public function detailPurchaseOrder($id){
                         <input readonly type="hidden" name="dproduct_id[]" value="'.$product->product_id.'">'.
                         '<td>'.$product->product_name.'</td>'.
                         '<td>'.$product->brand_name.'</td>'.
+                         '<td>'.$product->stock.'</td>'.
                         '<td>$<input id="dprice'.$cont. '" readonly type="number" name="dprice[]" value="'.$product->purchase_price.'" class="mi_factura"</td>
 
                         <td ><input id="damount'.$cont. '" name="damount[]" type="number" onkeyup="calculateSubtotal('.$cont. ')"></td>'.
