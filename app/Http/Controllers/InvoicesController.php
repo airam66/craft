@@ -62,35 +62,41 @@ class InvoicesController extends Controller
     public function store(Request $request){
             $venta = new Invoice;
             $venta->total=$request->get('Totalventa');
-            $venta->status=$request->get('status');
-            $venta->client_id=$request->get('client_id');
-            if (empty($venta->client_id)){
-              $venta->client_id=1;
-            }
-            $venta->discount=$request->get('discount');
-            if (empty($venta->discount)){
-              $venta->discount=0;
-            }
-            if ($venta->total>0){
-                 $venta->save();
+            if ($venta->total != null) {
+              $venta->status=$request->get('status');
+              $venta->client_id=$request->get('client_id');
+
+              if (empty($venta->client_id)){
+                $venta->client_id=1;
+              }
+              $venta->discount=$request->get('discount');
+
+              if (empty($venta->discount)){
+                $venta->discount=0;
+              }
+
+              if (!empty($venta->total) and ($venta->total>0)){
+                 $venta->save(); var_dump('ola');
                  $income=new Movement();
                  $income->concept="Venta N° ".$venta->id;
                  $income->type="entrada";
                  $income->rode=$venta->total;
                  $income->save();
-            }
-            else{
+              }
+              else{
+
                   flash("Debe ingresar al menos un producto" , 'danger')->important();
-            }
-           
-            //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE VENTA//++++++++++++++
-            $idarticulo = $request->get('dproduct_id');
-            $amount = $request->get('damount');
-            $price = $request->get('dprice');
+                  return redirect()->route('invoices.create');
+              }
 
-            $cont = 0;
+              //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE VENTA//++++++++++++++
+              $idarticulo = $request->get('dproduct_id');
+              $amount = $request->get('damount');
+              $price = $request->get('dprice');
 
-            while ( $cont < count($idarticulo) ) {
+              $cont = 0;
+
+              while ( $cont < count($idarticulo) ) {
                 $detalle = new InvoiceProduct();
                 $detalle->invoice_id=$venta->id; //le asignamos el id de la venta a la que pertenece el detalle
                 $detalle->product_id=$idarticulo[$cont];
@@ -100,9 +106,22 @@ class InvoicesController extends Controller
                 $detalle->save();
                 $cont = $cont+1;
 
-            }
+              }
+              flash("La venta ha sido realizada con éxito" , 'success')->important();
+              return redirect()->route('invoices.index');
 
-            return redirect()->route('invoices.index',$venta->id);
+              
+            } else {
+              flash("Debe agregar por lo menos un producto." , 'danger')->important();
+                return redirect()->route('invoices.create');
+            }
+            
+            
+           
+             
+            
+           
+            
 
     }
 
