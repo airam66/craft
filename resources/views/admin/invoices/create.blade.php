@@ -158,8 +158,10 @@
                       {!! Form::hidden('status','activo',['class'=>'form-control'])!!} 
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group text-center">
                         {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                        <a class="btn btn-danger" href="{{ route('invoices.index') }}">Cancelar</a>
+
                        </div>
                   </div>
                 </div>
