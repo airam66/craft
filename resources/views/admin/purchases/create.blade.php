@@ -50,7 +50,7 @@
               </div>
               <hr>
            
-           <!--busqueda prorducto-->
+           <!--busqueda producto-->
               <div class="borde">
                   <p class="text-aqua">Para agregar productos primero debe seleccionar un proveedor</p>
                   <h3>Producto</h3>

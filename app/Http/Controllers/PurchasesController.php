@@ -97,7 +97,7 @@ class PurchasesController extends Controller
 
                 if ($purchase->total>0){
                    $product=Product::find($detalle->product_id);
-                   $product->stock = $product->stock+$detalle->amount;
+                   //$product->stock = $product->stock+$detalle->amount;
                    $product->save();
                    $detalle->save(); 
                 }
