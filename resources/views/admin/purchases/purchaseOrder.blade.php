@@ -13,11 +13,11 @@
       <div id="logo">
         <img src="{{ asset('images/cotillon.png ') }}" >
       </div>
-      <h1>Orden de compra N° {{$purchase->id}}</h1>
+      <h1>ORDEN DE COMPRA TENTATIVA N°{{$purchase->id}}</h1>
       
     </header>
       
-      <h2>Proveedor: {{$purchase->provider->name}} </h2>
+      <h3 class="title">Proveedor: {{$purchase->provider->name}} </h3>
   
       <p><h4>Dirección: {{$purchase->provider->address}} -- Localidad: {{$purchase->provider->location}}  --   Provincia: {{$purchase->provider->province}} -- Teléfono: {{$purchase->provider->phone}}</h4></p>
        
@@ -28,7 +28,7 @@
                <tr>
                 <th>Producto</th>
                 <th>Marca</th>
-                <th>Precio de Compra</th>
+                <th>Precio Estimado</th>
                 <th>Cantidad</th>
                 <th>Subtotal Estimado</th>
                 </tr>
@@ -56,11 +56,7 @@
                  <h3>Total estimado: ${{$purchase->total}} </h3>
               </div>
             </main>
-           
-
-    <footer>
-    
-    </footer>
+          
     
   </body>
 </html>

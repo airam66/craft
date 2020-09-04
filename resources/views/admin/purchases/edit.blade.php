@@ -10,7 +10,7 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Editar Orden de Compra</h3>
+            <h3 class="box-title">EDITAR ORDEN DE COMPRA</h3>
          </div>
       <div class="box-body">
           {!! Form::model($purchase,['route'=>['purchases.update',$purchase->id], 'method'=>'PATCH', 'files'=>true])!!}
@@ -48,11 +48,13 @@
               </div>
               <hr>
 
-              <div class="panel-body borde"><!--busqueda prorducto-->
+              <!--busqueda producto-->
+              <div class="borde">
+                  <p class="text-aqua">Para agregar productos primero debe seleccionar un proveedor</p>
                   <h3>Producto</h3>
                 <div class="row " >
                     <div class="col-md-3 pull-left" >
-                         {!! form::label('Codigo')!!}
+                         {!! form::label('Código')!!}
                          <input id="code" class="form-control" name="code" type="text" >
                          <input id="product_id" class="form-control " name="product_id" type="hidden" >
                     </div> 
@@ -62,29 +64,32 @@
                           <i class="fa fa-search"></i>
                        </button>
                    </div>
+
+                    <div class="col-md-2 pull-right ">
+                       {!!Field::number('stock',null,['disabled'])!!}    
+                    </div>
                    
-                   <div class="col-md-2 col-md-offset-2">
-                       {!!Field::number('purchase_price',null, ['step'=>'any','disabled'])!!} 
+                   <div class="col-md-2 pull-right">
+                       {!!Field::number('purchase_price',null,['disabled'])!!} 
  
                     </div>
-                     <div class="col-md-2">
+                     <div class="col-md-2 pull-right">
                         {!! form::label('Cantidad')!!}
                         <input class="form-control" id="amount" name="amount" type="number" 
                         onkeyup="">
                       </div>                    
                  </div>
                  <div class="row " >
-                    <div class="col-md-4 pull-left ">
+                    <div class="col-md-6 pull-left ">
                          {!!Field::text('name',null,['disabled'])!!}
                     </div>
+                     <div class="col-md-4 pull-left ">
+                       {!!Field::text('brand',null,['disabled'])!!}
+                     </div>
                      
-                    <div class="col-md-4  col-md-offset-1 ">
-                         {!!Field::text('brand',null,['disabled'])!!}
-                    </div>
-
-
-                    <div class="col-md-2 col-md-offset-1">
-                      <button type="button" id="btn_add"  class="btn pull-right">
+       
+                    <div class="col-md-2 pull-right">
+                      <button type="button" id="btn_add" class="btn pull-right" title="agregar producto">
                       <img src="{{ asset('images/images.png ') }}" width="50" height="50">
                       </button>
                     </div>
@@ -148,13 +153,17 @@
         
               <div class="row no-print">
                   <div class="col-xs-12">
-                        <div class="form-group">
+                      
+
+                      <div class="form-group text-center">
                         {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+                         <a class="btn btn-danger" href="{{ route('purchases.index') }}">Cancelar</a>
                        </div>
                   </div>
                 </div>
-              </section><!-- /.content -->
+             
               {!! Form::close() !!}
+              </section><!-- /.content -->
              </div>
  
           </div>
@@ -165,103 +174,17 @@
     </div>
   </div>
 
- @include('partials.searchProductsPurchase')
+  @include('partials.searchProductsPurchase')
 
 
 @endsection
 
+@push('scripts')
+
+<script src="{{asset('js/completeProducts.js')}}"></script>
+@endpush
+
 @section('js')
-
-
-<script>
-
-  var options={
-    url: function(p){
-      return baseUrl('admin/autocompleteProvider?p='+p);
-         }, getValue:'cuit',
-            list: {
-                    match: {
-                        enabled: true
-                    },
-                    onClickEvent: function () { 
-                        var provider = $('#cuit').getSelectedItemData();
-                        $('#nombre').val(provider.name);
-                        $('#provider_id').val(provider.id);
-                      
-                       $providerid=$('#provider_id').val();
-                       $.ajax({
-                        type: 'get',
-                        url:  "{{ URL::to('admin/detailPurchase')}}",
-                        data:{'provider_id':$providerid},
-                        success: function(data){
-                            $('#detail').html(data);
-    
-                        }
-                       })
-
-                    },
-                    onKeyEnterEvent: function () { 
-                        var provider = $('#cuit').getSelectedItemData();
-                        $('#nombre').val(provider.name);
-                        $('#provider_id').val(provider.id);
-
-                        $providerid=$('#provider_id').val();
-                       $.ajax({
-                        type: 'get',
-                        url:  "{{ URL::to('admin/detailPurchase')}}",
-                        data:{'provider_id':$providerid},
-                        success: function(data){
-                          $('#detail').html(data);
-                         }
-                       })
-                    }
-                }
-   };
-  
-  $("#cuit").easyAutocomplete(options);
-
-
-</script>
-<script type="text/javascript">
-  function completeC($id,$cuit,$name){
-    $('#cuit').val($cuit);
-    $('#nombre').val($name);
-    $('#provider_id').val($id);
-    $('#favoritesModalProvider').modal('hide');
-  };
-</script>
-
-
-<script >
-  function complete($id,$code,$brand,$name,$purchase,$stock){
-    $('#code').val($code);
-    $('#brand').val($brand);
-    $('#product_id').val($id);
-    $('#name').val($name);
-    $('#purchase_price').val($purchase);
-    $('#favoritesModalProduct').modal('hide');
-   $('#mostrar').html('');
-  };
-</script>
-
-<script>
-$('#searchProducts').on('keyup', function(){
-  $value=$(this).val();
-
-  $providerid=$('#provider_id').val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProducts')}}",
-    data:{'searchProducts':$value,'provider_id':$providerid},
-    success: function(data){
-     
-      $('#mostrar').html(data);
-    }
-    
-  })
-})
-</script>
-
 
 <script>
     $('#btn_add').on('click',function(){

@@ -3,7 +3,6 @@
     =============================================*/
 
 // autocompletado de producto por proveedor
-
 var options={
     url: function(q){
        $providerid=$('#provider_id').val();
@@ -59,7 +58,6 @@ function complete($id,$code,$brand,$name,$purchase,$stock){
   $('#searchProducts').on('keyup', function(){
   $value=$(this).val();
   $providerid=$('#provider_id').val();
-  console.log($providerid);
   $url=baseUrl('admin/searchProducts');
   $.ajax({
     type: 'get',
