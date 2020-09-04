@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Editar cliente</h3>
+            <h3 class="box-title">EDITAR CLIENTE</h3>
           </div>
           <div class="box-body">
             
@@ -32,8 +32,9 @@
               </div>
               {!! Form::hidden('bill',0)!!}
 
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('clients.index') }}">Cancelar</a>
               </div>
           
  
