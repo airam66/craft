@@ -31,7 +31,7 @@ class ClientsController extends Controller
     public function store(ClientRequest $request)
     {
         $clients= new Client($request->all());
-    	
+    	$clients->name = mb_strtoupper($clients->name);
         $clients->save();
 
         flash("El cliente ". $clients->name . " ha sido registrado con exito" , 'success')->important();
