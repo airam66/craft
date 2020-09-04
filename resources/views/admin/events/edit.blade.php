@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Editar Evento</h3>
+            <h3 class="box-title">EDITAR EVENTO</h3>
           
           </div>
           <div class="box-body">
@@ -22,6 +22,8 @@
 
               <div class="form-group">
               {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('events.index') }}">Cancelar</a>
+
               </div>
           
  
