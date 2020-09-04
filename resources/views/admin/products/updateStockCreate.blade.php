@@ -19,14 +19,14 @@
            <div class="panel-body borde"><!--busqueda prorducto-->
                   <h3>Producto</h3>
                 <div class="row " >
-                    <div class="col-md-3 pull-left" >
+                    <div class="col-md-2 pull-left" style="padding-right: 0px;"  >
                          {!! form::label('Codigo')!!}
                          <input id="code" class="form-control" name="code" type="text" >
                          <input id="product_id" class="form-control " name="product_id" type="hidden" >
                     </div> 
                     <div class="pull-left">
                     <br>
-                       <button type="button" class="btn btn-primary pull-left" data-toggle="modal" id="first" data-title="Buscar" data-target="#favoritesModalProduct">
+                       <button type="button" class="btn btn-primary pull-left" data-toggle="modal" id="first" data-title="Buscar" data-target="#favoritesModalProduct" style="margin-top: 6px;">
                           <i class="fa fa-search"></i>
                        </button>
                    </div>
@@ -42,11 +42,14 @@
                       </div> 
                                         
                  </div>
-                 
-              </div>
-              <div class="form-group pull-right">
+
+                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Guardar" id="btn_add">
               </div>
+
+                 
+              </div>
+              
              
              
               </section><!-- /.content -->
