@@ -18,16 +18,16 @@
               {!! Field::text('name')!!}
 
               {!! Field::text('cuil')!!}
-              <div class="col-md-6">
+              <div class="col-md-6 mov-left">
               {!! Field::text('address')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-right">
               {!! Field:: text('location')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-left">
               {!! Field::text('email')!!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mov-right">
               {!! Field::number('phone')!!}
               </div>
               {!! Form::hidden('bill',0)!!}

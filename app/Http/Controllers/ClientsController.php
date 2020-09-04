@@ -62,6 +62,7 @@ class ClientsController extends Controller
 
          $client=Client::find($id);
          $client->fill($request->all());
+         $client->name = mb_strtoupper($client->name);
          $client->save();
         flash("El cliente ". $client->name . " ha sido modificado con éxito" , 'success')->important();
      
