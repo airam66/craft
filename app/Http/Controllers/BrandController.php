@@ -29,6 +29,7 @@ class BrandController extends Controller
    public function store(BrandRequest $request)
     {
        $brand= new Brand($request->all());
+       $brand->name = mb_strtoupper($brand->name);
        $brand->save();
        flash("La marca  ". $brand->name . " ha sido creada con exito" , 'success')->important();
      
@@ -57,6 +58,7 @@ class BrandController extends Controller
 
      $brand=Brand::find($id);
      $brand->fill($request->all());
+     $brand->name = mb_strtoupper($brand->name);
      $brand->save();
     flash("La marca  ". $brand->name . " ha sido modificada con éxito" , 'success')->important();
     

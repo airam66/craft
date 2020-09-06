@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Editar línea</h3>
+            <h3 class="box-title">EDITAR LÍEAS</h3>
           </div>
           <div class="box-body">
             
@@ -19,8 +19,9 @@
               {!! Field::text('name',null, ['class'=>'form-control'])!!}
              </div>
 
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('lines.index') }}">Cancelar</a>
               </div>
           
  

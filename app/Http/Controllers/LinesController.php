@@ -34,6 +34,7 @@ class LinesController extends Controller
     {
     	
        $line= new Line($request->all());
+       $line->name = mb_strtoupper($line->name);
        $line->save();
        flash("La linea ". $line->name . " ha sido creada con exito" , 'success')->important();
        
@@ -58,11 +59,9 @@ class LinesController extends Controller
     public function update(Request $request, $id)
     {
          $line=Line::find($id);
-
-        $line->fill($request->all());
-             
-
-        $line->save();
+         $line->fill($request->all());
+         $line->name = mb_strtoupper($line->name);
+         $line->save();
         flash("La linea ". $line->name . " ha sido modificada con exito" , 'success')->important();
      
 
