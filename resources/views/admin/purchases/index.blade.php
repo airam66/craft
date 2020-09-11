@@ -83,7 +83,7 @@
                        </button></a>
                          
                          <a href="{{route('purchasesInvoice.loadOrder',$purchase->id)}}"  >
-                                <button type="submit" class="btn btn-primary" title="Registrar compra">
+                                <button type="submit" class="btn btn-success" title="Registrar compra">
                                     Registrar Compra
                             
                                 </button>
@@ -102,12 +102,7 @@
                           </button>
                          </a>
                         
-  
-
-                        
-
-
-                         
+                
                   </td>
                   </tr>
 

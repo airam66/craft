@@ -96,24 +96,20 @@ class PurchasesController extends Controller
                 $detalle->subTotal=$amount[$cont]*$price[$cont];
 
                 if ($purchase->total>0){
-                   $product=Product::find($detalle->product_id);
+                   //$product=Product::find($detalle->product_id);
                    //$product->stock = $product->stock+$detalle->amount;
-                   $product->save();
+                  // $product->save();
                    $detalle->save(); 
                 }
                                
                 $cont = $cont+1;
 
             }
-          }else{
-            flash("Debe agregar por lo menos un producto ", 'danger')->important();
-              return redirect()->route('purchases.create');
-          }
-
-
-
-           flash("La orden de compra ha sido creada con exito" , 'success')->important();
+          
+            flash("La orden de compra ha sido creada con exito" , 'success')->important();
             return redirect()->route('purchases.index');
+          }
+           
     }
 
 
@@ -146,19 +142,18 @@ class PurchasesController extends Controller
       $purchase->total=$request->get('TotalCompra'); 
 
       if ($purchase->total>0){
-                 $purchase->save();
-            }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'success')->important();
-            }
+            $purchase->save();
+        }
+            
       DB::table('purchases_products')->where('purchase_id','=',$id)->delete();
       $idarticulo = $request->get('dproduct_id');
             $amount = $request->get('damount');
             $price = $request->get('dprice');
 
              $cont =0;
-
-            while ( $cont <  count($idarticulo) ) {
+          
+           if($idarticulo != null){
+             while ( $cont <  count($idarticulo) ) {
                 //dd($cont);
                 $detalle = new PurchaseProduct();
                 $detalle->purchase_id=$purchase->id; //le asignamos el id de la venta a la que pertenece el detalle
@@ -174,14 +169,12 @@ class PurchasesController extends Controller
                 $cont = $cont+1;
 
             }
-
-    
-        flash("La orden de compra N° ". $purchase->id . " ha sido modificada con exito" , 'success')->important();
+            
+            flash("La orden de compra ha sido modificada con exito" , 'success')->important();
      
-
-       return redirect()->route('purchases.index');
-
-
+            return redirect()->route('purchases.index');
+           }   
+ 
     }
 
 

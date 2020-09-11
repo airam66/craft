@@ -10,9 +10,8 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Factura  de Compra</h3>
-         <!-- <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>-->
-           
+            <h3 class="box-title">FACTURA DE COMPRA</h3>
+     
          </div>
           <div class="box-body">
           <section class="invoice">
@@ -23,7 +22,7 @@
                         <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
                      
                       <div class="pull-right">
-                         <b id="id">Factura N°: {{$purchasesInvoice->pi_id}}</b><br><br>
+                         <b id="id">Factura N°: {{$purchasesInvoice->number_invoice}}</b><br><br>
 
                          
                          <b>Fecha: {{$purchasesInvoice->created_at->format('d-m-Y')}}</b>
@@ -39,19 +38,17 @@
            
                 
                 <div class="row ">
-                         <div class="col-md-6 " >
+                      <div class="col-md-6 " >
                            
-                        <h4><strong>Proveedor: </strong> {{$purchasesInvoice->provider->name}}</h4>
+                         <h4><strong>Proveedor: </strong> {{$purchasesInvoice->provider->name}}</h4>
 
                            
-                         </div>
+                      </div>
                        
                       <div class="col-md-4  col-md-offset-2 pull-right">
-                            
-                           
-                             <h4><strong>Cuit: </strong> {{$purchasesInvoice->provider->cuit}} </h4>
-
-                            
+   
+                         <h4><strong>Cuit: </strong> {{$purchasesInvoice->provider->cuit}} </h4>
+  
                       </div>
              
           
@@ -112,17 +109,17 @@
                 <div class="row no-print">
                   <div class="col-xs-12">
 
-                      <div class="form-group">
-                       <!--Boton generar PDF-->
+                      <div class="form-group text-center">
                         
                         <!--Boton generar Editar-->
                          <a href="{{route('purchasesInvoice.edit',$purchasesInvoice->id)}}" >
 
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" title="Editar" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                             
                                 </button>
                         </a>
+                        <a class="btn btn-primary" title="Volver" href="{{ route('purchasesInvoice.index') }}">Volver</a>
                        </div>
                   </div>
                 </div>

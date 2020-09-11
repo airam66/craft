@@ -1,5 +1,5 @@
 /*=============================================
-    para la vista nueva orden de compra
+    para la vista nueva orden de compra y nueva factura de compra
     =============================================*/
 
 // autocompletado de producto por proveedor
@@ -25,7 +25,7 @@ var options={
                     onKeyEnterEvent: function () { 
                         var product = $("#code").getSelectedItemData();
                           $('#stock').val(product.stock);
-                          $('#product_id').val(product.id);
+                          $('#product_id').val(product.product_id);
                           $('#name').val(product.product_name);
                           $('#purchase_price').val(product.purchase_price);
                           $('#brand').val(product.brand_name);

@@ -1,5 +1,5 @@
 /*=============================================
-    para la vista nueva orden de compra
+    para la vista nueva orden de compra y nueva factura de compra
     =============================================*/
 
 $('#favoritesModalClient').on('shown.bs.modal', function () {

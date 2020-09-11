@@ -46,6 +46,7 @@
     <![endif]-->
     @yield('style')
     <!-- Scripts -->
+  
     <script>
 
         window.Laravel = {!! json_encode([

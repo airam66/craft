@@ -76,6 +76,8 @@ class PurchasesInvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //registrar una nueva FC
     public function store(Request $request)
     {
 
@@ -88,12 +90,12 @@ class PurchasesInvoiceController extends Controller
         
        
 
-        $purchase = new Purchase;
+            $purchase = new Purchase;
             $purchase->total=$request->get('TotalCompra');
             
             $purchase->provider_id=$request->get('provider_id');
             
-            $purchase->number_invoice=$request->get('number_nvoice');
+            $purchase->number_invoice=$request->get('number_invoice');
             $purchase->created_at=date("Y-m-d",strtotime($request->datepicker));
 
              $purchase->status='realizada';
@@ -106,12 +108,8 @@ class PurchasesInvoiceController extends Controller
                  $outcome->rode=$purchase->total;
                  $outcome->save();
             }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'danger')->important();
-            }
 
-
-            //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE ordencompra//++++++++++++++++++
+            //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLE DE FACTURA DE COMPRA//++++++++++++++++++
 
             $idarticulo = $request->get('dproduct_id');
             $amount = $request->get('damount');
@@ -119,10 +117,12 @@ class PurchasesInvoiceController extends Controller
 
             $cont =0;
 
-            while ( $cont <  count($idarticulo) ) {
+           if($idarticulo != null){
+
+             while ( $cont <  count($idarticulo) ) {
                 //dd($cont);
                 $detalle = new PurchaseProduct();
-                $detalle->purchase_id=$purchase->id; //le asignamos el id de la venta a la que pertenece el detalle
+                $detalle->purchase_id=$purchase->id; //le asignamos el id de la compra a la que pertenece el detalle
                 $detalle->product_id=$idarticulo[$cont];
 
                
@@ -141,16 +141,11 @@ class PurchasesInvoiceController extends Controller
                     $product->wholesale_price=$product->purchase_price+(($product->purchase_price*$porcentage->wholesale_porcentage)/100);
                      $product->retail_price=$product->purchase_price+(($product->purchase_price*$porcentage->retail_porcentage)/100);
                    
-
-
-                    
                    }
 
                    $product->stock=$product->stock + $detalle->amount;
                    $product->save();
-
                    $detalle->save();               
-
 
                 }
                                
@@ -158,13 +153,14 @@ class PurchasesInvoiceController extends Controller
 
             }
 
-
-
-
+            flash("La factura de compra ha sido registrada con exito" , 'success')->important();
            return redirect()->route('purchasesInvoice.index');
+
+         }   
+           
     }
     
-
+//registrar FC desde una Orden de compra
     public function storePI(Request $request,$id)
     {
       $this->validate($request,[
@@ -193,15 +189,15 @@ class PurchasesInvoiceController extends Controller
                  $outcome->rode=$purchase->total;
                  $outcome->save();
             }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'success')->important();
-            }
 
             $idprod = $request->get('dproduct_id');
             $amount = $request->get('damount');
             $price = $request->get('dprice');
 
              $cont =0;
+
+
+          if($idprod != null){
 
             while ( $cont <  count($idprod) ) {
                 //dd($cont);
@@ -222,9 +218,7 @@ class PurchasesInvoiceController extends Controller
                     $porcentage=Porcentage::all()->last();
                     $product->wholesale_price=$product->purchase_price+(($product->purchase_price*$porcentage->wholesale_porcentage)/100);
                      $product->retail_price=$product->purchase_price+(($product->purchase_price*$porcentage->retail_porcentage)/100);
-                   
-                    
-                   }
+                }
 
                    $product->stock=$product->stock + $detail->amount;
                    $product->save();
@@ -237,7 +231,11 @@ class PurchasesInvoiceController extends Controller
                 $cont = $cont+1;
 
             }
+
+            flash("La factura de compra ha sido registrada con éxito" , 'success')->important();
             return redirect()->route('purchasesInvoice.index');
+          }
+          
     }
 
     public function show($id)
@@ -347,114 +345,6 @@ class PurchasesInvoiceController extends Controller
     }
 
 
-    public function completeOrder(Request $request){
-
-       $cont=0;
-    $TotalCompra=0;
-    $Subtotal=[];
-       
-       
-        if($request->ajax()){  
-          
-            $purchase = Purchase::find($request->searchP);
-            $products= DB::table('purchases_products as pp')
-                          ->join('products as p','pp.product_id','=','p.id')
-                          ->join('brands as b','p.brand_id','=','b.id')
-                          ->select('p.id as product_id','p.name as product_name','pp.price','b.name as brand_name','pp.amount','pp.subTotal')
-                          ->where('pp.purchase_id','=',$purchase->id)->get();
-         
-        
-            $comilla="'";
-            if ($purchase){
-               
-                $output='<tr>
-
-                        <td width="20%"><b>CUIT</b><input type="text" id="provider_cuit" name="cuit" value="'.$purchase->provider->cuit.'" class="form-control" disabled></td>
-                        <td><br><button type="button" class="btn btn-primary " data                       
-                        -toggle="modal" id="second" data-title="Buscar" data-target="#favoritesModalClient" disabled><i class="fa fa-search"></i></button></td>
-                        
-                        <td><b>Nombre</b><input type="text" id="provider_name" name="name" value="'.$purchase->provider->name.'" class="form-control" disabled>
-                              <input id="provider_id" name="provider_id" class="form-control" type="hidden" ></td>
-                        </tr>';
-                
-                            
-            return Response($output);
-
-               
-               
-            }
-            else{
-                 $output= '
-                          
-
-                        <tr>
-
-                        <td width="20%"><b>CUIT</b><input type="text" id="provider_cuit" name="cuit" class="form-control"</td>
-                        <td><br><button type="button" class="btn btn-primary " data                       
-                        -toggle="modal" id="second" data-title="Buscar" data-target="#favoritesModalClient"><i class="fa fa-search"></i></button></td>
-                        
-                        <td><b>Nombre</b><input type="text" id="provider_name" name="name"  class="form-control" disabled>
-                              <input id="provider_id" name="provider_id" class="form-control" type="hidden" ></td>
-                        </tr>';
-                
-               
-                return Response($output);
-            }
-        }
-
-
-        
-    }
-
-
-     public function detailPurchase(Request $request){
-
-    $cont=0;
-    $TotalCompra=0;
-    $Subtotal=[];
-
-    if($request->ajax()){
-        $output="";
-        $comilla="'";
-
-        $purchase = Purchase::find($request->searchP);
-        $products= DB::table('purchases_products as pp')
-                          ->join('products as p','pp.product_id','=','p.id')
-                          ->join('brands as b','p.brand_id','=','b.id')
-                          ->select('p.id as product_id','p.name as product_name','pp.price','b.name as brand_name','pp.amount','pp.subTotal')
-                          ->where('pp.purchase_id','=',$purchase->id)->get();
-         
-        
-
-       if ($products) {
-        foreach ($products as $key => $product) {
-       
-                 $Subtotal[$cont]=0;
-                  $output.='
-                       <tr class="selected" id="'.$cont.'">
-                        <td><button type="button" class="btn btn-danger" onclick="deletefila('.$cont.',$('.$comilla.'#dsubTotal'.$cont.''.$comilla.').val())">X</button></td>
-                        <input readonly type="hidden" name="dproduct_id[]" value="'.$product->product_id.'">'.
-                        '<td>'.$product->product_name.'</td>'.
-                        '<td>'.$product->brand_name.'</td>'.
-
-                        '<td>$<input type="number" name="dprice[]" value="'.$product->price.'"</td>
-                        <td><input id="damount" name="damount[]" type="number" value="'.$product->amount.'" onkeyup="$('.$comilla.'#dsubTotal'.$cont.''.$comilla.').val(this.value*'.$product->price.')" onchange="$('.$comilla.'#TotalCompra'.$comilla.').val(parseFloat($('.$comilla.'#TotalCompra'.$comilla.').val())+ parseFloat($('.$comilla.'#dsubTotal'.$cont.''.$comilla.').val()))"> </td>'.
-                        '<td>$<input readonly id="dsubTotal'.$cont.'" name="dsubtTotal" class="mi_factura" type="number" value="'.$product->subTotal.'"  ></td>'
-
-                    .'</tr>';
-                     $cont++;
-                    
-        }
-
-
    
-        return Response($output);
-          
-       } 
-
-   
-    }
-    }
-
 
 }
