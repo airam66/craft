@@ -36,7 +36,7 @@ class EventController extends Controller
     {
 
        $event= new Event($request->all());
-       $event->name=strtoupper($event->name);
+       $event->name = mb_strtoupper($event->name);
        $event->save();
        flash("El evento  ". $event->name . " ha sido creado con éxito" , 'success')->important();
      
@@ -70,7 +70,7 @@ class EventController extends Controller
     public function update(Request $request,$id){
       $event=Event::find($id);
       $event->fill($request->all());
-      $event->name=strtoupper($event->name);
+      $event->name = mb_strtoupper($event->name);
       $event->save();
       
       flash("El evento  ". $event->name . " ha sido modificado con éxito" , 'success')->important();
