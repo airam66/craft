@@ -46,7 +46,7 @@
 		          @if ($client->status!='inactivo')
 		            <tr role="row" class="odd">
 		          @else
-		            <tr role="row" class="odd" style="background-color: rgb(255,96,96);">
+		            <tr role="row" class="odd" style="background-color: rgb(247, 212, 212);">
 		          @endif
 		            
 		            <td>{{$client->name}}</td>
