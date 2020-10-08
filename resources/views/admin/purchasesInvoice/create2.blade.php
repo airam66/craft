@@ -74,7 +74,7 @@
                   <h3>Producto</h3>
                 <div class="row " >
                     <div class="col-md-3 pull-left" >
-                         {!! form::label('Codigo')!!}
+                         {!! form::label('Código')!!}
                          <input id="code" class="form-control" name="code" type="text" >
                          <input id="product_id" class="form-control " name="product_id" type="hidden" >
                     </div> 
@@ -97,11 +97,11 @@
                       </div>                    
                  </div>
                  <div class="row " >
-                    <div class="col-md-6 pull-left ">
+                    <div class="col-md-6 pull-left">
                          {!!Field::text('name',null,['disabled'])!!}
                     </div>
                      
-                    <div class="col-md-4  pull-left ">
+                    <div class="col-md-4  pull-left">
                          {!!Field::text('brand',null,['disabled'])!!}
                     </div>
 
@@ -277,7 +277,7 @@ function deletefila(index,subTotal){
 
  //verificar que se haya agregado por lo menos un producto
   function verifyProducts(){
-    console.log("hola");
+   
   if ($('#TotalCompra').val()==0.00) {
     alert("Debe agregar por lo menos un producto");
     event.preventDefault();

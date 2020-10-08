@@ -10,32 +10,23 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">FACTURA DE COMPRA</h3>
+            <h3 class="box-title"> VER FACTURA DE COMPRA</h3>
      
          </div>
           <div class="box-body">
           <section class="invoice">
                 <!-- title row -->
                 <div class="row">
-                  <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b id="id">Factura N°: {{$purchasesInvoice->number_invoice}}</b><br><br>
-
-                         
-                         <b>Fecha: {{$purchasesInvoice->created_at->format('d-m-Y')}}</b>
-
+                 
+                      <div class=" col-md-6  pull-left">
+                          <h3 style="color:gray;font-size: 22px;"><b id="id">Factura N°: {{$purchasesInvoice->number_invoice}}</b><br></h3>
                       </div>
-                      
-                    </h3>
-                  </div><!-- /.col -->
+                      <div class="col-md-4  col-md-offset-2 pull-right">
+                        <h3 style="color:gray;font-size: 22px;"><b>Fecha: {{$purchasesInvoice->created_at->format('d-m-Y')}}</b></h3>
+                      </div>
+  
                 </div>
-              <div class="row">
-               <!-- info row -->
-             
-           
+                  
                 
                 <div class="row ">
                       <div class="col-md-6 " >
@@ -109,14 +100,13 @@
                 <div class="row no-print">
                   <div class="col-xs-12">
 
-                      <div class="form-group text-center">
+                      <div class="form-group">
                         
                         <!--Boton generar Editar-->
                          <a href="{{route('purchasesInvoice.edit',$purchasesInvoice->id)}}" >
 
                                 <button type="submit" title="Editar" class="btn btn-warning">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
-                            
+                                    Editar                            
                                 </button>
                         </a>
                         <a class="btn btn-primary" title="Volver" href="{{ route('purchasesInvoice.index') }}">Volver</a>

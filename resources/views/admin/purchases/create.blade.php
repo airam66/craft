@@ -19,13 +19,13 @@
                   <div class="col-xs-12">
                     
                       <div class="pull-left">
-                         <h3  style="color:gray;"><b>Orden de Compra N°:{{$numberPurchase}}</b></h3>                       
+                         <h3  style="color:gray;font-size: 22px;"><b>Orden de Compra N°:{{$numberPurchase}}</b></h3>                       
                       </div>
                       <div class="pull-right">
-                       <h3 style="color:gray;"> <b>Fecha: {{$date}}</b></h3>
+                       <h3 style="color:gray;font-size: 22px;"> <b>Fecha: {{$date}}</b></h3>
                       </div>
                       
-                  </div><!-- /.col -->
+                  </div>
               </div>
       
               <div class="border">

@@ -18,16 +18,14 @@
               
 
               <div class="row">
-                  <div class="col-xs-12">
-                    
-                      <div class="pull-left">
-                         <h3  style="color:gray;"><b>Orden de Compra N°:{{$purchase->id}}</b></h3>                       
+                                   
+                      <div class="col-md-3 pull-left">
+                         <h3  style="color:gray; font-size: 22px;"><b>Orden de Compra N°:{{$purchase->id}}</b></h3>                       
                       </div>
-                      <div class="pull-right">
-                       <h3 style="color:gray;"> <b>Fecha: {{$purchase->created_at->format('d-m-Y')}}</b></h3>
+                      <div class="col-md-6 pull-right">
+                       <h3 style="color:gray; font-size: 22px;"> <b>Fecha: {{$purchase->created_at->format('d-m-Y')}}</b></h3>
                       </div>
                       
-                  </div><!-- /.col -->
               </div>
       
               <div class="border">
@@ -211,7 +209,6 @@
          Subtotal[cont]=(amount*price).toFixed(2);
         // console.log(Subtotal[cont]);
          TotalCompra= (parseFloat($('#TotalCompra').val())+parseFloat(Subtotal[cont])).toFixed(2);
-         console.log(TotalCompra);
 
               var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
           cont++;
@@ -221,7 +218,7 @@
 
      
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a comprar");
+        alert("Error al ingresar detalle de la cotización, revise los datos del producto");
   }
 }
 

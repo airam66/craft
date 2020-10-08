@@ -77,10 +77,6 @@
                         <td>{{$purchase->status}}</td>
                         <td>
 
-                       <a href="{{route('purchases.detailPurchaseOrder',$purchase->id)}}" > <button  type="button" class="btn btn-info "  ><span class="fa fa-list" aria-hidden="true" title="Ver detalle" ></span></button></a>
-                       
-                       <a href="{{route('purchases.show',$purchase->id)}}" target="_blank" > <button  type="button" class="btn btn-primary " title="Generar pdf" ><i class=" fa fa-file-pdf-o"></i> 
-                       </button></a>
                          
                          <a href="{{route('purchasesInvoice.loadOrder',$purchase->id)}}"  >
                                 <button type="submit" class="btn btn-success" title="Registrar compra">
@@ -88,6 +84,11 @@
                             
                                 </button>
                         </a>
+
+                        <a href="{{route('purchases.detailPurchaseOrder',$purchase->id)}}" > <button  type="button" class="btn btn-info "  ><span class="fa fa-list" aria-hidden="true" title="Ver detalle" ></span></button></a>
+                       
+                       <a href="{{route('purchases.show',$purchase->id)}}" target="_blank" > <button  type="button" class="btn btn-primary " title="Generar pdf" ><i class=" fa fa-file-pdf-o"></i> 
+                       </button></a>
 
                         <a href="{{route('purchases.edit',$purchase->id)}}"  >
                                 <button type="submit" class="btn btn-warning" title="Editar">

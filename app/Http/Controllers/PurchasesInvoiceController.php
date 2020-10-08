@@ -284,10 +284,8 @@ class PurchasesInvoiceController extends Controller
 
       if ($purchaseInvoice->total>0){
                  $purchaseInvoice->save();
-            }
-      else{
-                  flash("Debe ingresar al menos un producto" , 'success')->important();
-            }
+      }
+      
 
         $purchaseProducts=PurchaseProduct::where('purchase_id','=',$id)->get();
                  foreach ($purchaseProducts as $purchaseProduct) {
@@ -304,6 +302,7 @@ class PurchasesInvoiceController extends Controller
             $price = $request->get('dprice');
 
              $cont =0;
+      if($idarticulo != null){
 
             while ( $cont <  count($idarticulo) ) {
                 //dd($cont);
@@ -326,11 +325,12 @@ class PurchasesInvoiceController extends Controller
 
             }
 
-    
-        flash("La Factura de Compra N° ". $purchaseInvoice->id . " ha sido modificada con exito" , 'success')->important();
-     
+            flash("La factura de compra ha sido modificada con éxito" , 'success')->important();
+            return redirect()->route('purchasesInvoice.index');
+      }
 
-       return redirect()->route('purchasesInvoice.index');
+    
+       
     }
 
     /**

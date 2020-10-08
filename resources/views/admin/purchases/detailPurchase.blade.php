@@ -10,7 +10,7 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Orden de Compra</h3>
+            <h3 class="box-title">VER ORDEN DE COMPRA</h3>
          <!-- <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>-->
            
          </div>
@@ -18,25 +18,25 @@
           <section class="invoice">
                 <!-- title row -->
                 <div class="row">
-                  <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b id="id">Orden de Compra N°: {{$purchase->id}}</b><br><br>
-                         <b>Fecha: {{$purchase->created_at->format('d-m-Y')}}</b>
+                   
+                      <div class="col-md-6 pull-left">
+                         <h3 style="color:gray; font-size: 22px;"><b id="id">Orden de Compra N°: {{$purchase->id}}</b></h3>
+                      </div>
+                      <div class="col-md-4  col-md-offset-2 pull-right">
+                         <h3 style="color:gray; font-size: 22px;"><b>Fecha: {{$purchase->created_at->format('d-m-Y')}}</b></h3>
                       </div>
                       
                     </h3>
-                  </div><!-- /.col -->
+               
                 </div>
-              <div class="row">
-               <!-- info row -->
+           
+
              <h3><b>Proveedor</b></h3>
            
                 
                 <div class="row ">
-                         <div class="col-md-6 " >
+                  
+                         <div class="col-md-6 pull-left" >
                            
                            <h4><strong>Cuit: </strong> {{$purchase->provider->cuit}} </h4>
                            
@@ -45,10 +45,9 @@
                       <div class="col-md-4  col-md-offset-2 pull-right">
                             
                             <h4><strong>Nombre: </strong> {{$purchase->provider->name}}</h4>
-                            
-                            
+      
                       </div>
-             
+                                
           
               </div><!-- /.row -->
               <hr>
@@ -107,20 +106,19 @@
 
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
-                  <div class="col-xs-12">
+                  <div class="col-xs-12 text">
 
                       <div class="form-group">
                        <!--Boton generar PDF-->
                         <a href="{{route('purchases.show',$purchase->id)}}" target="_blank" > 
-                              <button  type="button" class="btn btn-primary "  >
+                              <button  type="button" class="btn btn-primary" title="Generar pdf"  >
                                Generar PDF</button>
                         </a>
                         <!--Boton generar Editar-->
                          <a href="{{route('purchases.edit',$purchase->id)}}"  >
 
-                                <button type="submit" class="btn btn-warning">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
-                            
+                                <button type="submit" class="btn btn-warning" title="Editar">
+                                  Editar
                                 </button>
                         </a>
                        </div>
