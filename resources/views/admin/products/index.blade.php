@@ -77,7 +77,7 @@
             @if($product->extension!=null)
                     
                     <a  data-toggle="modal" id="first" data-title="detail" title="Ver detalle.." data-target="#favoritesModalProduct{{$product->id}}">
-                    <img src="{{asset('images/products/'.$product->extension)}}" width="40" height="40" >
+                    <img src="{{asset('images/products/'.$product->extension)}}" style="cursor:pointer;" width="40" height="40" >
                     </a>
                     
             @endif

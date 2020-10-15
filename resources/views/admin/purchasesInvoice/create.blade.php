@@ -10,25 +10,24 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Registrar Factura de Compra</h3>
+            <h3 class="box-title">REGISTRAR FACTURA DE COMPRA</h3>
          </div>
       <div class="box-body">
 
-          {!! Form::model($purchase,['route'=>['purchasesInvoice.storePI',$purchase->id], 'method'=>'POST', 'files'=>true])!!}
+          {!! Form::model($purchase,['route'=>['purchasesInvoice.storePI',$purchase->id], 'method'=>'POST'])!!}
           <section>
               <div class="row">
                   <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b>Orden de Compra N°:{{$purchase->id}}</b><br><br>
-                         <b>Fecha: {{$purchase->created_at->format('d-m-Y')}}</b>
+                                
+                      <div class="pull-left">
+                         <h3 style="color:gray;"><b>Orden de Compra N°:{{$purchase->id}}</b></h3>
+                         
                       </div>
-                      
-                    </h3>
+
                   </div><!-- /.col -->
               </div>
+              <br>
+
            <div class="border">
                 <div class="row ">
                        
@@ -70,7 +69,7 @@
                            <input id="cuit"  class="form-control mi_factura" value="{{$purchase->provider->cuit}}" type="hidden" >
                        </div>
                        
-                      <div class="col-md-6  col-md-offset-2">
+                      <div class="col-md-6  pull-right">
                             
                             <h4><strong>Nombre: </strong> {{$purchase->provider->name}}</h4>
                             <input id="provider_id" name="provider_id" class="form-control mi_factura" value=" {{$purchase->provider->id}}" type="hidden" >
@@ -81,7 +80,7 @@
               </div>
               <hr>
 
-              <div class="panel-body borde"><!--busqueda prorducto-->
+              <div class="panel-body borde"><!--busqueda producto-->
                   <h3>Producto</h3>
                 <div class="row " >
                     <div class="col-md-3 pull-left" >
@@ -96,30 +95,28 @@
                        </button>
                    </div>
                    
-                   <div class="col-md-2 col-md-offset-2">
-
-                       {!!Field::number('purchase_price',null, ['step'=>'any'])!!} 
-
- 
-                    </div>
-                     <div class="col-md-2">
+                   <div class="col-md-2" style="margin-left: 220px;">
                         {!! form::label('Cantidad')!!}
                         <input class="form-control" id="amount" name="amount" type="number" 
-                        onkeyup="">
+                        onkeyup=""> 
+                    </div>
+                     <div class="col-md-2">
+                       
+                        {!!Field::number('purchase_price',null, ['step'=>'any'])!!} 
                       </div>                    
                  </div>
                  <div class="row " >
-                    <div class="col-md-4 pull-left ">
+                    <div class="col-md-6 pull-left ">
                          {!!Field::text('name',null,['disabled'])!!}
                     </div>
                      
-                    <div class="col-md-4  col-md-offset-1 ">
+                    <div class="col-md-4 pull-left">
                          {!!Field::text('brand',null,['disabled'])!!}
                     </div>
 
 
-                    <div class="col-md-2 col-md-offset-1">
-                      <button type="button" id="btn_add" class="btn pull-right">
+                    <div class="col-md-2 pull-right">
+                      <button type="button" id="btn_add" title="Agregar producto" class="btn pull-right">
                       <img src="{{ asset('images/images.png ') }}" width="50" height="50">
                       </button>
                     </div>
@@ -196,9 +193,9 @@
               <div class="row no-print">
                   <div class="col-xs-12">
 
-                        <div class="form-group">
-
-                        {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                        <div class="form-group text-center">
+                         {!! Form::submit('Guardar',['class'=>'btn btn-primary','onclick'=>'verifyProducts()'])!!}
+                        <a class="btn btn-danger" href="{{ route('purchases.index') }}">Cancelar</a>
                        </div>
                   </div>
                 </div>
@@ -223,38 +220,46 @@
 @section('js')
 
 <script>
+// autocompletado de producto por proveedor
+var options={
+    url: function(q){
+       $providerid=$('#provider_id').val();
+      
+ return  baseUrl('admin/autocompleteProdProvider?q='+q+'&p='+$providerid);
+         }, getValue:"code",
+            list: {
+                    match: {
+                        enabled: true
+                    },
+                    onClickEvent: function () { 
+                        var product = $("#code").getSelectedItemData();
+                          $('#stock').val(product.stock);
+                          $('#product_id').val(product.product_id);
+                          $('#name').val(product.product_name);
+                          $('#purchase_price').val(product.purchase_price);
+                          $('#brand').val(product.brand_name);
+                          $('#amount').focus();
+                    },
+                    onKeyEnterEvent: function () { 
+                        var product = $("#code").getSelectedItemData();
+                          $('#stock').val(product.stock);
+                          $('#product_id').val(product.product_id);
+                          $('#name').val(product.product_name);
+                          $('#purchase_price').val(product.purchase_price);
+                          $('#brand').val(product.brand_name);
+                          $('#amount').focus();
 
-$('#searchP').on('click', function(){
-
-  $value=$('#numberPurchase').val();  
+                    }
+                }
+   };
   
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/completeOrder')}}",
-    data:{'searchP':$value},
-    success: function(data){
-       
-        $('#mostrar').html(data); 
-        detailPurchase($value);
+  $("#code").easyAutocomplete(options);
 
-            
-      }  
-  })
-
-})
+$('#favoritesModalProduct').on('shown.bs.modal', function () {
+  $('#searchProducts').focus();
+});
 
 
-function detailPurchase(value){
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/detailOrder')}}",
-    data:{'searchP':value},
-    success: function(data){
-       
-        $('#detail').html(data);             
-      }  
-  })
-}
 </script>
 
 <script >
@@ -265,30 +270,15 @@ function detailPurchase(value){
     $('#name').val($name);
     $('#purchase_price').val($purchase);
     $('#favoritesModalProduct').modal('hide');
-   $('#mostrar').html('');
+    $('#amount').focus();
+    $('#mostrar').html('');
+    
   };
 </script>
 
-<script>
-$('#searchProducts').on('keyup', function(){
-  $value=$(this).val();
-
-  $providerid=$('#provider_id').val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProducts')}}",
-    data:{'searchProducts':$value,'provider_id':$providerid},
-    success: function(data){
-     
-      $('#mostrar').html(data);
-    }
-    
-  })
-})
-</script>
-
 
 <script>
+//agrega el producto elegido
     $('#btn_add').on('click',function(){
         invoice_detail();
     });
@@ -309,11 +299,11 @@ $('#searchProducts').on('keyup', function(){
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
 
       
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
-         TotalCompra= parseFloat($('#totalCompra').val())+Subtotal[cont];
+         Subtotal[cont]=(amount*price).toFixed(2);
+         TotalCompra= (parseFloat($('#totalCompra').val())+parseFloat(Subtotal[cont])).toFixed(2);
          console.log(TotalCompra);
 
-              var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td> <td><input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>'+Subtotal[cont]+'</td> </tr>';
+              var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
           cont++;
           clear();
         $('#totalCompra').val(TotalCompra);
@@ -321,13 +311,13 @@ $('#searchProducts').on('keyup', function(){
 
      
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
+        alert("Error al ingresar detalle de la cotización, revise los datos del producto ");
   }
 }
 
 function deletefila(index,subTotal){
   console.log(index);
-  TotalCompra= parseFloat($('#totalCompra').val())-subTotal;
+  TotalCompra= (parseFloat($('#totalCompra').val())-subTotal).toFixed(2);
   console.log(subTotal);
   $('#totalCompra').val(TotalCompra);
   $('#'+index).remove();
@@ -348,39 +338,14 @@ function deletefila(index,subTotal){
 
 <script>
   function productStockProvider(){
-     $providerid=$('#provider_id').val();
-                       $.ajax({
-                        type: 'get',
-                        url:  "{{ URL::to('admin/detailPurchase')}}",
-                        data:{'provider_id':$providerid},
-                        success: function(data){
-                            $('#detail').html(data);
-    
-                        }
-                       });
+     
   }
 
 </script>
 
 <script>
-  function SearchLetter($letter){
-  $value=$letter;
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchLetter')}}",
-    data:{'searchL':$value,'provider_id':$providerid},
-    success: function(data){
-      $('#mostrar').html(data);
-    }
-    
-  });
-  }
-</script>
-
-<script>
-  function calculateSubtotal(number){
-
-    
+//calcula el subtotal de los productos agregados en la orden de compra
+  function calculateSubtotal(number){   
     price= $('#dprice'+number).val();
     amount=$('#damount'+number).val();
 
@@ -401,9 +366,17 @@ function deletefila(index,subTotal){
    $('#totalCompra').val(total);
   }
 
+  //verificar que se haya agregado por lo menos un producto
+  function verifyProducts(){
+  if ($('#totalCompra').val()==0.00) {
+    alert("Debe agregar por lo menos un producto");
+    event.preventDefault();
+  }
+}
+
 </script>
 <script>
-
+//elegir fecha
 $('#datepicker').datepicker({
      language: "es",
      autoclose: true,
@@ -413,6 +386,23 @@ $('#datepicker').datepicker({
 </script>
 
 <script>
+//filtros de productos del modal
+
+ $('#searchProducts').on('keyup', function(){
+  $value=$(this).val();
+  $.ajax({
+    type: 'get',
+    url:  "{{ URL::to('admin/searchProducts')}}",
+    data:{'searchProducts':$value,'provider_id':{{$purchase->provider->id}}},
+    success: function(data){
+     
+      $('#mostrar').html(data);
+    }
+    
+  })
+})
+
+
   function SearchLetter($letter){
   $value=$letter;
   $.ajax({
@@ -426,5 +416,6 @@ $('#datepicker').datepicker({
   });
   }
 </script>
+
 
 @endsection

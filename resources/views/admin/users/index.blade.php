@@ -4,13 +4,16 @@
 
 <div class="box box-primary">
 
-<div class="box-header ">
-<h2 class="box-title col-md-5">Listado de Usuarios</h2>
+<div class="box-header">
+<h1 class="box-title">Listado de Usuarios</h1>
+  <div class="row"> 
     
-                   
+         <!--Boton agregar usuario-->
+        <input type ='button' class="btn btn-success col-md-1" style=" margin-top: 10px;margin-bottom: 10px;
+      margin-left: 15px;"  value = 'Agregar' onclick="location.href = '{{ route('users.create') }}'"/>       
         
         <!-- search name form -->
-        <form route='admin.categories.index'  method="GET" class="col-md-3 col-md-offset-4 ">
+        <form route='admin.categories.index'  method="GET" class="col-md-4 col-md-offset-6">
             <div class="input-group">
               <input type="text" name="name" class="form-control" placeholder="Nombre..."> 
               <span class="input-group-btn">
@@ -19,14 +22,13 @@
             </div>
         </form>
           <!-- /.search form -->
-       <!--Boton agregar usuario-->
-        <input type ='button' class="btn btn-success"  value = 'Agregar' onclick="location.href = '{{ route('users.create') }}'"/> 
- 
+      
+    </div>
 
 </div>
-<div class="box-body">              
-  @if($users->isNotEmpty())
- <table id="tabla table-striped" class="display table table-hover" cellspacing="0" width="100%">
+<div class="box-body table-responsive no-padding">              
+
+ <table id="tabla table-striped" class="display table table-hover" cellspacing="0">
        
         <thead>
             <tr>
@@ -41,6 +43,7 @@
      
        
 <tbody>
+  @if($users->isNotEmpty())
    @foreach($users as $user) 
 
             <tr role="row" class="odd">
@@ -48,11 +51,11 @@
             <td>{{$user->email}}</td>
             <td>{{$user->role->name}}</td>
             <td> 
-            @if($user->name_photo!=null)
+            @if($user->photo_name!=null)
                    <div>
                   
                   <a data-toggle="modal" data-target="#favoritesModalUserImage{{$user->id}}">
-                   <img src="{{ asset('images/users/'.$user->name_photo)  }}" width="40" height="40"> 
+                   <img src="{{asset('images/users/'.$user->photo_name)}}" width="40" height="40" style="cursor:pointer;"> 
                    </a>
                    @include('admin.users.imagePopUp')
                    </div>
@@ -73,20 +76,16 @@
           
         </tr>
   @endforeach
+@else
+
+    <tr><td class="text-center" colspan="4">No se encontraron resultados</td></tr>
+
+@endif
    </tbody>
  </table>
  <div class="text-center">
-   {!!$users->render()!!}
+    {!!$users->appends(request()->input())->links()!!}
  </div>
-
-@else
-<div class="alert alert-dismissable alert-warning">
-  <button type="button" class="close" data-dismiss="alert">×</button>
-  <p>No se encontró ningun usuario.</p>
-</div>
-
-@endif
-
 </div>
 
 </div>

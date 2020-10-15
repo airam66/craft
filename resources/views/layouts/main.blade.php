@@ -46,6 +46,7 @@
     <![endif]-->
     @yield('style')
     <!-- Scripts -->
+  
     <script>
 
         window.Laravel = {!! json_encode([
@@ -225,6 +226,8 @@
                  </ul>
             </li>
 
+            @if(Auth::user()->role_id == 1)
+
              <li class="treeview">
               <a href="#">
                  <i class="fa fa-balance-scale"></i>
@@ -234,7 +237,7 @@
                 <li class="active"><a href="{{route('movements.index')}}"><i class="fa fa-circle-o"></i>Lista de Movimientos</a></li>
             </ul>
             </li>
-
+          @endif
             
             <li class="treeview">
               <a href="#">
@@ -250,6 +253,8 @@
 
               </ul>
             </li>
+
+          @if(Auth::user()->role_id == 1)
             <li class="treeview">
               <a href="#">
                  <i class="fa fa-laptop"></i>
@@ -260,6 +265,7 @@
                 <li class="active"><a href="{{route('cotillon.edit',1)}}"><i class="fa fa-circle-o"></i> Datos Generales</a></li>
               </ul>
             </li>
+          @endif
 
           </ul>
         </section>

@@ -105,9 +105,9 @@
                           <th>Eliminar</th>
                           <th>Codigo</th>
                           <th>Producto</th>
-                          <th>Precio</th>
+                          <th>Precio Estimado</th>
                           <th>Cantidad</th>
-                          <th>Subtotal</th>
+                          <th>Subtotal Estimado</th>
                         </tr>
                       </thead>
 

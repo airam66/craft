@@ -4,11 +4,11 @@
       role="dialog" aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header" style="background-color:pink"><b>{{strtoupper($product->name)}}</b>
+      <div class="modal-header" style="background-color:#5cb0c6;">
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
              </button>
-             <h4 class="modal-title" id="favoritesModalLabel"> </h4>
+             <h4 class="modal-title" id="favoritesModalLabel"><b>{{strtoupper($product->name)}}</b></h4>
       </div>
       <div class="modal-body">
          <div>

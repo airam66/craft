@@ -66,8 +66,8 @@
             @if($category->extension!=null)
                    <div>
                   
-                  <a data-toggle="modal" data-target="#favoritesModalCategoryImage{{$category->id}}">
-                   <img src="{{ asset('images/categories/'.$category->extension)  }}" width="40" height="40"> 
+                  <a data-toggle="modal" data-target="#favoritesModalCategoryImage{{$category->id}}" title="Ver imagen">
+                   <img src="{{ asset('images/categories/'.$category->extension)  }}" width="40" height="40" style="cursor: pointer;"> 
                    </a>
                    @include('admin.categories.imagePopUp')
                    </div>

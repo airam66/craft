@@ -11,25 +11,12 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nueva Factura de Compra</h3>
+            <h3 class="box-title">NUEVA FACTURA DE COMPRA</h3>
          </div>
       <div class="box-body">
           {!! Form::open(['route'=>'purchasesInvoice.store', 'method'=>'POST'])!!}
           <section>
-              <div class="row">
-                  <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b>Fecha:{{$date}} </b>
-                      </div>
-                      
-                    </h3>
-                  </div><!-- /.col -->
-              </div>
-
-
+              
               <div class="border">
                 <div class="row ">
                        
@@ -74,7 +61,7 @@
                             <button type="button" class="btn btn-primary " data-toggle="modal" id="second" data-title="Buscar" data-target="#favoritesModalClient"><i class="fa fa-search"></i></button>
                             @include('partials.searchPeople')
                       </div>
-                      <div class="col-md-6  col-md-offset-2">
+                      <div class="col-md-6  pull-right">
                             <input id="provider_id" name="provider_id" class="form-control" type="hidden" >
                             {!!Field::text('nombre',null,['disabled'])!!}
                       </div>
@@ -83,10 +70,11 @@
               <hr>
 
               <div class="panel-body borde"><!--busqueda prorducto-->
+                 <p class="text-aqua">Para agregar productos primero debe seleccionar un proveedor</p>
                   <h3>Producto</h3>
                 <div class="row " >
                     <div class="col-md-3 pull-left" >
-                         {!! form::label('Codigo')!!}
+                         {!! form::label('Código')!!}
                          <input id="code" class="form-control" name="code" type="text" >
                          <input id="product_id" class="form-control " name="product_id" type="hidden" >
                     </div> 
@@ -97,28 +85,29 @@
                        </button>
                    </div>
                    
-                   <div class="col-md-2 col-md-offset-2">
-                       {!!Field::number('purchase_price',null)!!} 
+                   <div class="col-md-2" style="margin-left: 220px;">
+                      {!! form::label('Cantidad')!!}
+                        <input class="form-control" id="amount" name="amount" type="number" 
+                        onkeyup=""> 
  
                     </div>
                      <div class="col-md-2">
-                        {!! form::label('Cantidad')!!}
-                        <input class="form-control" id="amount" name="amount" type="number" 
-                        onkeyup="">
+                        
+                        {!!Field::number('purchase_price',null)!!} 
                       </div>                    
                  </div>
                  <div class="row " >
-                    <div class="col-md-4 pull-left ">
+                    <div class="col-md-6 pull-left">
                          {!!Field::text('name',null,['disabled'])!!}
                     </div>
                      
-                    <div class="col-md-4  col-md-offset-1 ">
+                    <div class="col-md-4  pull-left">
                          {!!Field::text('brand',null,['disabled'])!!}
                     </div>
 
 
-                    <div class="col-md-2 col-md-offset-1">
-                      <button type="button" id="btn_add" class="btn pull-right">
+                    <div class="col-md-2 pull-right">
+                      <button type="button" id="btn_add" title="Agregar producto" class="btn pull-right">
                       <img src="{{ asset('images/images.png ') }}" width="50" height="50">
                       </button>
                     </div>
@@ -170,8 +159,9 @@
                   <div class="col-xs-12">
                       
 
-                      <div class="form-group">
-                        {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                      <div class="form-group text-center">
+                            {!! Form::submit('Guardar',['class'=>'btn btn-primary','onclick'=>'verifyProducts()'])!!}
+                        <a class="btn btn-danger" href="{{ route('purchasesInvoice.index') }}">Cancelar</a>
                        </div>
                   </div>
                 </div>
@@ -190,6 +180,12 @@
  @include('partials.searchProductsPurchase')
 
 @endsection
+
+@push('scripts')
+
+<script src="{{asset('js/completeProvider.js')}}"></script>
+<script src="{{asset('js/completeProducts.js')}}"></script>
+@endpush
 
 @section('js')
 
@@ -223,61 +219,10 @@
 
 
 </script>
-<script type="text/javascript">
-  function completeC($id,$number,$name){
-    $('#cuit').val($number);
-    $('#nombre').val($name);
-    $('#provider_id').val($id);
-    $('#favoritesModalClient').modal('hide');
-  };
-</script>
-
-
-<script >
-  function complete($id,$code,$brand,$name,$purchase,$stock){
-    $('#code').val($code);
-    $('#brand').val($brand);
-    $('#product_id').val($id);
-    $('#name').val($name);
-    $('#purchase_price').val($purchase);
-    $('#favoritesModalProduct').modal('hide');
-   $('#mostrar').html('');
-  };
-</script>
-<script >
-$('#searchC').on('keyup', function(){
-  $value=$(this).val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProvider')}}",
-    data:{'searchProvider':$value},
-    success: function(data){
-      $('#mostrarC').html(data);
-    }
-    
-  })
-})
-
-</script>
-<script>
-$('#searchProducts').on('keyup', function(){
-  $value=$(this).val();
-  $providerid=$('#provider_id').val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProducts')}}",
-    data:{'searchProducts':$value,'provider_id':$providerid},
-    success: function(data){
-      $('#mostrar').html(data);
-    }
-    
-  })
-})
-</script>
-
 
 <script>
     $('#btn_add').on('click',function(){
+      console.log("boton agregar");
         invoice_detail();
     });
 
@@ -297,9 +242,8 @@ $('#searchProducts').on('keyup', function(){
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
 
       
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
-         TotalCompra= parseFloat($('#TotalCompra').val())+Subtotal[cont];
-         console.log(TotalCompra);
+         Subtotal[cont]=(amount*price).toFixed(2);
+         TotalCompra= (parseFloat($('#TotalCompra').val())+parseFloat(Subtotal[cont])).toFixed(2);
 
               var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td><td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$ '+Subtotal[cont]+'</td> </tr>';
           cont++;
@@ -309,14 +253,13 @@ $('#searchProducts').on('keyup', function(){
 
      
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
+        alert("Error al ingresar detalle de la cotización, revise los datos del producto");
   }
 }
 
 function deletefila(index,subTotal){
-  console.log(index);
-  TotalCompra= parseFloat($('#TotalCompra').val())-subTotal;
-  console.log(subTotal);
+
+  TotalCompra= (parseFloat($('#TotalCompra').val())-subTotal).toFixed(2);
   $('#TotalCompra').val(TotalCompra);
   $('#'+index).remove();
  }
@@ -330,10 +273,23 @@ function deletefila(index,subTotal){
     $('#brand').val('');
     $('#amount').val('');
  }
+
+
+ //verificar que se haya agregado por lo menos un producto
+  function verifyProducts(){
+   
+  if ($('#TotalCompra').val()==0.00) {
+    alert("Debe agregar por lo menos un producto");
+    event.preventDefault();
+  }
+
+}
+
 </script>
 
 
 <script>
+
   function productStockProvider(){
      
   }
@@ -348,22 +304,6 @@ $('#datepicker').datepicker({
      format:'yyyy/mm/dd'
     ,
     })
-</script>
-
-<script>
-  function SearchLetter($letter){
-  $value=$letter;
-  $providerid=$('#provider_id').val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchLetter')}}",
-    data:{'searchL':$value,'provider_id':$providerid },
-    success: function(data){
-      $('#mostrar').html(data);
-    }
-    
-  });
-  }
 </script>
 
 @endsection

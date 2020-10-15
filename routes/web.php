@@ -137,6 +137,7 @@ Route::get('/viewReportSales','PdfController@viewReportSales')->name('admin.view
 //*******************Reporte de compras por clientes************************************************
  Route::get('createReportCOrder','PdfController@createReportCOrder')->name('createReportCOrder');
 });
+
 //################################Rutas para el encargado de pedidos#####################################
 Route::group(['middleware' => 'orderUser'],function(){
   //************************************Rutas para Pedidos**********************************
@@ -149,8 +150,12 @@ Route::group(['middleware' => 'orderUser'],function(){
  Route::put('orders/changeStatus/{order}','OrdersController@changeStatus')->name('orders.changeStatus');
  Route::resource('shoppingcarts','ShoppingCartsController',['only'=>['index']]);
  Route::get('shoppingcarts/createOrders/{id}','ShoppingCartsController@createOrders')->name('shoppingcarts.createOrders');
+
+ Route::resource('webUser','UserWebController',['only'=>'index']);
 });
-Route::group(['middleware' => 'orderUser','saleUser'],function(){
+
+//################################Rutas para el encargado de pedidos y el de ventas#####################################
+Route::group(['middleware' => 'saleOrderUser'],function(){
   //para buscar productos
   Route::get('/searchL','InvoicesController@searchL');
   Route::get('/search','InvoicesController@search');
@@ -163,6 +168,7 @@ Route::group(['middleware' => 'orderUser','saleUser'],function(){
   Route::get('/autocomplete', 'InvoicesController@autocomplete')->name('autocomplete');
   Route::get('/autocompleteClient', 'InvoicesController@autocompleteClient')->name('autocompleteClient');
 });
+
 Route::group(['middleware'=>'adminUser'],function(){
    //***************************Rutas para usuarios******************************************
  Route::post('users/store','UsersController@store')->name('users.store');
@@ -181,7 +187,6 @@ Route::group(['middleware'=>'adminUser'],function(){
   //********************MOVIMIENTOS************************************************************
   Route::resource('movements','MovementsController',['only'=>['create','store','index']]);
   
-  Route::resource('webUser','UserWebController',['only'=>'index']);
 
   //------------------------------Reporte de moviemientos-------------------------------------------
 
@@ -189,8 +194,9 @@ Route::group(['middleware'=>'adminUser'],function(){
 
  });
 
-
+//------------------------------Reporte de ventas semanales-------------------------------------------
  Route::get('reportWeeklySales','PdfController@reportWeeklySales')->name('reportWeeklySales');
+
 
 //**********************CALENDARIO DE PEDIDOS***********************************************************
 Route::get('/calendar','CalendarsController@calendar')->name('calendar');

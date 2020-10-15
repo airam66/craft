@@ -14,11 +14,7 @@
       <!-- form busqueda -->
         <form route='admin.brands.index'  method="GET" class="col-md-4 col-md-offset-6 ">
             <div class="input-group">
-              @if($searchName !=null) 
-                  <input type="text" name="name" class="form-control" placeholder="Nombre..." value="{{$searchName}}">
-               @else 
                   <input type="text" name="name" class="form-control" placeholder="Nombre...">
-               @endif 
               
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>

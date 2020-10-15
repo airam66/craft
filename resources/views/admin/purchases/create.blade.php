@@ -17,16 +17,15 @@
           <section class="invoice">
               <div class="row">
                   <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
+                    
+                      <div class="pull-left">
+                         <h3  style="color:gray;font-size: 22px;"><b>Orden de Compra N°:{{$numberPurchase}}</b></h3>                       
+                      </div>
                       <div class="pull-right">
-                         <b>Orden de Compra N°:{{$numberPurchase}}</b><br><br>
-                         <b>Fecha: {{$date}}</b>
+                       <h3 style="color:gray;font-size: 22px;"> <b>Fecha: {{$date}}</b></h3>
                       </div>
                       
-                    </h3>
-                  </div><!-- /.col -->
+                  </div>
               </div>
       
               <div class="border">
@@ -91,7 +90,7 @@
                      
        
                     <div class="col-md-2 pull-right">
-                      <button type="button" id="btn_add" class="btn pull-right" title="agregar producto">
+                      <button type="button" id="btn_add" class="btn pull-right" title="Agregar producto">
                       <img src="{{ asset('images/images.png ') }}" width="50" height="50">
                       </button>
                     </div>
@@ -102,7 +101,7 @@
 
                <!-- Table row -->
                   <div class="col-xs-12 table-responsive">
-                    <table id="details" class="table table-striped table-hover">
+                    <table id="details" class="table table-striped table-bordered table-condensed table-hover">
                       <thead>
                         <tr>
                           <th>Eliminar</th>
@@ -145,7 +144,7 @@
                       
 
                       <div class="form-group text-center">
-                        {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                        {!! Form::submit('Guardar',['class'=>'btn btn-primary','onclick'=>'verifyProducts()'])!!}
                          <a class="btn btn-danger" href="{{ route('purchases.index') }}">Cancelar</a>
                        </div>
                   </div>
@@ -248,7 +247,7 @@
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
 
       
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
+         Subtotal[cont]=parseFloat(amount*price);
          Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
          TotalCompra= parseFloat($('#TotalCompra').val())+Subtotal[cont];
        
@@ -261,7 +260,7 @@
 
      
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a comprar");
+        alert("Error al ingresar detalle de la cotización, revise los datos del producto");
   }
 }
 
@@ -272,6 +271,8 @@ function deletefila(index,subTotal){
   $('#TotalCompra').val(TotalCompra);
   $('#'+index).remove();
  }
+
+
 function calculateSubtotal(number){
 
     
@@ -320,6 +321,13 @@ function calculateSubtotal(number){
                         }
                        });
   }
+
+   function verifyProducts(){
+  if ($('#TotalCompra').val()==0.00) {
+    alert("Debe agregar por lo menos un producto");
+    event.preventDefault();
+  }
+}
 
 </script>
 
