@@ -18,6 +18,7 @@ class AddUpdateUsersTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->integer('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->enum('status', ['activo','inactivo'])->default('activo');
         });
     }
 

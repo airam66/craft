@@ -29,6 +29,7 @@ class UsersController extends Controller
     $user=new User($request->all());
     $user->fill($request->all());
     $user->password=bcrypt($request->password);
+    $user->status='activo';
      if($request->file('photo')){
                  $file =$request->file('photo');
                  $extension=$file->getClientOriginalName();
@@ -40,7 +41,7 @@ class UsersController extends Controller
       $user->photo_name='profile.jpg';
      }
     $user->save();
-    flash("El usuario ". $user->name . " ha sido creado con exito" , 'success')->important();
+    flash("El usuario ". $user->name . " ha sido creado con éxito" , 'success')->important();
     return redirect()->route('users.index');
       
    }
