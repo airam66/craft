@@ -223,11 +223,10 @@
 @section('js')
  
 <script>
-
 $('#datepicker').datepicker({
      language: "es",
      autoclose: true,
-     format:'yyyy/mm/dd'
+     format:'dd/mm/yyyy'
     ,
     })
 </script>
@@ -290,50 +289,39 @@ $('#datepicker').datepicker({
 
 
 <script type="text/javascript">
-
 $('#favoritesModalClient').on('shown.bs.modal', function () {
   $('#searchC').focus()
 })
-
 function productStockProvider(){
 }
-
-
 </script>
 <script>
-
-
-
 $('#amount').on('keyup', function(){
   var am=parseInt($('#amount').val());
   var maxW=parseInt($('#wholesale_cant').val());
   var pW=$('#priceW').val();
   var pR=$('#priceR').val();
    if (am >= maxW){
-    console.log('mayor a la cantidad');
+   
         $('#price').val(pW);
   }
   else{
-    console.log('menor a la cantidad');
+    
         $('#price').val(pR);
   }
 });
 </script>
 
 <script>
-$('#advance').on('keyup', function(){
-
+$('#advance').on('keyup', function(){ 
   if ($('#advance').val()==''){
-
-    $('#balance').val(0);
+    $('#advance').val(0); 
   }
-
   total=parseFloat($('#Totalventa').val());
   
   balance=parseFloat($('#advance').val());
   
   outStandingBalance=total-balance;
-
   outStandingBalance=Math.round(outStandingBalance*100)/100;
   
   $('#balance').val(outStandingBalance);
@@ -368,18 +356,16 @@ $('#searchC').on('keyup', function(){
     
   })
 })
-
 </script>
 
 <script>
     $('#btn_add').on('click',function(){
         invoice_detail();
     });
-
   var cont=0;
   var Totalventa=0;
+  var TotalventaDisc = 0;
   var Subtotal=[];
-
   function invoice_detail(){
     stock=$('#stock').val();
     code=$('#code').val();
@@ -389,33 +375,78 @@ $('#searchC').on('keyup', function(){
     amount=$('#amount').val();
     
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
-
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
-         Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
-         Totalventa=Totalventa+Subtotal[cont];
-
-              var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
-          cont++;
-          clear();
-        $('#Subtotalventa').val(Totalventa);
-        $('#balance').val(Totalventa); 
-         $('#Totalventa').val(Totalventa); 
-        $('#details').append(fila);
+        Subtotal[cont]=parseFloat(amount)*parseFloat(price);
+        Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
         
+        var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
 
+        cont++;
+        $('#details').append(fila);
+        clear();
+        Totalventa= calcularSubtotal();
+        Totalventa= Math.round(Totalventa*100)/100;
+        $('#Subtotalventa').val(Totalventa);
+        if($('#discount').is(':checked')){
+          TotalventaDisc = Totalventa - parseFloat(Totalventa*0.1);
+          TotalventaDisc= Math.round(TotalventaDisc*100)/100;
+          $('#Totalventa').val(TotalventaDisc); 
+          TotalventaDisc -=  $('#advance').val();
+          TotalventaDisc= Math.round(TotalventaDisc*100)/100;
+          $('#balance').val(TotalventaDisc);  
+        }else{
+          $('#Totalventa').val(Totalventa); 
+          Totalventa -= $('#advance').val();
+          Totalventa= Math.round(Totalventa*100)/100;
+          $('#balance').val(Totalventa);    
+        } 
   }else{
         alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
   }
+}
 
+
+function calcularSubtotal(){
+var total = 0;
+  // Aplico un ciclo para recorrer todos los elementos del tag th
+$('#details tbody tr').each(function() { 
+     
+    var columnas = $(this).find("td"); 
+    var subtotal= $(columnas[5]).text();
+     total += parseFloat(subtotal.substr(1)) 
+          
+   });
+ 
+  return total
 }
 
 function deletefila(index){
-  Totalventa=Totalventa-Subtotal[index];
-  $('#Subtotalventa').val(Totalventa);
-  $('#Totalventa').val(Totalventa);
-  $('#balance').val(Totalventa);
+  var Totalventa =0;
+   var TotalDisc =0; //hola
   $('#fila'+index).remove();
- }
+  Totalventa=calcularSubtotal();
+  Totalventa= Math.round(Totalventa*100)/100;
+  $('#Subtotalventa').val(Totalventa);
+  if($('#discount').is(':checked')){
+      TotalDisc = Totalventa - parseFloat(Totalventa*0.1);
+      TotalDisc= Math.round(TotalDisc*100)/100;
+       $('#Totalventa').val(TotalDisc);
+      
+  } else{
+    $('#Totalventa').val(Totalventa);
+  }
+       
+  if(Totalventa == 0)
+  {
+    $('#balance').val(0);
+  }
+  else{
+    TotalDisc -= $('#advance').val();
+    TotalDisc= Math.round(TotalDisc*100)/100;
+    $('#balance').val(TotalDisc);
+  }
+}
+  
+ 
 
  function clear(){
     $('#stock').val('');
@@ -452,20 +483,17 @@ $('#discount').on('click', function(){
  Tvo=$('#Totalventa').val();
  
   if (document.getElementById('discount').checked){
-
           Tvn=parseFloat(St)-parseFloat(St*0.1);
           Tvn=Math.round(Tvn*100)/100;
             $('#Totalventa').val(Tvn);
             $('#balance').val(Tvn);
          
-
   }
   else{
             $('#Totalventa').val(St);
             $('#balance').val(St);
          }
 });
-
  </script>
 
 
