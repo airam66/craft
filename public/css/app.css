@@ -99,24 +99,23 @@ p{
 
 @media all and (max-width: 360px) {
 
-    .title img{
-	    width: 360px;
-	    height: 40px;
+	.title img{
+		    width: 360px;
+		    height: 40px;
 
-     }
+	}
 
-     .panel-body h3{
-	
-    font-size: 20px;
+	.panel-body h3{
+		
+	    font-size: 20px;
+	}
+
+	.panel-body label{
+	 
+	    font-size: 15px;
+	   
+	}     
 }
-
-.panel-body label{
- 
-    font-size: 15px;
-   
-}
-     
-  }
 
 
 img{

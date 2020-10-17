@@ -1511,6 +1511,13 @@ a:focus {
   .small-box p {
     font-size: 12px;
   }
+  .small-box h3 {
+  font-size: 10px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+  padding: 0;
+}
 }
 /*
  * Component: Box
