@@ -213,7 +213,7 @@ return view('admin.role');})->name('noAutorizhed');
 Route::post('users/modifyMyPassword','UsersController@modifyMyPassword')->name('users.modifyMyPassword');
 Route::post('users/changeMyPassword','UsersController@changeMyPassword')->name('users.changeMyPassword');
 Route::get('users/editDatas','UsersController@editDatas')->name('users.editDatas');
-Route::patch('users/changeDatas','UsersController@changeMyDatas')->name('users.changeMyDatas');
+Route::post('users/changeMyDatas','UsersController@changeMyDatas')->name('users.changeMyDatas');
 Route::get('profile','UsersController@profile')->name('profile');
 Route::get('users/{user}','UsersController@show')->name('users.show');
  });

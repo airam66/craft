@@ -9,12 +9,12 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Actualizar mis datos</h3>
+            <h3 class="box-title">MODIFICAR MIS DATOS</h3>
           </div>
           
           <div class="box-body">
             
-            {!! Form::open(['route'=>'users.changeMyDatas', 'method'=>'PATCH', 'files'=>true])!!}
+            {!! Form::open(['route'=>'users.changeMyDatas', 'method'=>'POST', 'files'=>true])!!}
 
               {!! Field::text('name',Auth::user()->name)!!}
 
@@ -23,18 +23,12 @@
                <img src="{{ asset('images/users/'.Auth::user()->photo_name)  }}"  width="160" height="150" >
               </div>
               {!! Field::file('photo')!!}
-
-              <label> Localidad</label><br>
-              {!! Form::select('location',['Rosario de Lerma'=>'Rosario de Lerma','Salta'=>'Salta','San Lorenzo'=>'San Lorenzo','Cerrillos'=>'Cerrillos','Chicoana'=>'Chicoana','La Merced'=>'La Merced'],Auth::user()->location,['class'=>'form-control chosen-select'])!!} 
-              <br>
-
-              {!! Field::text('address',Auth::user()->address)!!}
-             
-              {!! Field::number('phone',Auth::user()->phone)!!}
               
                {!! Field::email('email',Auth::user()->email,['disabled'])!!}
-              <div class="form-group">
-              {!! Form::submit('Guardar cambios',['class'=>'btn btn-primary'])!!}
+
+              <div class="form-group text-center">
+                {!! Form::submit('Guardar cambios',['class'=>'btn btn-primary'])!!}
+                <a class="btn btn-danger" href="{{ route('profile') }}">Cancelar</a>
               </div>
           
  
