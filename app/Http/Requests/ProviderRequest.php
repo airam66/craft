@@ -26,7 +26,7 @@ class ProviderRequest extends FormRequest
     {
         return [
             'name'=>'max:120|required',
-            'cuit'=> 'max:11|min:11|unique:providers|required',
+            'cuit'=> 'digits:11|unique:providers|required',
             'location'=>'required',
             'province'=>'required',
             'address'=>'required',
