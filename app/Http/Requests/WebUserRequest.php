@@ -26,7 +26,7 @@ class WebUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'cuit'=>'max:11|min:11|unique:users',
+            'cuit'=>'digits:11',
             'phone'=>'required|numeric',
             'photo_name'=>'image',
             'location'=>'required',
