@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="{{asset('plugins/chosen/chosen.css')}}">
    <!-- Date Picker -->
   <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+  <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 @yield('style') 
 
 <style>
@@ -45,60 +48,81 @@ margin:auto;
 
 
     <ul class="nav navbar-nav navbar-right">
-@if (Auth::guest())
+   @if (Auth::guest())
          <li><a href="{{route('register')}}"><b>REGISTRARSE</b></a></li>
          <li><a href="{{route('login')}}"><b>INICIAR SESION</b></a></li>
 
-                 @else
-                            <li><a href="{{url('/carrito')}}" id="cart">
-                            <b>Mi Carrito <span class="glyphicon glyphicon-shopping-cart">
-                                     
-                                  </span></b>
-                                  </a>
-                             </li>
+   @else
+    <li>
+      <a href="" id="procesar-pedido">
+        <b> Mi Carrito 
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+          <div id="carritoId" class="dropdown-menu" aria-labelledby="navbarCollapse">
+              <table id="lista-carrito" class="table">
+                  <thead>
+                      <tr>
+                          <th>Imagen</th>
+                          <th>Nombre</th>
+                          <th>Precio</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              </table>
 
-                              <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+              <a href="#" id="vaciar-carrito" class="btn btn-primary btn-block">Vaciar Carrito</a>
+              <a href="#" id="procesar-pedido" class="btn btn-danger btn-block">Procesar
+                  Compra</a>
+          </div>
+        </b>
+      </a>
+    </li>
+      <!------------------------------>
 
-                                <ul class="dropdown-menu" role="menu">
-                                                                     <li>
-                                      <a href="{{ route('MisCarritos') }}">
-                                            Mis Carritos
-                                        </a>
 
-                                    </li>
-                                    <hr>
-                                    <li>
-                                      <a href="{{ route('webUsers.edit') }}">
-                                            Editar Perfil
-                                        </a>
+<!------------------------------->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            {{ Auth::user()->name }} <span class="caret"></span>
+        </a>
 
-                                    </li>
-                                    <hr>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Salir
-                                        </a>
+        <ul class="dropdown-menu" role="menu">
+                                             <li>
+              <a href="{{ route('MisCarritos') }}">
+                    Mis Carritos
+                </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>                                 
-                                   
-                                </ul>
-                            </li>
-                  @endif 
-     
+            </li>
+            <hr>
+            <li>
+              <a href="{{ route('webUsers.edit') }}">
+                    Editar Perfil
+                </a>
+
+            </li>
+            <hr>
+            <li>
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                    Salir
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>                                 
+           
+        </ul>
+    </li>
+    @endif 
+
        
     </ul>
 
       <ul class="nav navbar-nav">
          
-            <li><a href="{{ route('index')}}"><b>INICIO</b></a></li>
+        <li><a href="{{ route('index')}}"><b>INICIO</b></a></li>
         <li><a href="{{ route('aboutUs')}}"><b>SOBRE NOSOTROS</b></a></li>
         <li><a href="{{ route('contactUs')}}"><b>CONTACTO</b></a></li>
         <li><a href="{{route('catalogue')}}"><b>CATÁLOGO</b></a></li>
@@ -141,9 +165,13 @@ margin:auto;
   <!-- datepicker -->
  <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
  <script src="{{asset('plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
-     
-   
- @yield('js')
+ <script src="{{asset('js/sweetalert2.min.js')}}"></script>
+ <script>
+  function baseUrl(url){
+    return "{{url('')}}/"+url;
+  }
+</script>
+@yield('js')
  
 </body>
 </html>

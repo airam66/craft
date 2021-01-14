@@ -23,19 +23,18 @@
                             
                         @if (!Auth::guest())
                         <div class="mi_letter">
-                          <h5 class="text-left"><b>Precio: </b>${{$product->retail_price}}c/u</h5>
-                          <h5 class="text-left">${{$product->wholesale_price}}c/u (mayor a {{$product->wholesale_cant-1}} unidades)</h5> 
+                         <h5 class="text-left precio">
+                            <b>Precio: </b>$<span class="">{{$product->retail_price}}</span>c/u
+                         </h5>
+                         <h5 class="text-left precioSale">
+                            $<span class="">{{$product->wholesale_price}}</span>c/u (mayor a {{$product->wholesale_cant-1}} unidades)
+                         </h5>
+                         <h5 style="display:none;" class="cant">
+                            <span class="">{{$product->wholesale_cant}}</span>
+                         </h5>
                         </div>
-                              {!!Form::open(['url'=>'/shoppingcartsproducts', 'method'=>'POST', 'class'=>'inline-block'])!!}
-                              <input type ='hidden' name='user_id' value="{{Auth::user()->id}}">
-                              <input type ='hidden' name='product_id' value="{{$product->id}}">
-                              <button type ='submit' class="btn btn-success col-md-offset-1" value='Carrito' id="add_cart">
-                              @if(in_array($product->id,$idproducts))
-                              <span class="glyphicon glyphicon-check"></span>
-                              @else
-                              <span class="glyphicon glyphicon-shopping-cart"></span>
-                             @endif Agregar al carrito</button>
-                            {!!form::close()!!}
+                              <a type ='submit' class="btn btn-success col-md-offset-1 agregar-carrito" data-id="{{$product->id}}">
+                              <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al carrito</a>
                         @endif
                        
 

@@ -242,6 +242,7 @@ Route::resource('shoppingcartsproducts','ShoppingCartsProductsController',['only
 Route::get('/shoppingcartsproducts/{id}/destroy','ShoppingCartsProductsController@destroy')->name('shoppingcartsproducts.destroy');
 Route::get('/MisCarritos','ShoppingCartsController@indexWeb')->name('MisCarritos');
 route::get('/carrito','ShoppingCartsController@edit');
+route::post('store','ShoppingCartsController@store')->name('shoppingcarts.store');
 Route::resource('shoppingcarts','ShoppingCartsController',['only'=>['update']]);
 Route::get('my_order/pdf','ShoppingCartsController@pdfOrderOnline')->name('my_order.pdf');
 Route::get('/orderOnline','ShoppingCartsController@confirmOrderOnline')->name('orderOnline');

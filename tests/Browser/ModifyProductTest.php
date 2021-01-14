@@ -40,7 +40,7 @@ class ModifyProductTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user,$category,$event,$brand,$line){
 
                      //When
-            $browser->visit('http://localhost:8080/comercio/public/admin/products')
+            $browser->visit('http://localhost/comercio/public/admin/products')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')

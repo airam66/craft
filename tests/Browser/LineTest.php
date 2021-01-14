@@ -18,7 +18,7 @@ class LineTest extends DuskTestCase
         $user=factory(User::class)->create(['email'=>'example@gmail.com',]);
 
         $this->browse(function (Browser $browser) use ($user){
-            $browser->visit('http://localhost:8080/comercio/public/admin/lines/create')
+            $browser->visit('http://localhost/comercio/public/admin/lines/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')

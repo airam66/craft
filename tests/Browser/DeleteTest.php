@@ -36,7 +36,7 @@ class DeleteTest extends DuskTestCase
         $porcentage= factory(\App\Porcentage::class)->create();
 
         $this->browse(function (Browser $browser) use ($user,$category,$event,$brand,$line){
-            $browser->visit('http://localhost:8080/comercio/public/admin/products')
+            $browser->visit('http://localhost/comercio/public/admin/products')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')
