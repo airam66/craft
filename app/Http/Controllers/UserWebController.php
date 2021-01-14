@@ -52,13 +52,13 @@ class UserWebController extends Controller
 
   public function changePassword(ChangePasswordRequest $request){
     $user=\Auth::user();
-     $user->password=bcrypt($request->newpassword);
-     $user->save();
-    flash("Su contraseña se ha cambiado correctamente ", 'success')->important();
-     
-       return redirect()->route('webUsers.edit');
+    $user->password=bcrypt($request->newpassword);
+    $user->save();
+    \Auth::logout();
+        
+       return redirect()->route('login');
    }
-
+    
 
     public function destroy($id)
     {

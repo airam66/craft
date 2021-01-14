@@ -31,7 +31,7 @@ class ClientsController extends Controller
     public function store(ClientRequest $request)
     {
         $clients= new Client($request->all());
-    	
+    	$clients->name = mb_strtoupper($clients->name);
         $clients->save();
 
         flash("El cliente ". $clients->name . " ha sido registrado con exito" , 'success')->important();
@@ -62,6 +62,7 @@ class ClientsController extends Controller
 
          $client=Client::find($id);
          $client->fill($request->all());
+         $client->name = mb_strtoupper($client->name);
          $client->save();
         flash("El cliente ". $client->name . " ha sido modificado con éxito" , 'success')->important();
      

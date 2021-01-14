@@ -10,48 +10,36 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Factura  de Compra</h3>
-         <!-- <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>-->
-           
+            <h3 class="box-title"> VER FACTURA DE COMPRA</h3>
+     
          </div>
           <div class="box-body">
           <section class="invoice">
                 <!-- title row -->
                 <div class="row">
-                  <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b id="id">Factura N°: {{$purchasesInvoice->pi_id}}</b><br><br>
-
-                         
-                         <b>Fecha: {{$purchasesInvoice->created_at->format('d-m-Y')}}</b>
-
+                 
+                      <div class=" col-md-6  pull-left">
+                          <h3 style="color:gray;font-size: 22px;"><b id="id">Factura N°: {{$purchasesInvoice->number_invoice}}</b><br></h3>
                       </div>
-                      
-                    </h3>
-                  </div><!-- /.col -->
+                      <div class="col-md-4  col-md-offset-2 pull-right">
+                        <h3 style="color:gray;font-size: 22px;"><b>Fecha: {{$purchasesInvoice->created_at->format('d-m-Y')}}</b></h3>
+                      </div>
+  
                 </div>
-              <div class="row">
-               <!-- info row -->
-             
-           
+                  
                 
                 <div class="row ">
-                         <div class="col-md-6 " >
+                      <div class="col-md-6 " >
                            
-                        <h4><strong>Proveedor: </strong> {{$purchasesInvoice->provider->name}}</h4>
+                         <h4><strong>Proveedor: </strong> {{$purchasesInvoice->provider->name}}</h4>
 
                            
-                         </div>
+                      </div>
                        
                       <div class="col-md-4  col-md-offset-2 pull-right">
-                            
-                           
-                             <h4><strong>Cuit: </strong> {{$purchasesInvoice->provider->cuit}} </h4>
-
-                            
+   
+                         <h4><strong>Cuit: </strong> {{$purchasesInvoice->provider->cuit}} </h4>
+  
                       </div>
              
           
@@ -113,16 +101,15 @@
                   <div class="col-xs-12">
 
                       <div class="form-group">
-                       <!--Boton generar PDF-->
                         
                         <!--Boton generar Editar-->
                          <a href="{{route('purchasesInvoice.edit',$purchasesInvoice->id)}}" >
 
-                                <button type="submit" class="btn btn-warning">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
-                            
+                                <button type="submit" title="Editar" class="btn btn-warning">
+                                    Editar                            
                                 </button>
                         </a>
+                        <a class="btn btn-primary" title="Volver" href="{{ route('purchasesInvoice.index') }}">Volver</a>
                        </div>
                   </div>
                 </div>

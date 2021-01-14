@@ -105,9 +105,9 @@
                           <th>Eliminar</th>
                           <th>Codigo</th>
                           <th>Producto</th>
-                          <th>Precio</th>
+                          <th>Precio Estimado</th>
                           <th>Cantidad</th>
-                          <th>Subtotal</th>
+                          <th>Subtotal Estimado</th>
                         </tr>
                       </thead>
 
@@ -158,8 +158,10 @@
                       {!! Form::hidden('status','activo',['class'=>'form-control'])!!} 
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group text-center">
                         {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                        <a class="btn btn-danger" href="{{ route('invoices.index') }}">Cancelar</a>
+
                        </div>
                   </div>
                 </div>
@@ -240,11 +242,6 @@
 
 
 <script type="text/javascript">
-
-$('#favoritesModalClient').on('shown.bs.modal', function () {
-  $('#searchC').focus()
-})
-
 function productStockProvider(){
 }
 
@@ -260,26 +257,25 @@ $('#amount').on('keyup', function(){
   var pW=$('#priceW').val();
   var pR=$('#priceR').val();
    if (am >= maxW){
-    console.log('mayor a la cantidad');
+    
         $('#price').val(pW);
   }
   else{
-    console.log('menor a la cantidad');
-        $('#price').val(pR);
+            $('#price').val(pR);
   }
 });
 </script>
 
 <script>
 $('#discount').on('click', function(){
+  
   St=$('#Subtotalventa').val();
-  Tvo=$('#Totalventa').val();
-    if(St==Tvo){
-      Tvn=parseFloat(St)-parseFloat(St*0.1);
-        $('#Totalventa').val(Tvn); 
-     }else{
-        $('#Totalventa').val(St);
-     }
+  if ($(this).is(':checked')){ 
+      total=parseFloat(St)-parseFloat(St*0.1);
+      $('#Totalventa').val(total);
+  }else{
+      $('#Totalventa').val(St);
+  }
 })
 </script>
 
@@ -324,6 +320,7 @@ $('#searchC').on('keyup', function(){
   var Subtotal=[];
 
   function invoice_detail(){
+   
     stock=$('#stock').val();
     code=$('#code').val();
     product_id=$('#product_id').val();
@@ -336,14 +333,21 @@ $('#searchC').on('keyup', function(){
       if (parseInt(amount)<parseInt(stock)){
          Subtotal[cont]=parseFloat(amount)*parseFloat(price);
          Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
-         Totalventa=Totalventa+Subtotal[cont];
+         
 
               var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
           cont++;
-          clear();
-        $('#Subtotalventa').val(Totalventa);
-        $('#Totalventa').val(Totalventa); 
+          clear(); 
         $('#details').append(fila);
+        Totalventa=calcularSubtotal();  
+        $('#Subtotalventa').val(Totalventa);
+        if($('#discount').is(':checked')){
+          Totalventa -=parseFloat(Totalventa*0.1);
+              $('#Totalventa').val(Totalventa);
+        } else{
+             $('#Totalventa').val(Totalventa);
+         }
+        $('#Totalventa').val(Totalventa);
 
       }else{
           alert ('La cantidad a vender supera el stock');
@@ -354,11 +358,32 @@ $('#searchC').on('keyup', function(){
   }
 }
 
+function calcularSubtotal(){
+var total = 0;
+  // Aplico un ciclo para recorrer todos los elementos del tag th
+$('#details tbody tr').each(function() { 
+     
+    var columnas = $(this).find("td"); 
+    var subtotal= $(columnas[5]).text();
+     total += parseFloat(subtotal.substr(1)) 
+          
+   });
+ 
+  return total
+}
+
 function deletefila(index){
-  Totalventa=Totalventa-Subtotal[index];
-  $('#Subtotalventa').val(Totalventa);
-  $('#Totalventa').val(Totalventa);
   $('#fila'+index).remove();
+  Totalventa=calcularSubtotal();
+  $('#Subtotalventa').val(Totalventa);
+  if($('#discount').is(':checked')){
+      Totalventa -=parseFloat(Totalventa*0.1);
+      $('#Totalventa').val(Totalventa);
+  } else{
+     $('#Totalventa').val(Totalventa);
+  }
+ 
+  
  }
 
  function clear(){

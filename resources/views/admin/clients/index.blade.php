@@ -31,9 +31,9 @@
             <tr>
                
                 <th>Nombre</th>
-                <th>Direccion</th>
+                <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Saldo</th>
+                <th>Saldo Pendiente</th>
                 
                 <th></th>
             </tr>
@@ -46,13 +46,13 @@
 		          @if ($client->status!='inactivo')
 		            <tr role="row" class="odd">
 		          @else
-		            <tr role="row" class="odd" style="background-color: rgb(255,96,96);">
+		            <tr role="row" class="odd" style="background-color: rgb(247, 212, 212);">
 		          @endif
 		            
 		            <td>{{$client->name}}</td>
 		            <td>{{$client->address}}</td>
 		            <td>{{$client->phone}}</td>
-                <th>{{$client->bill}}</th>
+                <th>$ {{$client->bill}}</th>
 		           
                 <td>
                  @if ($client->status!='inactivo')

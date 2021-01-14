@@ -1,71 +1,62 @@
 @extends('layouts.main')
  
- 
 @section('content')
    
-<div class="container-fluid spark-screen">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="container-fluid spark-screen">
+    <div class="row">
+      <div class="col-md-12">
 
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Cargar productos de un proveedor</h3>
+            <h3 class="box-title">Agregar productos de un proveedor</h3>
          </div>
-          {!! Form::open(['route'=>'providersproducts.store', 'method'=>'POST', 'files'=>true])!!}
-          <div class="box-body">
+      <div class="box-body">
+          {!! Form::open(['route'=>'providersproducts.store', 'method'=>'POST'])!!}
           <section>
-      
-                <div class="border">
-                <h3>Proveedor</h3>
+              
+              <div>
+                <h4><b>Proveedor</b></h4>
                 <div class="row ">
                        
-                      <div class="col-md-3 pull-left" >
-                           {!! form::label('CUIT')!!}
-                           <input id="cuit" class="form-control" name="cuit" type="text" >
+                      <div class="col-md-3" >
+                           
+                           {!!Field::text('cuit',null)!!}
                        </div>
                        <div class="pull-left">
                        <br>
-                            <button type="button" class="btn btn-primary " data-toggle="modal" id="second" data-title="Buscar" data-target="#favoritesModalProvider"><i class="fa fa-search"></i></button>
-                            @include('admin.providersproducts.buscarProvider')
+                            <button type="button" class="btn btn-primary " data-toggle="modal" id="second" data-title="Buscar" title="ver proveedores" data-target="#favoritesModalClient"><i class="fa fa-search"></i></button>
+                            @include('partials.searchPeople')
                       </div>
-                      <div class="col-md-6  col-md-offset-1">
+                      <div class="col-md-6  col-md-offset-2">
                             <input id="provider_id" name="provider_id" class="form-control" type="hidden" >
                             {!!Field::text('nombre',null,['disabled'])!!}
                       </div>
                 </div>
+
+                <div>
+                   <input id="product_id" class="form-control " name="product_id" type="hidden" >
+                   <button type="button" class="btn btn-success pull-left" data-toggle="modal" title="ver productos" id="first" data-title="Buscar" data-target="#favoritesModalProduct">
+                         Elegir producto
+                  </button>
+
                 </div>
-<!-- busqueda de productos-->
-                <div class="row " >
-                <h3>Productos</h3>
-                    <div class="col-md-3 pull-left" >
-                         {!! form::label('Codigo')!!}
-                         <input id="code" class="form-control" name="code" type="text" >
-                         <input id="product_id" class="form-control " name="product_id" type="hidden" >
-                    </div> 
-                    <div class="pull-left">
-                    <br>
-                       <button type="button" class="btn btn-primary pull-left" data-toggle="modal" id="first" data-title="Buscar" data-target="#favoritesModalProduct">
-                          <i class="fa fa-search"></i>
-                       </button>
-                   </div>
-                   <div class="col-md-6 col-md-offset-1">
-                         {!!Field::text('name',null,['disabled'])!!}
-                   </div>
-                   <div class="col-md-1">
-                      <button type="button" id="btn_add" class="btn btn-primary pull-right" onclick="add_product()">Agregar
-                      </button>
-                    </div>
-                    
-                 </div>
-        
+              </div>
+              <br>
+              <br>
+              <hr>
+
+              <div>
+                 <h4><b>Productos</b></h4>
+         
                  <div class="col-xs-12 table-responsive">
                     <table id="details" class="table table-striped table-bordered table-condensed table-hover">
                       <thead>
                         <tr>
-                          <th>Eliminar</th>
                           <th>Codigo</th>
                           <th>Nombre</th>
+                          <th>Marca</th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -75,128 +66,82 @@
 
                     </table>
                   </div>
-              <div class="row no-print">
-                  <div class="col-xs-12">
+                 
+                
 
-
-                      <div class="form-group">
-                        {!! Form::submit('Confirmar',['class'=>'btn btn-primary'])!!}
+                      <div class="form-group text-center">
+                        {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+                        <a class="btn btn-danger" href="{{ route('providersproducts.create') }}">Cancelar</a>
                       </div>
-                  </div>
-                </div>
+            
+              </div>
+              <hr>
 
-
-              </section>
-
+            
+              </section><!-- /.content -->
+              {!! Form::close() !!}
              </div>
  
-              {!! Form::close() !!}
-
           </div>
-   
+          <!-- /.box-body -->
         </div>
+        <!-- /.box -->
+      </div>
     </div>
-</div>
-@include('admin.providersproducts.buscarProducto')
+  </div>
+
+ @include('partials.searchProductsPurchase')
 
 @endsection
 
+@push('scripts')
+
+<script src="{{asset('js/completeProvider.js')}}"></script>
+<script src="{{asset('js/completeProductsPurchase.js')}}"></script>
+@endpush
+
 @section('js')
 <script>
-
-  var options={
-    url: function(p){
-      return baseUrl('admin/autocompleteProvider?p='+p);
-         }, getValue:'cuit',
-            list: {
-                    match: {
-                        enabled: true
-                    },
-                    onClickEvent: function () { 
-
-                        var provider = $('#cuit').getSelectedItemData();
-
-                        $('#nombre').val(provider.name);
-                        $('#provider_id').val(provider.id);
-                    },
-                    onKeyEnterEvent: function () { 
-
-                        var provider = $('#cuit').getSelectedItemData();
-
-                        $('#nombre').val(provider.name);
-                        $('#provider_id').val(provider.id);
-                    }
-                }
-   };
-  
-  $("#cuit").easyAutocomplete(options);
-
-
-</script>
-<script type="text/javascript">
-  function completeC($id,$cuit,$name){
-    $('#cuit').val($cuit);
-    $('#nombre').val($name);
-    $('#provider_id').val($id);
-    $('#favoritesModalProvider').modal('hide');
-  };
-
-
-</script>
-
-<script type="text/javascript">
-$('#searchP').on('keyup', function(){
-  $value=$(this).val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProvider')}}",
-    data:{'searchProvider':$value},
-    success: function(data){
-      $('#mostrarP').html(data);
-    }
-    
-  })
-})
-</script>
-<script>
-$('#search').on('keyup', function(){
-  $value=$(this).val();
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/search')}}",
-    data:{'search':$value},
-    success: function(data){
-      $('#mostrar').html(data);
-    }
-    
-  })
-})
-</script>
-<script >
-  function complete($id,$code,$name,$wholesale,$retail,$stock,$amount){
-    $('#code').val($code);
-    $('#product_id').val($id);
-    $('#name').val($name);
-    $('#favoritesModalProduct').modal('hide');
-  };
-</script>
-<script>
   var cont=0;
-  function add_product(){
-    code=$('#code').val();
-    product_id=$('#product_id').val();
-    name=$('#name').val();
-    
-  if (product_id!="" && code!="" && name!=""){
+  var products=[];
+  function add_product($id,$code,$prod_name,$brand_name){
+    code=$code;
+    product_id=$id; 
+    prod_name=$prod_name;
+    brand_name=$brand_name;
+     
 
-          var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> > </tr>';
+ console.log("entro al metodo");
+  if (product_id != ""){
+    console.log("entro al if");
+
+          var fila='<tr class="selected" id="fila'+cont+'"><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+prod_name+'</td> <td>'+brand_name+'</td><td><button type="button" title="eliminar" class="btn btn-danger" onclick="deletefila('+cont+');">X</button></td>  > </tr>';
           cont++;
+          products.push({ id: product_id,
+                code: code,
+                prod_name: prod_name,
+                cont:cont
+                });
           clear();
         $('#details').append(fila);
+       
 
   }else{
-        alert("Error al algregar producto, revise que posea datos");
+       alert("Ya agrego este producto");
   }
+
+for(var i = products.length -1; i >=0; i--){
+ console.log(9878);
+
+  if(products.indexOf(products[i]) !== i) {
+   deletefila(products[i].cont);
+   console.log(products[i].cont);
+    
+}
+}
+
+   $('#favoritesModalProduct').modal('hide');
+   $('#searchProducts').val('');
 }
 
 function deletefila(index){
@@ -207,8 +152,18 @@ function deletefila(index){
     $('#code').val('');
     $('#product_id').val('');
     $('#name').val('');
+
  }
 </script>
+
+
+<script>
+  function productStockProvider(){
+   
+  }
+
+</script>
+ 
 @endsection
  
 

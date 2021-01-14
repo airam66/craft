@@ -29,6 +29,7 @@ class UsersController extends Controller
     $user=new User($request->all());
     $user->fill($request->all());
     $user->password=bcrypt($request->password);
+    $user->status='activo';
      if($request->file('photo')){
                  $file =$request->file('photo');
                  $extension=$file->getClientOriginalName();
@@ -40,7 +41,7 @@ class UsersController extends Controller
       $user->photo_name='profile.jpg';
      }
     $user->save();
-    flash("El usuario ". $user->name . " ha sido creado con exito" , 'success')->important();
+    flash("El usuario ". $user->name . " ha sido creado con éxito" , 'success')->important();
     return redirect()->route('users.index');
       
    }
@@ -90,9 +91,9 @@ class UsersController extends Controller
     $user=\Auth::user();
      $user->password=bcrypt($request->newpassword);
      $user->save();
-    flash("Su contraseña se ha cambiado correctamente ", 'success')->important();
-     
-       return redirect()->route('users.modifyMyPassword');
+     \Auth::logout();
+        
+       return redirect()->route('login');
    }
    
    public function profile(){
@@ -123,7 +124,7 @@ class UsersController extends Controller
     $user->save();
     flash("Sus datos se cambiaron correctamente ", 'success')->important();
      
-       return redirect()->route('users.editDatas');
+       return redirect()->route('profile');
    
    }
 

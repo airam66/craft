@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'orderUser'=> \App\Http\Middleware\MDOrderUser::class,
         'adminUser'=> \App\Http\Middleware\MDAdminUser::class,
         'standard'=> \App\Http\Middleware\MDStandard::class,
+        'saleOrderUser'=>\App\Http\Middleware\MDSaleOrderUser::class,
     ];
 }

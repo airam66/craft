@@ -17,9 +17,10 @@ class LinesController extends Controller
     public function index(Request $request)
     {
 
-      $lines=Line::SearchLine($request->name)->orderBy('name','ASC')->paginate(10);
+      $lines=Line::SearchLine($request->name)->orderBy('name','ASC')->where('status','=','activo')->paginate(10);
        
-      return view('admin.lines.index')->with('lines',$lines);
+      return view('admin.lines.index')->with('lines',$lines)
+                                      ->with('searchName', $request->name);
     }
 
 
@@ -33,6 +34,7 @@ class LinesController extends Controller
     {
     	
        $line= new Line($request->all());
+       $line->name = mb_strtoupper($line->name);
        $line->save();
        flash("La linea ". $line->name . " ha sido creada con exito" , 'success')->important();
        
@@ -57,11 +59,9 @@ class LinesController extends Controller
     public function update(Request $request, $id)
     {
          $line=Line::find($id);
-
-        $line->fill($request->all());
-             
-
-        $line->save();
+         $line->fill($request->all());
+         $line->name = mb_strtoupper($line->name);
+         $line->save();
         flash("La linea ". $line->name . " ha sido modificada con exito" , 'success')->important();
      
 

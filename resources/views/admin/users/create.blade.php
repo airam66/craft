@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nuevo usuario</h3>
+            <h3 class="box-title">NUEVO USUARIO</h3>
           </div>
           
           <div class="box-body">
@@ -23,14 +23,15 @@
               {!! Field::password('password')!!}
 
               {!! Field::password('password_confirmation')!!}
+
+              {!! Field::select('role_id', $roles ,['class'=>'select-roles','empty'=>'Seleccione un rol'])!!}
              
               {!! Field::file('photo')!!}
-
-              {!! Field::select('role_id', $roles ,['class'=>'select-roles','empty'=>'Seleccione un rol'])!!} 
+           
              
-             
-              <div class="form-group">
-              {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+              <div class="form-group text-center">
+                {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+                <a class="btn btn-danger" href="{{ route('users.index') }}">Cancelar</a>
               </div>
           
  

@@ -7,81 +7,79 @@ use App\ProviderProduct;
 use App\Provider;
 use App\Product;
 use App\Http\Requests\ProviderRequest;
+use Illuminate\Support\Facades\DB;
 
 class ProvidersProductsController extends Controller
 {
     
-    public function index(Request $request)
-    {
-      
-       /* return view('admin.products.index')->with('products',$products)*/
-
-    }
-
-    public function create()
-    {
-        $products=Product::where('status','=','activo')->orderBy('name','ASC')->get();
-        $providers=Provider::where('status','=','activo')->orderBy('name','ASC')->get();
-        return view('admin.providersproducts.create')->with('products',$products)
-                                                     ->with('providers',$providers);
-    }
 
     
-    public function store(Request $request)
+    public function storeProducts(Request $request, $id)
     {
     	
-            $idarticulo = $request->get('dproduct_id');
-
+            $products = $request->get('dproduct_id');
+            $provider=Provider::find($id); 
+           // var_dump($provider->products);
             $cont = 0;
+
+            $idarticulo = array_values(array_unique($products));
 
             while ( $cont < count($idarticulo) ) {
                 $detalle = new ProviderProduct();
-                $detalle->provider_id=$request->provider_id; 
+                $detalle->provider_id= $provider->id;
                 $detalle->product_id=$idarticulo[$cont];
                 $detalle->save();
                 $cont = $cont+1;
             }
+
+
+
+            flash("Los productos han sido agregados con éxito" , 'success')->important();
        
-        return redirect()->route('providersproducts.create');
+        return redirect()->route('providers.index');
 
     }
 
-     
-    public function show($id)
-    {
-        //
+  public function searchProdName(Request $request){
+      if($request->ajax()){
+        $output="";
+        $comilla="'";
+
+      $products=DB::table('products as p')
+                   ->join('brands as b','p.brand_id','=','b.id')
+                   ->select('code','p.id as product_id','p.name as product_name','b.name as brand_name','stock','p.status','b.name')
+                   ->where('p.name','LIKE', "%".$request->searchProducts."%")
+                   ->where('p.status','=','activo')
+                   ->where('b.name',"<>","CreaTu")->get();
+        
+        $result=popUpProductsProvider($products);
+         return Response($result);       
+   
     }
+    }
+    
+     public function searchProdLetter(Request $request){
+   
+      if($request->ajax()){
+   
+         $output="";
+        $comilla="'";
+        $products=DB::table('products as p')
+                   ->join('brands as b','p.brand_id','=','b.id')
+                   ->select('code','p.id as product_id','p.name as product_name','b.name as brand_name','stock','p.status','b.name')
+                  ->where('p.name','LIKE', $request->searchL."%")
+                  ->where('p.status','=','activo')
+                  ->where('b.name',"<>","CreaTu")->get();
+                         
+         $result=popUpProductsProvider($products);
+         return Response($result);
+              
+   
+        }
+    }
+
 
    
-    public function edit($id)
-    {   
-    	/*$product= Product::find($id);
-
-
-        return view('admin.products.edit')->with('product',$product)*/
-
-
-    }
-
    
-    public function update(Request $request, $id)
-    {
-    }
-
-    public function desable($id)
-    {
-    }
-
-    public function enable($id)
-    {
-      /*  $product= Product::find($id);
-        $product->status='activo';
-        $product->save();
-        return redirect()->route('products.index');*/
-    }
-
-    public function destroy($id)
-    {
-
-    }
+    
 }

@@ -36,17 +36,22 @@
           <div class="col-sm-6 invoice-col">
             DE
             <address>
-              <strong>Cotillon creaTu</strong><br>
-              Direccion:Roque Saenz Peña Nro 14 bis 2 <br>
+              <strong>Cotillón CreaTu</strong><br>
+              Dirección:Roque Saenz Peña Nro 14 bis 2 <br>
               B° San Martin,Rosario de Lerma, Salta<br>
-              Telefono: (387)59662005 - (387) 5910201<br>
+              Teléfono: (387)59662005 - (387) 5910201<br>
               Email:creatucotillon@gmail.com
             </address>
           </div><!-- /.col -->
           <div class="col-sm-6 invoice-col">
             A
             <address>
-              <strong>SR/A :  {{$invoice->client->name}}</strong>
+              <strong>SR/A :  {{$invoice->client->name}}</strong><br>
+              @if($invoice->client_id != 1)
+                CUIL/CUIT:{{$invoice->client->cuil}}<br>
+                Dirección:{{$invoice->client->address}}<br>
+                Teléfono:{{$invoice->client->phone}}<br>
+              @endif
             </address>
           </div><!-- /.col -->
           
@@ -61,9 +66,8 @@
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th>Codigo</th>
                           <th>Producto</th>
-                          <th>Descripcion</th>
+                          <th>Precio</th>
                           <th>Cantidad</th>
                           <th>Subtotal</th>
                         </tr>
@@ -71,9 +75,8 @@
                       <tbody>
                         @foreach($detalles as $detalle )
                         <tr>
-                          <td>{{$detalle->id}}</td>
                           <td>{{$detalle->name}}</td>
-                          <td>{{$detalle->description}}</td>
+                          <td>{{$detalle->price}}</td>
                           <td>{{$detalle->amount}}</td>
                           <td>$ {{  $detalle->subTotal}}</td>
                         </tr>

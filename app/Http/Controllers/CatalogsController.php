@@ -34,6 +34,7 @@ public function show($id)
       ->join('products as p','pe.product_id','=','p.id')
       ->join('categories as c','c.id','=','p.category_id')
       ->select('c.id','c.name','c.extension')
+      ->where('c.status','=','activo')
       ->where('pe.event_id','=',$event->id)->distinct()->get();
 
    

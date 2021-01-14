@@ -77,12 +77,12 @@ Route::group(['middleware' => 'purchaseUser'],function(){
  //**************************Rutas para proveedores************************************************** 
   Route::resource('providers','ProvidersController');
   Route::get('/listProducts','ProvidersController@listProducts');
-  Route::get('/searchProvider','PurchasesController@searchProvider');
-  Route::get('/searchProducts','PurchasesController@searchProducts');
-  Route::resource('providersproducts','ProvidersProductsController');
+  Route::get('/searchProdName','ProvidersProductsController@searchProdName');
+  Route::get('/searchProdLetter','ProvidersProductsController@searchProdLetter');
   Route::get('providers/{id}/desable','ProvidersController@desable')->name('providers.desable');
   Route::get('providers/{id}/enable','ProvidersController@enable')->name('providers.enable');
-
+  Route::get('providers/{id}/addProducts','ProvidersController@addProducts')->name('providers.addProducts');
+  Route::post('providersproducts/{provider}/storeProducts','ProvidersProductsController@storeProducts')->name('providersproducts.storeProducts');
 
   //**************************** Rutas para compras**************************************************
   Route::resource('purchases','PurchasesController');
@@ -91,6 +91,7 @@ Route::group(['middleware' => 'purchaseUser'],function(){
   Route::get('/searchProducts','PurchasesController@searchProducts');
    Route::get('/searchLetter','PurchasesController@searchLetter');
   Route::get('/autocompleteProvider', 'PurchasesController@autocompleteProvider')->name('autocompleteProvider');
+  Route::get('/autocompleteProdProvider', 'PurchasesController@autocompleteProdProvider')->name('autocompleteProdProvider');
   Route::get('/purchases/{id}/desable','PurchasesController@desable')->name('purchases.desable');
       
   Route::get('/purchases/{id}/detailPurchaseOrder','PurchasesController@detailPurchaseOrder')->name('purchases.detailPurchaseOrder');
@@ -136,6 +137,7 @@ Route::get('/viewReportSales','PdfController@viewReportSales')->name('admin.view
 //*******************Reporte de compras por clientes************************************************
  Route::get('createReportCOrder','PdfController@createReportCOrder')->name('createReportCOrder');
 });
+
 //################################Rutas para el encargado de pedidos#####################################
 Route::group(['middleware' => 'orderUser'],function(){
   //************************************Rutas para Pedidos**********************************
@@ -148,8 +150,12 @@ Route::group(['middleware' => 'orderUser'],function(){
  Route::put('orders/changeStatus/{order}','OrdersController@changeStatus')->name('orders.changeStatus');
  Route::resource('shoppingcarts','ShoppingCartsController',['only'=>['index']]);
  Route::get('shoppingcarts/createOrders/{id}','ShoppingCartsController@createOrders')->name('shoppingcarts.createOrders');
+
+ Route::resource('webUser','UserWebController',['only'=>'index']);
 });
-Route::group(['middleware' => 'orderUser','saleUser'],function(){
+
+//################################Rutas para el encargado de pedidos y el de ventas#####################################
+Route::group(['middleware' => 'saleOrderUser'],function(){
   //para buscar productos
   Route::get('/searchL','InvoicesController@searchL');
   Route::get('/search','InvoicesController@search');
@@ -162,6 +168,7 @@ Route::group(['middleware' => 'orderUser','saleUser'],function(){
   Route::get('/autocomplete', 'InvoicesController@autocomplete')->name('autocomplete');
   Route::get('/autocompleteClient', 'InvoicesController@autocompleteClient')->name('autocompleteClient');
 });
+
 Route::group(['middleware'=>'adminUser'],function(){
    //***************************Rutas para usuarios******************************************
  Route::post('users/store','UsersController@store')->name('users.store');
@@ -180,7 +187,6 @@ Route::group(['middleware'=>'adminUser'],function(){
   //********************MOVIMIENTOS************************************************************
   Route::resource('movements','MovementsController',['only'=>['create','store','index']]);
   
-  Route::resource('webUser','UserWebController',['only'=>'index']);
 
   //------------------------------Reporte de moviemientos-------------------------------------------
 
@@ -188,8 +194,9 @@ Route::group(['middleware'=>'adminUser'],function(){
 
  });
 
-
+//------------------------------Reporte de ventas semanales-------------------------------------------
  Route::get('reportWeeklySales','PdfController@reportWeeklySales')->name('reportWeeklySales');
+
 
 //**********************CALENDARIO DE PEDIDOS***********************************************************
 Route::get('/calendar','CalendarsController@calendar')->name('calendar');
@@ -206,7 +213,7 @@ return view('admin.role');})->name('noAutorizhed');
 Route::post('users/modifyMyPassword','UsersController@modifyMyPassword')->name('users.modifyMyPassword');
 Route::post('users/changeMyPassword','UsersController@changeMyPassword')->name('users.changeMyPassword');
 Route::get('users/editDatas','UsersController@editDatas')->name('users.editDatas');
-Route::patch('users/changeDatas','UsersController@changeMyDatas')->name('users.changeMyDatas');
+Route::post('users/changeMyDatas','UsersController@changeMyDatas')->name('users.changeMyDatas');
 Route::get('profile','UsersController@profile')->name('profile');
 Route::get('users/{user}','UsersController@show')->name('users.show');
  });

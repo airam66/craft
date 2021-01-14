@@ -9,7 +9,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Nuevo proveedor</h3>
+            <h3 class="box-title">NUEVO PROVEEDOR</h3>
           </div>
           <div class="box-body">
             
@@ -17,7 +17,7 @@
             
               {!! Field::text('name')!!}
 
-              {!! Field::number('cuit')!!}
+              {!! Field::number('cuil')!!}
               
               {!! Field::text('address')!!}
               <div class="col-md-6">
@@ -38,8 +38,9 @@
               {!! Form::label('status','Estado')!!}
               {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 
               </div>
-              <div class="form-group">
-              {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+              <div class="form-group text-center">
+              {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+               <a class="btn btn-danger" href="{{ route('providers.index') }}">Cancelar</a>
               </div>
           
  

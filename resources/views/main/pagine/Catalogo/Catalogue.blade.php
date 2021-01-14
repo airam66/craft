@@ -23,50 +23,51 @@
 
                    @if (!Auth::guest())
                    <div class="card product mystyle">
-                    <div>
-                       @if($product->extension!=null)
-                        <img src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
+                      <div>
+                       @if($product->extension!=null)             
+                          <img class="img-prod" src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
                        @endif
-                    </div>
-                    <div class="text-center">
-                       <h5 style="height: 40px;"><b>{{strtoupper($product->name)}}</b></h5>
-                       <div class="mi_letter">
-                         <h5 class="precio">
-                            $<span class="">{{$product->retail_price}}</span>c/u
-                         </h5>
-                         <h5 style="display:none;" class="precioSale">
-                            $<span class="">{{$product->wholesale_price}}</span>c/u
-                         </h5>
-                         <h5 style="display:none;" class="cant">
-                            <span class="">{{$product->wholesale_cant}}</span>
-                         </h5>
-                       </div>
-                    </div>
-                    <a type="submit" class="btn btn-success agregar-carrito" data-id="{{$product->id}}">
-                      Agregar al carrito
-                      <span class="glyphicon glyphicon-check"></span>
-                    </a>
-                    <div class="text-right" >
-                        <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
-                        <img src="{{ asset('images/informacion3.png ') }}" width="45" height="45">
+                      </div>
+                        <div class="text-center">
+                           <h5 class="name-prod" style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>
+                           <div class="mi_letter">
+                               <h5 class="precio">
+                                  $<span class="">{{$product->retail_price}}</span>c/u
+                               </h5>
+                               <h5 style="display:none;" class="precioSale">
+                                  $<span class="">{{$product->wholesale_price}}</span>c/u
+                               </h5>
+                               <h5 style="display:none;" class="cant">
+                                  <span class="">{{$product->wholesale_cant}}</span>
+                               </h5>
+                           </div>
+                          
+                        </div>
+                        <a type="submit" class="btn btn-success agregar-carrito" data-id="{{$product->id}}">
+                          Agregar al carrito
+                          <span class="glyphicon glyphicon-check"></span>
                         </a>
-                    </div>    
-                   </div>
+                        <div class="text-right" >
+                            <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
+                              <img class="image-info" src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
+                            </a>
+                        </div>
+                     </div>
                    @else
                     <div class="card product my_style">
                       <div>
                        @if($product->extension!=null)
              
-                          <img src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
+                          <img class="image-prod" src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
             
                        @endif
                       </div>
                         <div class="text-center">
-                           <h5 style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>
+                           <h5 class="name-prod" style="height: 35px;"><b>{{strtoupper($product->name)}}</b></h5>                        
                         </div>
                         <div class="text-right" >
                             <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
-                              <img src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
+                              <img class="image-info" src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
                             </a>
                         </div>
                     </div>

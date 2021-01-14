@@ -26,12 +26,12 @@ class ProviderRequest extends FormRequest
     {
         return [
             'name'=>'max:120|required',
-            'cuil'=> 'max:11|min:11|unique:providers',
+            'cuit'=> 'digits:11|unique:providers|required',
             'location'=>'required',
             'province'=>'required',
             'address'=>'required',
             'email'=>'unique:clients',
-            'phone'=>'max:15|min:10|required',
+            'phone'=>'max:15|min:7|required',
         ];
     }
 }

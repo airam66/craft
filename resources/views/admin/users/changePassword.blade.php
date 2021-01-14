@@ -10,7 +10,7 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Cambiar contraseña</h3>
+            <h3 class="box-title">CAMBIAR CONTRASEÑA</h3>
           </div>
           
           <div class="box-body">
@@ -25,8 +25,9 @@
               {!! Field::password('newpassword_confirmation')!!}
              
          
-              <div class="form-group">
+              <div class="form-group text-center">
               {!! Form::submit('Guardar cambios',['class'=>'btn btn-primary'])!!}
+              <a class="btn btn-danger" href="{{ route('profile') }}">Cancelar</a>
               </div>
           
  

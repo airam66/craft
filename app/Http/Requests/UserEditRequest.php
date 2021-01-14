@@ -26,13 +26,7 @@ class UserEditRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'phone'=>'required|numeric',
-            'photo_name'=>'image',
-            'location'=>'required',
-            'address'=>'required',
-            
-          
-           
+            'photo_name'=>'image',          
         ];
     }
 }
