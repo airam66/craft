@@ -10,40 +10,43 @@
         <!-- Default box -->
       <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Editar Orden de Compra</h3>
+            <h3 class="box-title">EDITAR FACTURA DE COMPRA</h3>
          </div>
       <div class="box-body">
-          {!! Form::model($purchaseInvoice,['route'=>['purchasesInvoice.update',$purchaseInvoice->id], 'method'=>'PATCH', 'files'=>true])!!}
+          {!! Form::model($purchaseInvoice,['route'=>['purchasesInvoice.update',$purchaseInvoice->id], 'method'=>'PATCH'])!!}
           <section>
+
               <div class="row">
-                  <div class="col-xs-12">
-                    <h3 class="page-header" style="color:gray;">
-                        <img src="{{ asset('images/cotillon.png ') }}" width="230" height="80"  >
-                     
-                      <div class="pull-right">
-                         <b>Factura N°:{{$purchaseInvoice->pi_id}}</b><br><br>
-                         <b>Fecha: {{$purchaseInvoice->created_at->format('d-m-Y')}}</b>
+                                   
+                      <div class="col-md-3 pull-left">
+                         <h3  style="color:gray; font-size: 22px;"><b>Factura N°: {{$purchaseInvoice->number_invoice}}</b></h3>                       
+                      </div>
+                      <div class="col-md-6 pull-right">
+                       <h3 style="color:gray; font-size: 22px;"> <b>Fecha: {{$purchaseInvoice->created_at->format('d-m-Y')}}</b></h3>
                       </div>
                       
-                    </h3>
-                  </div><!-- /.col -->
               </div>
+
       
               <div class="border">
-             
+                <h3>Proveedor</h3>
                 <div class="row ">
-                         <div class="col-md-4 pull-left" >
+                        <div class="col-md-3 pull-left" >
+                                  <h4><strong>Cuit: </strong> {{$purchaseInvoice->provider->cuit}} </h4>
+                                 <input id="cuit"  class="form-control myfactura" value="{{$purchaseInvoice->provider->cuit}}" type="hidden" >
+                                 
+                                  
+                         </div>
+
+                         <div class="col-md-6  pull-right">
                            
                             <h4><strong>Proveedor: </strong> {{$purchaseInvoice->provider->name}}</h4>
+
+                             <input id="provider_id" name="provider_id" class="form-control myfactura" value=" {{$purchaseInvoice->provider->id}}" type="hidden" >
                             
                        </div>
                        
-                      <div class="col-md-6  col-md-offset-2">
-                            <h4><strong>Cuit: </strong> {{$purchaseInvoice->provider->cuit}} </h4>
-                           
-                           
-                            
-                      </div>
+                    
                 </div>
               </div>
               <hr>
@@ -52,7 +55,7 @@
                   <h3>Producto</h3>
                 <div class="row " >
                     <div class="col-md-3 pull-left" >
-                         {!! form::label('Codigo')!!}
+                         {!! form::label('Código')!!}
                          <input id="code" class="form-control" name="code" type="text" >
                          <input id="product_id" class="form-control " name="product_id" type="hidden" >
                     </div> 
@@ -62,29 +65,31 @@
                           <i class="fa fa-search"></i>
                        </button>
                    </div>
-                   
-                   <div class="col-md-2 col-md-offset-2">
-                       {!!Field::number('purchase_price',null, ['step'=>'any','disabled'])!!} 
- 
-                    </div>
-                     <div class="col-md-2">
+
+                   <div class="col-md-2" style="margin-left: 220px;">
                         {!! form::label('Cantidad')!!}
                         <input class="form-control" id="amount" name="amount" type="number" 
                         onkeyup="">
-                      </div>                    
+                    </div>
+                   
+                   <div class="col-md-2">
+                       {!!Field::number('purchase_price',null, ['step'=>'any'])!!} 
+ 
+                    </div>
+                                         
                  </div>
                  <div class="row " >
-                    <div class="col-md-4 pull-left ">
+                    <div class="col-md-6 pull-left">
                          {!!Field::text('name',null,['disabled'])!!}
                     </div>
                      
-                    <div class="col-md-4  col-md-offset-1 ">
+                    <div class="col-md-4  pull-left">
                          {!!Field::text('brand',null,['disabled'])!!}
                     </div>
 
 
-                    <div class="col-md-2 col-md-offset-1">
-                      <button type="button" id="btn_add"  class="btn pull-right">
+                    <div class="col-md-2 pull-right">
+                      <button type="button" id="btn_add"  class="btn pull-right" title="Agregar producto">
                       <img src="{{ asset('images/images.png ') }}" width="50" height="50">
                       </button>
                     </div>
@@ -148,8 +153,10 @@
         
               <div class="row no-print">
                   <div class="col-xs-12">
-                        <div class="form-group">
-                        {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+                        <div class="form-group text-center">
+                        {!! Form::submit('Guardar',['class'=>'btn btn-primary','onclick'=>'verifyProducts()'])!!}
+
+                        <a class="btn btn-danger" href="{{ route('purchasesInvoice.index') }}">Cancelar</a>
                        </div>
                   </div>
                 </div>
@@ -170,38 +177,12 @@
 
 @endsection
 
+@push('scripts')
+
+<script src="{{asset('js/completeProducts.js')}}"></script>
+@endpush
+
 @section('js')
-
-<script >
-  function complete($id,$code,$brand,$name,$purchase,$stock){
-    $('#code').val($code);
-    $('#brand').val($brand);
-    $('#product_id').val($id);
-    $('#name').val($name);
-    $('#purchase_price').val($purchase);
-    $('#favoritesModalProduct').modal('hide');
-   $('#mostrar').html('');
-  };
-</script>
-
-<script>
-$('#searchProducts').on('keyup', function(){
-  $value=$(this).val();
-
-  $providerid={{$purchaseInvoice->provider->id}}
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchProducts')}}",
-    data:{'searchProducts':$value,'provider_id':$providerid},
-    success: function(data){
-     
-      $('#mostrar').html(data);
-    }
-    
-  })
-})
-</script>
-
 
 <script>
     $('#btn_add').on('click',function(){
@@ -224,11 +205,10 @@ $('#searchProducts').on('keyup', function(){
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
 
       
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
-         TotalCompra= parseFloat($('#TotalCompra').val())+Subtotal[cont];
-         console.log(TotalCompra);
+         Subtotal[cont]=(amount*price).toFixed(2);
+         TotalCompra= (parseFloat($('#TotalCompra').val())+parseFloat(Subtotal[cont])).toFixed(2);
 
-              var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td> <td><input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>'+Subtotal[cont]+'</td> </tr>';
+              var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td><td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+name+'</td> <td>'+brand+'</td> <td>$<input readonly type="number" step="any" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
           cont++;
           clear();
         $('#TotalCompra').val(TotalCompra);
@@ -236,14 +216,13 @@ $('#searchProducts').on('keyup', function(){
 
      
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
+        alert("Error al ingresar detalle de la cotización, revise los datos del producto");
   }
 }
 
 function deletefila(index,subTotal){
-  console.log(index);
-  TotalCompra= parseFloat($('#TotalCompra').val())-subTotal;
-  console.log(subTotal);
+ 
+  TotalCompra= (parseFloat($('#TotalCompra').val())-subTotal).toFixed(2);
   $('#TotalCompra').val(TotalCompra);
   $('#'+index).remove();
  }
@@ -257,6 +236,17 @@ function deletefila(index,subTotal){
     $('#brand').val('');
  
  }
+
+ 
+ //verificar que se haya agregado por lo menos un producto
+  function verifyProducts(){
+    
+  if ($('#TotalCompra').val()==0.00) {
+    alert("Debe agregar por lo menos un producto");
+    event.preventDefault();
+  }
+
+}
 </script>
 
 
@@ -276,19 +266,5 @@ function deletefila(index,subTotal){
 
 </script>
 
-<script>
-  function SearchLetter($letter){
-  $value=$letter;
-  $.ajax({
-    type: 'get',
-    url:  "{{ URL::to('admin/searchLetter')}}",
-    data:{'searchL':$value,'provider_id':{{$purchaseInvoice->provider->id}} },
-    success: function(data){
-      $('#mostrar').html(data);
-    }
-    
-  });
-  }
-</script>
 
 @endsection

@@ -18,7 +18,7 @@ class InvoicesController extends Controller
     {
        
         $this->products= new Product();
-        $this->clients=new Client();
+        $this->clients=new Client(); 
     }
     
 
@@ -26,22 +26,16 @@ class InvoicesController extends Controller
 
       $fecha1=$request->fecha1;
       $fecha2=$request->fecha2;
-     $invoices=Invoice::orderBy('id','DESC')->paginate(15);
+      $invoices=Invoice::orderBy('id','DESC')->paginate(15);
 
       if ($request->searchClient!=''){
-         $client= Client::SearchClient($request->searchClient)->first();
-          if ($client != null){
-          $Invoices=$client->invoices()->paginate(15);
-         }
-         else{
-            $invoices = Collection::make();
-         }
-      }
+          $invoices=Invoice::SearchInvoiceClient($request->searchClient)->paginate(15);
+      } 
 
-      if($request->fecha1!='' and $request->fecha2!=''){
-         $fecha1=$request->fecha1;
-         $fecha2=$request->fecha2;
-         $invoices=Invoice::SearchInvoice($request->fecha1,$request->fecha2)
+      
+
+      if($fecha1!='' and $fecha2!=''){
+         $invoices=Invoice::SearchInvoice($fecha1,$fecha2)
                             ->orderBy('id','DESC')->paginate(15);
      }
       
@@ -68,35 +62,41 @@ class InvoicesController extends Controller
     public function store(Request $request){
             $venta = new Invoice;
             $venta->total=$request->get('Totalventa');
-            $venta->status=$request->get('status');
-            $venta->client_id=$request->get('client_id');
-            if (empty($venta->client_id)){
-              $venta->client_id=1;
-            }
-            $venta->discount=$request->get('discount');
-            if (empty($venta->discount)){
-              $venta->discount=0;
-            }
-            if ($venta->total>0){
-                 $venta->save();
+            if ($venta->total != null) {
+              $venta->status=$request->get('status');
+              $venta->client_id=$request->get('client_id');
+
+              if (empty($venta->client_id)){
+                $venta->client_id=1;
+              }
+              $venta->discount=$request->get('discount');
+
+              if (empty($venta->discount)){
+                $venta->discount=0;
+              }
+
+              if (!empty($venta->total) and ($venta->total>0)){
+                 $venta->save(); var_dump('ola');
                  $income=new Movement();
                  $income->concept="Venta N° ".$venta->id;
                  $income->type="entrada";
                  $income->rode=$venta->total;
                  $income->save();
-            }
-            else{
+              }
+              else{
+
                   flash("Debe ingresar al menos un producto" , 'danger')->important();
-            }
-           
-            //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE VENTA//++++++++++++++
-            $idarticulo = $request->get('dproduct_id');
-            $amount = $request->get('damount');
-            $price = $request->get('dprice');
+                  return redirect()->route('invoices.create');
+              }
 
-            $cont = 0;
+              //+++++++++++++INICIAMOS CAPTURA DE VARIABLES ARREGLO[] PARA DETALLEDE VENTA//++++++++++++++
+              $idarticulo = $request->get('dproduct_id');
+              $amount = $request->get('damount');
+              $price = $request->get('dprice');
 
-            while ( $cont < count($idarticulo) ) {
+              $cont = 0;
+
+              while ( $cont < count($idarticulo) ) {
                 $detalle = new InvoiceProduct();
                 $detalle->invoice_id=$venta->id; //le asignamos el id de la venta a la que pertenece el detalle
                 $detalle->product_id=$idarticulo[$cont];
@@ -106,9 +106,22 @@ class InvoicesController extends Controller
                 $detalle->save();
                 $cont = $cont+1;
 
-            }
+              }
+              flash("La venta ha sido realizada con éxito" , 'success')->important();
+              return redirect()->route('invoices.index');
 
-            return redirect()->route('invoices.index',$venta->id);
+              
+            } else {
+              flash("Debe agregar por lo menos un producto." , 'danger')->important();
+                return redirect()->route('invoices.create');
+            }
+            
+            
+           
+             
+            
+           
+            
 
     }
 
@@ -231,7 +244,7 @@ public function searchDate(Request $request){
                     $product=Product::find($invoiceProduct->product_id);
                     $product->stock = $product->stock+$invoiceProduct->amount;
                     $product->save();
-                    $invoiceProduct->delete();
+                    //$invoiceProduct->delete();
                 }
 
         $invoice->status='inactivo';
@@ -254,11 +267,10 @@ public function searchDate(Request $request){
 
 
     public function show($id){
-      
       $invoice= Invoice::find($id);
       $detalles= DB::table('invoices_products as d')
       ->join('products as p','d.product_id','=','p.id')
-      ->select('p.id','p.name','p.description','d.amount','d.subTotal')
+      ->select('p.id','p.name','p.description','d.price','d.amount','d.subTotal')
       ->where('d.invoice_id','=',$id)->get();
     
       return view ('admin.invoices.show')->with('invoice',$invoice)

@@ -25,12 +25,13 @@
   <br> 
       
         
-  <table id="tabla table-striped" class="display table table-hover" cellspacing="0" width="100%">
+  <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
        
     <thead>
-            <tr style="background-color:lightgray">
+            <tr>
              <th width="35%">Nombre</th>
                 <th>Marca</th>
+                <th>Precio</th>
                 <th>Stock</th>
                 <th></th>
                    

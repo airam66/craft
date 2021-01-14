@@ -5,12 +5,17 @@
 <div class="box box-primary">
 
   <div class="box-header ">
-    <h2 class="box-title col-md-5">Listado de Marcas</h2>
+    <h1 class="box-title">Listado de Marcas</h1>
+
+    <div class="row">
       
+       <input type ='button' class="btn btn-success col-md-1" style=" margin-top: 10px;margin-bottom: 10px;
+    margin-left: 15px;"  value = 'Agregar' onclick="location.href = '{{ route('brands.create') }}'"/> 
       <!-- form busqueda -->
-        <form route='admin.brands.index'  method="GET" class="col-md-3 col-md-offset-4 ">
+        <form route='admin.brands.index'  method="GET" class="col-md-4 col-md-offset-6 ">
             <div class="input-group">
-              <input type="text" name="name" class="form-control" placeholder="Nombre..."> 
+                  <input type="text" name="name" class="form-control" placeholder="Nombre...">
+              
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -18,14 +23,14 @@
         </form>
           <!-- /form  busqueda-->
         
-        <input type ='button' class="btn btn-success"  value = 'Agregar' onclick="location.href = '{{ route('brands.create') }}'"/> 
+    </div>
 
   </div>
   <!--Inicio body-->
-  <div class="box-body"> 
-  @if($brands->isNotEmpty())             
+  <div class="box-body table-responsive no-padding"> 
+            
 
-    <table id="tabla table-striped" class="display table table-hover" cellspacing="0" width="100%">
+    <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
        
         <thead>
             <tr>
@@ -37,20 +42,17 @@
             </tr>
         </thead>
      
-       
         <tbody>
+          @if($brands->isNotEmpty())  
            @foreach($brands as $brand) 
 
-                  
                     <tr role="row" class="odd">
-
-                      <td>{{$brand->id}}</td>
 
                       <td>{{$brand->name}}</td>
                       <td>{{$brand->status}}</td>
                       <td> 
                       
-                      <a href="{{route('brands.edit',$brand->id)}}"  >
+                      <a href="{{route('brands.edit',$brand->id)}}"  title="Editar">
                         <button type="submit" class="btn btn-warning">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                             
@@ -58,7 +60,7 @@
                      </a>
 
 
-                      <a href="{{route('brands.desable',$brand->id)}}" onclick="return confirm('¿Seguro dara de baja esta marca?')">
+                      <a href="{{route('brands.desable',$brand->id)}}" title="Deshabilitar" onclick="return confirm('¿Seguro desea dar de baja esta marca?')">
                           <button type="submit" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                           </button>
@@ -66,18 +68,15 @@
                       </td>
                     </tr>
           @endforeach
+         @else
+           <tr><td class="text-center" colspan="4">No se encontraron resultados</td></tr>
+         @endif
         </tbody>
     </table>
     <div class="text-center">
-      {!!$brands->render()!!}
+       {!!$brands->appends(request()->input())->links()!!}
     </div>
-    @else
- <div class="alert alert-dismissable alert-warning">
-  <button type="button" class="close" data-dismiss="alert">×</button>
-  <p>No se encontró ninguna marca.</p>
-</div>
-
-@endif
+   
   </div><!--Fin body-->
 </div>
 

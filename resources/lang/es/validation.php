@@ -84,7 +84,7 @@ return [
     'state'                => 'El estado no es válido para el país seleccionado.',
     'string'               => 'El campo :attribute debe contener solo caracteres.',
     'timezone'             => 'El campo :attribute debe contener una zona válida.',
-    'unique'               => 'El elemento :attribute ya está en uso.',
+    'unique'               => 'El campo :attribute ya está en uso.',
     'uploaded'             => 'El elemento :attribute fallo al subir.',
     'url'                  => 'El formato de :attribute no corresponde con el de una URL válida.',
     'current_password'     => 'La contraseña no coincide',
@@ -154,7 +154,10 @@ return [
     'datepicker'             =>         'Fecha',
     'type'                   =>         'Tipo',
     'concept'                =>         'Concepto',
-    'rode'                   =>         'Monto'
+    'rode'                   =>         'Monto',
+    'events[]'               =>         'Evento/s',
+    'from_date'              =>         'Fecha Desde',
+    'to_date'                =>         'Fecha Hasta'
     ],
 
 ];

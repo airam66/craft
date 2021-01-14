@@ -16,7 +16,7 @@ class ProvidersController extends Controller
     
     public function index(Request $request)
     {
-       $providers=Provider::SearchProvider($request->name)->orderBy('name','status','ASC')->paginate(10);
+       $providers=Provider::SearchProvider($request->name)->orderBy('name','ASC')->paginate(10);
       
        return view('admin.providers.index')->with('providers',$providers);
 
@@ -91,6 +91,15 @@ class ProvidersController extends Controller
    
     public function update(Request $request, $id)
     {
+       $this->validate($request,[
+          'name'=>'max:120|required',
+            'cuit'=> 'max:11|min:11|required',
+            'location'=>'required',
+            'province'=>'required',
+            'address'=>'required',
+            'phone'=>'max:15|min:7|required',
+        ]);
+
       $provider=Provider::find($id);
       $provider->fill($request->all());
       $provider->save();
@@ -119,6 +128,16 @@ class ProvidersController extends Controller
 
     public function destroy($id)
     {
+
+    }
+
+     public function addProducts($id)
+    {   
+      $provider= Provider::find($id);
+
+
+        return view('admin.providers.addProductsProvider')->with('provider',$provider);
+
 
     }
 }

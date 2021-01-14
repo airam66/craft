@@ -46,6 +46,7 @@
     <![endif]-->
     @yield('style')
     <!-- Scripts -->
+  
     <script>
 
         window.Laravel = {!! json_encode([
@@ -210,8 +211,7 @@
                   <ul class="treeview-menu">
                 <li class="active"><a href="{{route('clients.index')}}"><i class="fa fa-circle-o"></i>Lista de clientes</a></li>
                 <li class="active"><a href="{{route('providers.index')}}"><i class="fa fa-circle-o"></i> Lista de proveedores</a></li>
-                <li class="active"><a href="{{route('providersproducts.create')}}"><i class="fa fa-circle-o"></i> Proveedores por productos</a></li>
-               <!-- <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
+             
             </ul>
             </li>
             
@@ -226,6 +226,8 @@
                  </ul>
             </li>
 
+            @if(Auth::user()->role_id == 1)
+
              <li class="treeview">
               <a href="#">
                  <i class="fa fa-balance-scale"></i>
@@ -235,7 +237,7 @@
                 <li class="active"><a href="{{route('movements.index')}}"><i class="fa fa-circle-o"></i>Lista de Movimientos</a></li>
             </ul>
             </li>
-
+          @endif
             
             <li class="treeview">
               <a href="#">
@@ -251,6 +253,8 @@
 
               </ul>
             </li>
+
+          @if(Auth::user()->role_id == 1)
             <li class="treeview">
               <a href="#">
                  <i class="fa fa-laptop"></i>
@@ -261,6 +265,7 @@
                 <li class="active"><a href="{{route('cotillon.edit',1)}}"><i class="fa fa-circle-o"></i> Datos Generales</a></li>
               </ul>
             </li>
+          @endif
 
           </ul>
         </section>
@@ -356,9 +361,9 @@
 
     <script src="{{asset('js/plantilla.js')}}"></script>
    
-    
-    @yield('js')
     @stack('scripts')
+    @yield('js')
+    
     
     <script>
       function baseUrl(url){

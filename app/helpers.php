@@ -65,9 +65,35 @@ function popUpProductsPurchases($products){
                    $output.='<tr>'.
                         '<td>'.$product->product_name.'</td>'.
                         '<td>'.$product->brand_name.'</td>'.
+                        '<td>$'.$product->purchase_price.'</td>'.
                         '<td>'.$product->stock.'</td>'.
+                       
 
                         '<td><a onclick="complete('.$product->product_id.','.$product->code.','.$comilla.$product->brand_name.$comilla.','.$comilla.$product->product_name.$comilla.','.$product->purchase_price.','.$product->stock.')'.'"'.' type="button" class="btn btn-primary"> Agregar </a></td>'
+
+
+                    .'</tr>';
+        }
+
+   
+        return $output;
+          
+   }
+}
+
+function popUpProductsProvider($products){
+  
+        $output="";
+        $comilla="'";
+        
+        if ($products) {
+        foreach ($products as $key => $product) {
+                   $output.='<tr>'.
+                        '<td>'.$product->product_name.'</td>'.
+                        '<td>'.$product->brand_name.'</td>'.
+                        '<td>'.$product->stock.'</td>'.
+
+                        '<td><a onclick="add_product('.$product->product_id.','.$product->code.','.$comilla.$product->product_name.$comilla.','.$comilla.$product->brand_name.$comilla.')'.'"'.' type="button" class="btn btn-primary"> Agregar </a></td>'
 
 
                     .'</tr>';
@@ -90,14 +116,16 @@ function popUpPeople($people,$type){
         foreach ($people as $key => $person) {
                  if($type!='Client'){
                   $numberPerson=$person->cuit;
+                  $infoPerson=$person->province;
                  }else{
                   $numberPerson=$person->cuil;
+                  $infoPerson=$person->phone;
                  }
                   $output.='<tr>'.
                         '<td>'.$numberPerson.'</td>'.
                         '<td>'.$person->name.'</td>'.
                         '<td>'.$person->address.'</td>'.
-                        '<td>'.$person->phone.'</td>'.
+                        '<td>'.$infoPerson.'</td>'.
                      
                          '<td><a onclick="completeC('.$comilla.$person->id.$comilla.','.$numberPerson.','.$comilla.$person->name.$comilla.'); productStockProvider() " type="button" class="btn btn-primary"> Agregar </a></td>'
                       

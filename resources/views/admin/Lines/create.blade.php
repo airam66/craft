@@ -9,26 +9,26 @@
         <!-- Default box -->
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="titulo_h text-center">NUEVA LINEA</h3>
+            <h3 class="box-title">NUEVA LINEA</h3>
           </div>
-          <div class="box box-info">
+          
           <div class="box-body">
             
             {!! Form::open(['route'=>'lines.store', 'method'=>'POST'])!!}
 
-             <div class="form-group titulo_h4">
+             <div class="form-group">
               {!! Field::text('name',null, ['class'=>'form-control'])!!}
              </div>
 
 
-              <div class= "form-group titulo_h4">
+              <div class= "form-group">
   
               {!! Form::label('status','Estado')!!}
               {!! Form::select('status', ['activo'=>'activo','inactivo'=>'inactivo'],null,['class'=>'form-control'])!!} 
               </div>
 
               <div class="form-group text-center">
-              {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+              {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
                <a class="btn btn-danger" href="{{ route('lines.index') }}">Cancelar</a>
 
               </div>

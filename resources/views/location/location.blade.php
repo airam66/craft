@@ -1,4 +1,4 @@
- <select name="location" class="form-control" value="{{ old('location') }}" required autofocus>
+ <select name="location" id="location" class="form-control" value="{{ old('location') }}" required autofocus>
                   <option value="" selected="selected">Seleccione una localidad</option>
                   <option value="Rosario de Lerma">Rosario de Lerma</option>
                   <option value="Salta ">Salta</option>

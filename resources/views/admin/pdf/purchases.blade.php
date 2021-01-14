@@ -1,86 +1,63 @@
 @extends('layouts.main')
 @section('content')
+<section class="content">
  <div class="row">
-            <div class="col-xs-12">
-              <div class="box box-info">
-                <div class="box-header">
-                  <h3 class="box-title">REPORTES DE COMPRAS</h3>
-                  
-                </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                   
-                    <thead><tr>
-                      <th>N°</th>
-                      <th>Reporte</th>
-                      <th></th>
-                      
-                    </tr></thead>
-                    <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Reporte de Compras Mensuales</td>
-                      <td>
-                         <form action="viewReportPurchase"  method="GET" target="_blank">
-                            <div class="col-md-4 pull-left">
-                                {!! Field::select('from_number', $months, ['empty'=>'Seleccione un mes'])!!}
-                             </div>
-                             <div class="col-md-4">
+  <!--COMPRAS MENSUALES-->
+            <div class="col-md-6">
 
-                                 {!! Field::select('to_number', $months, ['empty'=>'Seleccione un mes'])!!}   
-                              </div>                           
-                              <br> 
-                            <button type="submit" class="btn btn-primary">
-                                        Ver
-                            </button>
-                          </form>                           
-                      </td>
-                     
-                    
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                      <td>Reporte de Compras a Proveedores</td>
-                      <td>
-                        <form action='createReportPPurchase'  method="GET" target="_blank" >
-                           <div class="input-group date">
-                             <div class="input-group input-daterange">
-                              <div class="input-group-addon">DESDE</div>
-                               <div class="form-group{{ $errors->has('fecha1') ? ' has-error' : '' }}">
-                                <input type="text" class="form-control" name="fecha1" data-date-end-date="0d" placeholder="Seleccione una fecha" id="fecha1">
-                                @if ($errors->has('fecha1'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('fecha1') }}</strong>
-                                    </span>
-                                @endif
-                               </div>
-                              <div class="input-group-addon">HASTA</div>
-                               <div class="form-group{{ $errors->has('fecha2') ? ' has-error' : '' }}">
-                                 <input type="text" class="form-control" name="fecha2" data-date-end-date="0d" placeholder="Seleccione una fecha" id="fecha2">
-                                  @if ($errors->has('fecha2'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('fecha2') }}</strong>
-                                    </span>
-                                @endif
-                                </div>
-                              <div class="input-group-addon">
-                                
-                                <button type="submit" class="btn btn-primary">
-                                      Ver
+              <div class="box box-warning">
+                <div class="box-header">
+                  <h4 class="text-center"><b>REPORTE DE COMPRAS MENSUALES AÑO</b></h4>
+                </div>
+                <div class="box-body">
+                    <form action="viewReportPurchase"  method="GET" id="reportPurchases">
+                
+                         {!! Field::select('from_number', $months, ['empty'=>'Seleccione un mes'])!!}
+                         {!! Field::select('to_number', $months, ['empty'=>'Seleccione un mes'])!!} 
+                    <div class="text-center">
+                          <button type="submit" class="btn btn-primary" id="buttonPurchases">
+                                        Ver Reporte
+                          </button>
+                    </div>
+                     </form>  
+                           
+                              
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->    
+            </div><!-- /.col (left) -->
+            <!-- FIN REPORTE COMPRAS MENSUALES-->
+
+            <!--REPORTE COMPRAS A PROVEEDORES-->
+            <div class="col-md-6">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h4 class="text-center"><b>REPORTE DE COMPRAS A PROVEEDORES</b></h4>
+                </div>
+                <div class="box-body">
+                   <form action='createReportPPurchase'  method="GET" id="reportPPurchases">
+                          
+                              <div class="input-daterange">
+                                {!! Field::text('from_date', ['data-date-end-date'=>'0d','placeholder'=>'Seleccione una fecha'])!!}
+                              </div> 
+
+                              <div class="input-daterange">
+                                {!! Field::text('to_date', ['data-date-end-date'=>'0d','placeholder'=>'Seleccione una fecha'])!!}
+                              </div>
+                              
+                              <div class="text-center">
+                                <button type="submit" class="btn btn-primary" id="buttonPPurchases">
+                                      Ver Reporte
                                   </button>
                               </div>
-                            </div>
-                          </div>
-                        </form>
-                     </td>
-                    </tr>
-                    
-                   
-                  </tbody></table>
+                    </form>
+
                 </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
- </div>
+              </div><!-- /.box COMPRAS A PROVEEDORES-->
+
+            </div><!-- /.col (right) -->
+
+    </div><!-- /.row -->
+</section>
 
  @endsection
  @section('js')
@@ -89,10 +66,27 @@
     $(this).datepicker({
          language: "es",
          autoclose: true,
-         format:"yyyy/mm/dd"
+         format:"dd/mm/yyyy"
     });
 });
 
+$('#buttonPPurchases').click(function(){
+    var date1=$('#from_date').val();
+    var date2=$('#to_date').val();
+
+    if((date1 && date2) && (date1 < date2 )){
+       $('#reportPPurchases').attr('target','_blank');
+    }
+});
+
+$('#buttonPurchases').click(function(){
+    var mes1=$('#from_number').val();
+    var mes2=$('#to_number').val();
+
+    if((mes1 && mes2) && (mes1 < mes2 )){
+       $('#reportPurchases').attr('target','_blank');
+    }
+});
 
 </script>
 

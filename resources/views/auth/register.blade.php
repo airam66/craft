@@ -37,9 +37,12 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-transparent space">
                 
-                <div class="panel-body">
-                   <h3><b>Registrarse</b></h3>
+                <div class="panel-body text-center">
+                   <h3><b>CREÁ TU CUENTA</b></h3>
 
+                   <div><label style="font-size: 16px; color:#0fc1c8;">Todos los campos son obligatorios</label></div>
+
+                    <label><b>Datos personales</b></label>
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
@@ -57,11 +60,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('cuit') ? ' has-error' : '' }}">
-                            <label for="cuit" class="col-md-4 control-label">CUIT</label>
+                        <div class="form-group{{ $errors->has('cuil') ? ' has-error' : '' }}">
+                            <label for="cuil" class="col-md-4 control-label">CUIL/CUIT</label>
 
                             <div class="col-md-6">
-                                <input id="cuil" type="text" class="form-control" name="cuil" value="{{ old('cuil') }}" required autofocus>
+                                <input id="cuil" type="number" class="form-control" name="cuil" value="{{ old('cuil') }}" required autofocus>
 
                                 @if ($errors->has('cuil'))
                                     <span class="help-block">
@@ -99,10 +102,10 @@
                         </div>
 
                          <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <label for="location" class="col-md-4 control-label">Teléfono</label>
+                            <label for="phone" class="col-md-4 control-label">Teléfono</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus>
+                                <input id="phone" type="number" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
@@ -111,6 +114,8 @@
                                 @endif
                             </div>
                         </div>
+
+                        <label><b>Datos de acceso</b></label>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">Correo</label>
@@ -149,12 +154,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Registrarme
+                        <div class="form-group text-center">
+                                <button type="submit" class="btn btn-lg btn-success">
+                                    Crear cuenta
                                 </button>
-                            </div>
                         </div>
                     </form>
                   </div>
