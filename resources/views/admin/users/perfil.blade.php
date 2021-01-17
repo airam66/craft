@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="box box-widget widget-user-2">
+<div class="box box-widget widget-user-2" style="width: 70%; margin:0 auto;">
 	
 	<div class="widget-user-header bg-aqua-active">
 		
@@ -21,16 +21,16 @@
 	</div>
 	<div class="box-footer">
 		<div class="row">
-			<div class="col-sm-4 border-right">
+			<div class="col-sm-6 border-right">
 				<div class="description-block">
 					
-				<a href="{{ route('users.modifyMyPassword')}}">Cambiar Contraseña</a>
+				<a style="font-size:18px; font-weight: bold;" href="{{ route('users.modifyMyPassword')}}">Cambiar Contraseña</a>
 				</div>
 			</div>
-			<div class="col-sm-4 border-right">
+			<div class="col-sm-6 border-right">
 				<div class="description-block">
 
-					<a href="{{route('users.editDatas')}}"  >Modificar datos</a>
+				<a style="font-size:18px; font-weight: bold;" href="{{route('users.editDatas')}}"  >Modificar datos</a>
 
 				</div>
 			</div>

@@ -91,9 +91,9 @@ class UsersController extends Controller
     $user=\Auth::user();
      $user->password=bcrypt($request->newpassword);
      $user->save();
-    flash("Su contraseña se ha cambiado correctamente ", 'success')->important();
-     
-       return redirect()->route('users.modifyMyPassword');
+     \Auth::logout();
+        
+       return redirect()->route('login');
    }
    
    public function profile(){
@@ -124,7 +124,7 @@ class UsersController extends Controller
     $user->save();
     flash("Sus datos se cambiaron correctamente ", 'success')->important();
      
-       return redirect()->route('users.editDatas');
+       return redirect()->route('profile');
    
    }
 

@@ -62,12 +62,12 @@
             @endif
             </td>
             <td>
-              <a href="{{route('users.edit',$user->id)}}"  >
+              <a href="{{route('users.edit',$user->id)}}" title="Editar">
                         <button type="submit" class="btn btn-warning">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                         </button>
                      </a>
-              <a href="{{route('users.destroy',$user->id)}}" onclick="return confirm('¿Seguro dara de baja usuario?')">
+              <a href="{{route('users.destroy',$user->id)}}" title="Deshabilitar" onclick="return confirm('¿Seguro dara de baja usuario?')">
                         <button type="submit" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                         </button>

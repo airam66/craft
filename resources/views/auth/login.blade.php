@@ -36,8 +36,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-transparent space">
                 
-                <div class="panel-body">
-                   <h3><b>Iniciar Sesión</b></h3>
+                <div class="panel-body text-center">
+                   <h3><b>INICIAR SESIÓN</b></h3>
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
@@ -81,15 +81,13 @@
                         </div>-->
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-success">
-                                    Entrar
+                                <button type="submit" class="btn btn-lg btn-success">
+                                    Iniciar sesión
                                 </button>
 
                                 <!--<a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>-->
-                            </div>
                         </div>
                     </form>
                 </div>

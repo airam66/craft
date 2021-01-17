@@ -24,8 +24,8 @@ class DateRequest extends FormRequest
     public function rules()
     {
         return [
-          'fecha1'=>'required',
-          'fecha2'=>'required',
+          'from_date'=>'required',
+          'to_date'=>'required',
         ];
     }
 }

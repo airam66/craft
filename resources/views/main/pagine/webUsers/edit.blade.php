@@ -5,7 +5,7 @@
                      
   <div class="content-wrap centering">
         <div class="mi_letter text-center">
-                  <h3>Actualizar datos</h3>
+                  <h1>Actualizar datos</h1>
                   <img src="{{ asset('images/line.png')}}" alt=""> 
       </div>
          @include('flash::message')

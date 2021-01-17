@@ -26,7 +26,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'name'=>'max:120|required',
-            'cuil'=> 'max:11|min:11|unique:clients',
+            'cuil'=> 'digits:11|unique:clients',
             'location'=>'required',
             'address'=>'required',
             'email'=>'unique:clients',

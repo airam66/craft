@@ -152,21 +152,24 @@ class PdfController extends Controller
        
         $vistaurl="admin.pdf.reportProviderPurchases";
 
-     $invoices= Purchase::whereDate('created_at','>=',$request->fecha1)
-                          ->whereDate('created_at','<=',$request->fecha2)
+        $fecha1 = str_replace("/","-",$request->from_date);
+        $fecha2 = str_replace("/","-",$request->to_date);
+
+     $purchases= Purchase::whereDate('created_at','>=',date('Y-m-d',strtotime($fecha1)))
+                          ->whereDate('created_at','<=',date('Y-m-d',strtotime($fecha2)))
                           ->where('status','=','realizada')
                           ->orderBy('id','ASC')->get();
          
                 
     $provider=DB::table('providers as pr')
              ->join('purchases as p','pr.id','=','p.provider_id')
-             ->select('provider_id','pr.name','pr.address')
-             ->groupBy('provider_id','pr.name','pr.address')
-             ->whereDate('p.created_at','>=',$request->fecha1)
-             ->whereDate('p.created_at','<=',$request->fecha2)
+             ->select('provider_id','pr.name','pr.cuit','pr.address')
+             ->groupBy('provider_id','pr.name','pr.cuit','pr.address')
+             ->whereDate('p.created_at','>=',date('Y-m-d',strtotime($fecha1)))
+             ->whereDate('p.created_at','<=',date('Y-m-d',strtotime($fecha2)))
              ->where('p.status','=','realizada')->distinct()->get();
     
-     if ($invoices->isEmpty()){
+     if ($purchases->isEmpty()){
           
       flash("No hay compras en el período de fechas ingresado" , 'warning')->important();
      
@@ -174,7 +177,7 @@ class PdfController extends Controller
        return redirect()->route('admin.reportPurchase');
       }
 
-        return $this->createPDF($invoices,$provider,$vistaurl);
+        return $this->createPDF($purchases,$provider,$vistaurl);
     }
 
     public function createReportCOrder(DateRequest $request){
