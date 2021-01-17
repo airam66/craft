@@ -112,22 +112,55 @@ class ShoppingCartsController extends Controller
 
     public function edit()
     {
-        $shoppingcart_id=\Session::get('shoppingcart_id');
-        $shoppingcart=ShoppingCart::findOrCreateBySessionID($shoppingcart_id);
+        return view('main.pagine.shoppingcart.edit');
+    }
 
-        $details2=$shoppingcart->ShoppingCartProducts()->get();
+    public function store(Request $request){
+        $user_id=\Auth::user()->client_id;
 
-        $details= DB::table('shoppingcart_product as scp')
-                          ->join('products as p','scp.product_id','=','p.id')
-                          ->select('scp.id as shopping_cart_id','p.id as product_id','p.extension','p.name as product_name','scp.price','scp.amount','scp.subTotal')
-                          ->where('scp.shopping_cart_id','=',$shoppingcart->id)->get();
-        //dd($details);
-        $date=date('d').'/'.date('m').'/'.date('Y');
+        $shoppingcart=ShoppingCart::create([
+            'status'=>'confirmar',
+            'client_id'=>$user_id,
+            'total'=>$request->total,
+            'delivery_date'=>$request->datepicker,
+        ]);
 
-        return view('main.pagine.shoppingcart.edit')->with('shoppingcart',$shoppingcart)
-                                                    ->with('details',$details)
-                                                    ->with('date',$date); 
-        
+        $idarticulo = $request->get('idproductos');
+        $amount = $request->get('cantidad'); 
+
+        $cont =0;
+        while ( $cont <count($idarticulo) ) {
+            $detalle = new ShoppingCartProduct;
+            $detalle->shopping_cart_id = $shoppingcart->id;
+            $detalle->product_id = $idarticulo[$cont];
+
+            $product = Product::find($idarticulo[$cont]);
+
+            if ($amount[$cont]>=$product->wholesale_cant){
+                $detalle->subTotal=$product->wholesale_price*$amount[$cont];
+                $detalle->price=$product->wholesale_price;
+            }else{
+                $detalle->subTotal=$product->retail_price*$amount[$cont];
+                $detalle->price=$product->retail_price;
+            }
+            $detalle->amount=$amount[$cont];
+            $detalle->save();
+                           
+            $cont = $cont+1;
+
+        }
+        $shoppingcart->total=$shoppingcart->total(); 
+
+        if ($shoppingcart->total>0){
+                 $shoppingcart->save();
+            }
+            else{
+                  flash("Debe ingresar al menos un producto" , 'success')->important();
+            }
+
+        flash("El carrito ha sido modificada con exito" , 'success')->important();
+     
+        return redirect()->back();
     }
 
     /**
