@@ -25,7 +25,7 @@ class clientTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($user){
 
-            $browser->visit('http://localhost:8080/comercio/public/admin/clients/create')
+            $browser->visit('http://localhost/comercio/public/admin/clients/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')

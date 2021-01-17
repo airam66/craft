@@ -32,7 +32,7 @@ class InvoiceTest extends DuskTestCase
        
 
         $this->browse(function (Browser $browser) use ($user,$category,$event,$brand,$line,$product1,$product2){
-            $browser->visit('http://localhost:8080/comercio/public/admin/invoices/create')
+            $browser->visit('http://localhost/comercio/public/admin/invoices/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')

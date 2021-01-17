@@ -20,7 +20,7 @@ class deleteCategoryTest extends DuskTestCase
          $category= factory(\App\Category::class)->create(['name'=>'Cumpleaños','description'=>'rgsrrtgcyth',]);
          $this->browse(function (Browser $browser) use($user) {
 
-            $browser->visit('http://localhost:8080/comercio/public/admin/categories')
+            $browser->visit('http://localhost/comercio/public/admin/categories')
                     ->type('email',$user->email)
                     ->type('password','secret')
                     ->press('Entrar')
