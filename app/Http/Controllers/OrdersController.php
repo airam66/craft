@@ -18,9 +18,10 @@ class OrdersController extends Controller
 {
     public function index(Request $request){
 
-      $orders=Order::orderBy('id','DESC')->paginate(15);
+      
        $fecha1=$request->fecha1;
        $fecha2=$request->fecha2;
+       $orders=Order::orderBy('id','DESC')->paginate(15);
        
        $orders->each(function($orders){
           $orders->client;
@@ -36,10 +37,8 @@ class OrdersController extends Controller
          }
       }
 
-      if($request->fecha1!='' and $request->fecha2!=''){
-         $fecha1=$request->fecha1;
-         $fecha2=$request->fecha2;
-         $orders=Order::SearchOrder($request->fecha1,$request->fecha2)
+      if($fecha1!='' and $fecha2!=''){
+         $orders=Order::SearchOrder($fecha1,$fecha2)
                             ->orderBy('id','DESC')->paginate(15);
       }
       
