@@ -8,7 +8,7 @@
 
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Registrar movimiento</h3>
+            <h3 class="box-title">REGISTRAR MOVIMIENTO</h3>
           
           </div>
           <div class="box-body">
@@ -22,8 +22,9 @@
               
               {!!Field::number('rode',null, ['class'=>'form-control','step'=>'any'])!!}
 
-              <div class="form-group">
-              {!! Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+              <div class="form-group text-center">
+              {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+               <a class="btn btn-danger" href="{{ route('movements.index') }}">Cancelar</a>
               </div>
           
  
