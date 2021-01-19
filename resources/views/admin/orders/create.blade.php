@@ -438,6 +438,11 @@ function deletefila(index){
   if(Totalventa == 0)
   {
     $('#balance').val(0);
+    $('#advance').val(0);
+    if($('#discount').is(':checked')){
+      $('#discount').prop("checked", false);
+    }
+    
   }
   else{
     TotalDisc -= $('#advance').val();

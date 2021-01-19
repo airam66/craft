@@ -87,6 +87,7 @@ class OrdersController extends Controller
             }
 
             if ($order->total>0){
+
                  $order->save();
                  $client=Client::find($order->client_id);
                  $client->bill=$request->get('balance');
@@ -98,7 +99,8 @@ class OrdersController extends Controller
                  $payment->save();
             }
             else{
-                  flash("Debe ingresar al menos un producto" , 'danger')->important();
+                  flash("Debe ingresar al menos un producto" ,'danger')->important();
+                  return redirect()->route('orders.create');
             }
 
             
