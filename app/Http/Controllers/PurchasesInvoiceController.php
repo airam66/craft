@@ -106,6 +106,7 @@ class PurchasesInvoiceController extends Controller
                  $outcome->concept="Compra N° ".$purchase->id;
                  $outcome->type="salida";
                  $outcome->rode=$purchase->total;
+                 $outcome->created_at = $purchase->created_at;
                  $outcome->save();
             }
 
@@ -187,6 +188,7 @@ class PurchasesInvoiceController extends Controller
                  $outcome->concept="Compra N° ".$purchase->id;
                  $outcome->type="salida";
                  $outcome->rode=$purchase->total;
+                 $outcome->created_at = $purchase->created_at;
                  $outcome->save();
             }
 

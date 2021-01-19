@@ -23,7 +23,7 @@ class ChangePasswordTest extends TestCase
            ->type('1234567',"newpassword")
            ->type('1234567',"newpassword_confirmation")
            ->press('Guardar cambios')
-           ->seeInElement('.alert','Su contraseña se ha cambiado correctamente');
+           ->seePageIs('login');
 
     }
 
