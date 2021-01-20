@@ -44,7 +44,7 @@
                             <div class="form-group{{ $errors->has('datepicker') ? ' has-error' : '' }}">
                             <div class="form-group">
                                   <div class='input-group date' >
-                                      <input type="text" class="form-control pull-right" id="datepicker" name="datepicker" value="{{date('Y/m/d', strtotime($order->delivery_date))}}">
+                                      <input type="text" class="form-control pull-right" id="datepicker" name="datepicker" value="{{date('d/m/Y', strtotime($order->delivery_date))}}">
                                       <span class="input-group-addon">
                                           <span class="glyphicon glyphicon-time"></span>
                                       </span>
@@ -189,7 +189,7 @@
                         </tr>
                         <tr>
                           <th>Saldo a pagar:</th>
-                          <td>$<input type="number" name="balance" id="balance" value="{{$order->client->bill}}" step="any" class="mi_factura"></td>
+                          <td>$<input type="number" name="balance" id="balance" value="{{$order->total-$order->totalPayments()}}" step="any" class="mi_factura"></td>
                         </tr>
                       </table>
                     </div>
@@ -199,10 +199,9 @@
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                   <div class="col-xs-12">
-                     
-                    <div class="form-group">
-                      {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
-                      
+                    <div class="form-group text-center">
+                        {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+                        <a class="btn btn-danger" href="{{ route('orders.index') }}">Cancelar</a>
                     </div>
                   </div>
                 </div>
@@ -233,7 +232,7 @@
 $('#datepicker').datepicker({
      language: "es",
      autoclose: true,
-     format:'yyyy/mm/dd'
+     format:'dd/mm/yyyy'
     ,
     })
 </script>
@@ -341,26 +340,40 @@ $('#search').on('keyup', function(){
     amount=$('#amount').val();
     
   if (product_id!="" && code!="" && name!="" && price!="" && amount>0){
-
-
-         Subtotal[cont]=parseFloat(amount)*parseFloat(price);
-          Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
-          TotalVenta= parseFloat($('#total').val())+Subtotal[cont];
-         
-
-
-              var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
-          cont++;
-          clear();
-        $('#total').val(TotalVenta);
-         Balance=parseFloat($('#total').val())-parseFloat($('#advance').val());
-          $('#balance').val(Balance);
-        $('#details').append(fila);
+      Subtotal[cont]=parseFloat(amount)*parseFloat(price);
+      Subtotal[cont]=Math.round(Subtotal[cont]*100)/100;
+      
+      
+      var fila='<tr class="selected" id="'+cont+'"><td><button type="button" class="btn btn-danger" onclick="deletefila('+cont+','+Subtotal[cont]+');">X</button></td> <td> <input readonly type="hidden" name="dproduct_id[]" value="'+product_id+'">'+code+'</td> <td>'+name+'</td> <td>$<input readonly type="number" name="dprice[]" value="'+price+'" class="mi_factura"></td> <td><input readonly type="number" name="damount[]" value="'+amount+'" class="mi_factura"></td> <td>$'+Subtotal[cont]+'</td> </tr>';
+          
+      cont++;
+      $('#details').append(fila);
+      clear();
+      TotalVenta= $('#total').val()+Subtotal[cont];//calcularSubtotal();parseFloat(
+      TotalVenta= Math.round(TotalVenta*100)/100;
+      $('#total').val(TotalVenta);
+      Balance=parseFloat($('#total').val())-parseFloat($('#advance').val());
+      $('#balance').val(Balance);
+      
 
 
   }else{
-        alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
+    alert("Error al ingresar detalle de la cotización, revise la cantidad del producto a vender");
   }
+}
+
+function calcularSubtotal(){
+var total = 0;
+  // Aplico un ciclo para recorrer todos los elementos del tag th
+$('#details tbody tr').each(function() { 
+     
+    var columnas = $(this).find("td"); 
+    var subtotal= $(columnas[5]).text();
+     total += parseFloat(subtotal.substr(1)) 
+          
+   });
+ 
+  return total
 }
 
 function deletefila(index,subTotal){
