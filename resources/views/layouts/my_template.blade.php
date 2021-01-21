@@ -54,9 +54,10 @@ margin:auto;
 
    @else
     <li>
-      <a href="" id="procesar-pedido">
+      <a href="{{route('carrito')}}" id="procesar-pedido">
         <b> Mi Carrito 
           <span class="glyphicon glyphicon-shopping-cart"></span>
+
           <div id="carritoId" class="dropdown-menu" aria-labelledby="navbarCollapse">
               <table id="lista-carrito" class="table">
                   <thead>
@@ -71,8 +72,7 @@ margin:auto;
               </table>
 
               <a href="#" id="vaciar-carrito" class="btn btn-primary btn-block">Vaciar Carrito</a>
-              <a href="#" id="procesar-pedido" class="btn btn-danger btn-block">Procesar
-                  Compra</a>
+              <a href="#" id="procesar-pedido" class="btn btn-danger btn-block">Procesar Compra</a>
           </div>
         </b>
       </a>
@@ -151,11 +151,7 @@ margin:auto;
         Copyright(c) 2017. Todos los derechos reservados<br> 
         Desarrollado por: <b>GymSoftware</b>
     </div>
-    </div>
-
-
-   
-    
+    </div>   
 
 
 <!--Javascripts-->

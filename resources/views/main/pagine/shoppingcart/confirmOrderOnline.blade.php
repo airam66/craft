@@ -9,10 +9,10 @@
       Señor/a {{\Auth::user()->name}} Ud. tiene 6 días desde el día de la fecha para acercarse a nuestro local y confirmar su compra. Muchas Gracias.<br>
         </div>
 
-@if($dateNow->diff($user->updated_at)->days>0)
-    {!! Form::model(Auth::user(),['route'=>'webUsers.changeDatas', 'method'=>'PUT','files'=>true])!!}
+@if($dateNow->diff($user->updated_at)->days>180)
+    {!! Form::model(Auth::user(),['route'=>'updateDatas', 'method'=>'PUT'])!!}
         
-              <div class="row">              
+          <div class="row">              
             <div class="col-md-6 col-md-offset-3" >
                <h3 class="text-center">CONFIRMAR MIS DATOS</h3>
                <hr> 
@@ -27,11 +27,12 @@
               {!! Field::number('phone',$client->phone)!!}
               
                {!! Field::email('email',Auth::user()->email,['disabled'])!!}
+
+               <input hidden type="number" name="shoppingcart_id"  value="{{$shoppingcart->id}}">
          
               <div class="form-group">
               <input class="btn btn-success" type="submit" value="Guardar cambios" id="Confirmar">
               </div>
-          
             </div> 
         </div>
         

@@ -43,9 +43,9 @@
                            </div>
                           
                         </div>
-                        <a type="submit" class="btn btn-success agregar-carrito" data-id="{{$product->id}}">
+                        <a type="submit" id="btn-add" class="btn btn-success agregar-carrito" data-id="{{$product->id}}">
                           Agregar al carrito
-                          <span class="glyphicon glyphicon-check"></span>
+                          <span id="icono" class=""></span>
                         </a>
                         <div class="text-right" >
                             <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
