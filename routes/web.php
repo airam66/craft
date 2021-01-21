@@ -248,10 +248,11 @@ Route::patch('my_profile/changePassword','UserWebController@changePassword')->na
 Route::resource('shoppingcartsproducts','ShoppingCartsProductsController',['only'=>['store']]);
 Route::get('/shoppingcartsproducts/{id}/destroy','ShoppingCartsProductsController@destroy')->name('shoppingcartsproducts.destroy');
 Route::get('/MisCarritos','ShoppingCartsController@indexWeb')->name('MisCarritos');
-route::get('/carrito','ShoppingCartsController@edit');
+route::get('/carrito','ShoppingCartsController@edit')->name('carrito');
 route::post('store','ShoppingCartsController@store')->name('shoppingcarts.store');
 Route::resource('shoppingcarts','ShoppingCartsController',['only'=>['update']]);
 Route::get('my_order/pdf','ShoppingCartsController@pdfOrderOnline')->name('my_order.pdf');
 Route::get('/orderOnline','ShoppingCartsController@confirmOrderOnline')->name('orderOnline');
+Route::put('updateDatas','ShoppingCartsController@updateDatas')->name('updateDatas');
 
                   //se restringe a solo el uso de rutas store y destroy

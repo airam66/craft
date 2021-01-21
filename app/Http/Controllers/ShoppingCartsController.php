@@ -116,11 +116,11 @@ class ShoppingCartsController extends Controller
     }
 
     public function store(Request $request){
-        $user_id=\Auth::user()->client_id;
+        $user=\Auth::user();
 
         $shoppingcart=ShoppingCart::create([
             'status'=>'confirmar',
-            'client_id'=>$user_id,
+            'client_id'=>$user->client_id,
             'total'=>$request->total,
             'delivery_date'=>$request->datepicker,
         ]);
@@ -152,15 +152,22 @@ class ShoppingCartsController extends Controller
         $shoppingcart->total=$shoppingcart->total(); 
 
         if ($shoppingcart->total>0){
-                 $shoppingcart->save();
-            }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'success')->important();
-            }
+             $shoppingcart->save();
+        }
+        else{
+              flash("Debe ingresar al menos un producto" , 'success')->important();
+        }
 
         flash("El carrito ha sido modificada con exito" , 'success')->important();
-     
-        return redirect()->back();
+
+        $client=Client::find($user->client_id);
+        $dateNow = new DateTime("now");
+ 
+        return view('main.pagine.shoppingcart.confirmOrderOnline')->with('user',$user)
+                                                                  ->with('shoppingcart',$shoppingcart)
+                                                                  ->with('client',$client)
+                                                                  ->with('dateNow',$dateNow);
+
     }
 
     /**
@@ -244,25 +251,24 @@ class ShoppingCartsController extends Controller
       return $pdf->stream();
     }
 
-    public function confirmOrderOnline(Request $request){
-        //dd($request);
-        $user=\Auth::user();
-        $client=Client::find($user->client_id);
-        $dateNow = new DateTime("now");
-        $this->validate($request,[
-          'datepicker'=>'required',
-        ]);
+    public function updateDatas(Request $request){
+      $user=\Auth::user();
+      $user->fill($request->all());  
+      $client=Client::find($user->client_id);
+      $client->fill($request->all());
+      $client->save();
+      $user->save();
 
-        $shoppingcart_id=\Session::get('shoppingcart_id');
-        $shoppingcart=ShoppingCart::findOrCreateBySessionID($shoppingcart_id);
-        $shoppingcart->status='confirmar';
-        $shoppingcart->delivery_date=$request->datepicker;
-        $shoppingcart->save();
+      $dateNow = new DateTime("now");
+      $shoppingcart=ShoppingCart::find($request->shoppingcart_id);
 
-        return view('main.pagine.shoppingcart.confirmOrderOnline')->with('user',$user)
+      flash("Sus datos se cambiaron correctamente ", 'success')->important();
+
+      return view('main.pagine.shoppingcart.confirmOrderOnline')->with('user',$user)
                                                                   ->with('shoppingcart',$shoppingcart)
                                                                   ->with('client',$client)
                                                                   ->with('dateNow',$dateNow);
+   
+   }
 
-    }
 }
