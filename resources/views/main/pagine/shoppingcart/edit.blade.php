@@ -32,7 +32,7 @@
                             <tr>
                                 <th colspan="4" scope="col" class="text-right">TOTAL :</th>
                                 <th scope="col">
-                                  $ <input id="total" name="total" class="font-weight-bold border-0" readonly style="background-color: white;"></input>
+                                  $ <input id="total" name="total" class="font-weight-bold border-0" readonly style="background-color: white;">
                                 </th>
                                 <!-- <th scope="col"></th> -->
                             </tr>
@@ -43,7 +43,7 @@
                                 <div class="form-group{{ $errors->has('datepicker') ? ' has-error' : '' }}">
                                   <div class="form-group">
                                         <div class='input-group date' >
-                                            <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Seleccione una fecha" value="{{ old('datepicker') }}">
+                                            <input required type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Seleccione una fecha" value="{{ old('datepicker') }}">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-time"></span>
                                             </span>

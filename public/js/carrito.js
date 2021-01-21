@@ -8,9 +8,10 @@ class Carrito {
             const producto = e.target.parentElement.parentElement;
             //Enviamos el producto seleccionado para tomar sus datos
             this.leerDatosProducto(producto);
-            console.log("hola");
+            document.getElementById("icono").className = 'glyphicon glyphicon-check';
+            document.getElementById("btn-add").disabled = true;
         }
-        
+ 
     }
 
     //Leer datos del producto
@@ -24,8 +25,8 @@ class Carrito {
             maximo: producto.querySelector('.cant span').textContent,
             id: producto.querySelector('a').getAttribute('data-id'),
             cantidad: 1
-        }
-        console.log(infoProducto);
+        } 
+
         let productosLS;
         productosLS = this.obtenerProductosLocalStorage();
         productosLS.forEach(function (productoLS){
@@ -46,6 +47,7 @@ class Carrito {
         else {
             this.insertarCarrito(infoProducto);
         }
+
         
     }
 
@@ -78,7 +80,6 @@ class Carrito {
         }
         this.eliminarProductoLocalStorage(productoID);
         this.calcularTotal();
-
     }
 
     //Elimina todos los productos
@@ -89,7 +90,7 @@ class Carrito {
         }
         this.vaciarLocalStorage();
 
-        return false;
+        return false;  
     }
 
     //Almacenar en el LS
@@ -101,6 +102,7 @@ class Carrito {
         productos.push(producto);
         //Agregamos al LS
         localStorage.setItem('productos', JSON.stringify(productos));
+
     }
 
     //Comprobar que hay elementos en el LS
@@ -135,7 +137,7 @@ class Carrito {
                 </td>
             `;
             listaProductos.appendChild(row);
-        });
+        });  
     }
 
     //Mostrar los productos guardados en el LS en compra.html
@@ -147,20 +149,20 @@ class Carrito {
             row.innerHTML = `
                 <td>
                     <input type="hidden"  name="idproductos[]" readonly value=${producto.id}>
-                    <img src="${producto.imagen}" width=100>
+                    <img src="${producto.imagen}" width="40" height="40" >
                 </td>
                 <td>${producto.titulo}</td>
-                <td> $ ${producto.precio}</td>
+                <td id='precios'> $${producto.precio}</td>
                 <td>
                     <input type="number" class="form-control cantidad" name="cantidad[]" min="1" value=${producto.cantidad}>
                 </td>
-                <td id='subtotales'>$ ${producto.precio * producto.cantidad}</td>
+                <td id='subtotales'>$${producto.precio * producto.cantidad}</td>
                 <td>
                     <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${producto.id}"></a>
                 </td>
             `;
             listaCompra.appendChild(row);
-        });
+        }); 
     }
 
     //Eliminar producto por ID del LS
@@ -173,8 +175,7 @@ class Carrito {
             if(productoLS.id === productoID){
                 productosLS.splice(index, 1);
             }
-        });
-
+        }); 
         //Añadimos el arreglo actual al LS
         localStorage.setItem('productos', JSON.stringify(productosLS));
     }
@@ -199,7 +200,7 @@ class Carrito {
         }
         else {
             location.href = baseUrl("carrito");
-        }
+        }  
     }
 
     //Calcular montos
@@ -216,7 +217,6 @@ class Carrito {
             }
             total = total + element;
         }
-        
         document.getElementById('total').value = total.toFixed(2);
     }
 
@@ -228,14 +228,17 @@ class Carrito {
             id = producto.querySelector('a').getAttribute('data-id');
             cantidad = producto.querySelector('.cantidad').value;
             let actualizarMontos = document.querySelectorAll('#subtotales');
+            let actualizarPrecios = document.querySelectorAll('#precios');
             productosLS = this.obtenerProductosLocalStorage();
             productosLS.forEach(function (productoLS, index) {
                 if (productoLS.id === id) {
                     productoLS.cantidad = cantidad;   
-                    if(cantidad<Number(productosLS.maximo)){           
+                    if(cantidad<Number(productosLS[index].maximo)){           
                         actualizarMontos[index].innerHTML = "$ " + Number(cantidad * productosLS[index].precio);
+                        actualizarPrecios[index].innerHTML = '$' + productosLS[index].precio;
                     }else{
-                        actualizarMontos[index].innerHTML = "$ " + Number(cantidad * productosLS[index].precioSale);
+                        actualizarMontos[index].innerHTML = "$ " + Number(cantidad * productosLS[index].precioSale)
+                        actualizarPrecios[index].innerHTML = '$' + productosLS[index].precioSale;
                     }
                 }    
             });
