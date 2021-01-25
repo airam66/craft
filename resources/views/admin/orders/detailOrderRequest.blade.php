@@ -143,7 +143,7 @@
                         </tr>
                         <tr>
                           <th>Adelanto</th>
-                          <td>{{$order->totalPayments()}}</td>
+                          <td>${{$order->totalPayments()}}</td>
                         </tr>
                         <tr>
                           <th>Saldo a pagar:</th>
