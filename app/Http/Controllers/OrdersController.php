@@ -95,7 +95,7 @@ class OrdersController extends Controller
                   $payment=new Payment;
                   $payment->order_id=$order->id;
                   $payment->amount_paid=$request->get('advance');
-                  $payment->balance_paid=$order->total-$payment->amount_paid;
+                  $payment->balance_paid=$request->get('balance');
                  $payment->save();
             }
             else{
@@ -168,7 +168,6 @@ class OrdersController extends Controller
         $client->bill=$client->bill- $payment->balance_paid;
         $client->bill=$client->bill+$request->get('balance');
         $client->save();
-
         $payment->balance_paid=$request->get('balance');
         $payment->save();
 

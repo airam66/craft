@@ -143,6 +143,7 @@ $('#Rode').on('keyup', function(){
     $('#balance').val($balance);
   }else{
     $balance=$balance-$rode;
+    $balance=Math.round($balance*100)/100;
   $('#balance').val($balance);
   }
   

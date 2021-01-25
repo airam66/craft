@@ -142,6 +142,10 @@
                           <td>${{$order->total}}</td>
                         </tr>
                         <tr>
+                          <th>Adelanto</th>
+                          <td>{{$order->totalPayments()}}</td>
+                        </tr>
+                        <tr>
                           <th>Saldo a pagar:</th>
                           <td>${{$order->total-$order->totalPayments()}}</td>
                         </tr>
