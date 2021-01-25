@@ -486,17 +486,19 @@ function deletefila(index){
 $('#discount').on('click', function(){
  St=$('#Subtotalventa').val();
  St=Math.round(St*100)/100;
- Tvo=$('#Totalventa').val();
  
   if (document.getElementById('discount').checked){
           Tvn=parseFloat(St)-parseFloat(St*0.1);
           Tvn=Math.round(Tvn*100)/100;
             $('#Totalventa').val(Tvn);
+            Tvn -= $('#advance').val();
             $('#balance').val(Tvn);
          
   }
   else{
             $('#Totalventa').val(St);
+            St -= $('#advance').val();
+            St=Math.round(St*100)/100;
             $('#balance').val(St);
          }
 });
