@@ -18,9 +18,10 @@ class OrdersController extends Controller
 {
     public function index(Request $request){
 
-      $orders=Order::orderBy('id','DESC')->paginate(15);
+      
        $fecha1=$request->fecha1;
        $fecha2=$request->fecha2;
+       $orders=Order::orderBy('id','DESC')->paginate(15);
        
        $orders->each(function($orders){
           $orders->client;
@@ -36,10 +37,8 @@ class OrdersController extends Controller
          }
       }
 
-      if($request->fecha1!='' and $request->fecha2!=''){
-         $fecha1=$request->fecha1;
-         $fecha2=$request->fecha2;
-         $orders=Order::SearchOrder($request->fecha1,$request->fecha2)
+      if($fecha1!='' and $fecha2!=''){
+         $orders=Order::SearchOrder($fecha1,$fecha2)
                             ->orderBy('id','DESC')->paginate(15);
       }
       
@@ -78,7 +77,8 @@ class OrdersController extends Controller
              
             $order->total=$request->get('Totalventa');
             $order->client_id=$request->get('client_id');
-            $order->delivery_date=date("Y-m-d",strtotime($request->get('datepicker')));
+            $order->delivery_date= str_replace('/','-', $request->get('datepicker'));
+            $order->delivery_date=date("Y-m-d",strtotime($order->delivery_date)); 
             
            
            $order->discount=$request->get('discount');
@@ -87,9 +87,10 @@ class OrdersController extends Controller
             }
 
             if ($order->total>0){
+
                  $order->save();
                  $client=Client::find($order->client_id);
-                 $client->bill=$request->get('balance');
+                 $client->bill= $client->bill+$request->get('balance');
                  $client->save();
                   $payment=new Payment;
                   $payment->order_id=$order->id;
@@ -98,7 +99,8 @@ class OrdersController extends Controller
                  $payment->save();
             }
             else{
-                  flash("Debe ingresar al menos un producto" , 'danger')->important();
+                  flash("Debe ingresar al menos un producto" ,'danger')->important();
+                  return redirect()->route('orders.create');
             }
 
             
@@ -153,44 +155,46 @@ class OrdersController extends Controller
   public function update(Request $request,$id){
 
   	$order=Order::find($id);
-      $order->total=$request->get('total'); 
-      $order->delivery_date=$request->get('datepicker');
-      $payment=Payment::all()->last();
+    $order->total=$request->get('total');  
+    
+    if ($order->total>0){
+                 
+        $order->delivery_date= str_replace('/','-', $request->get('datepicker'));
+        $order->delivery_date=date("Y-m-d",strtotime($order->delivery_date));      
+        $order->save();
 
-      if ($order->total>0){
-                 $order->save();
-                 $client=Client::find($order->client_id);
-                 $client->bill=$client->bill+$request->get('balance');
-                 $client->save();
-                 $payment->balance_paid=$request->get('balance');
-                 $payment->save();
-            }
-            else{
-                  flash("Debe ingresar al menos un producto" , 'success')->important();
-            }
-      DB::table('order_product')->where('order_id','=',$id)->delete();
-      $idprod = $request->get('dproduct_id');
-            $amount = $request->get('damount');
-            $price = $request->get('dprice');
+        $client=Client::find($order->client_id);
+        $payment=Payment::all()->last();
+        $client->bill=$client->bill- $payment->balance_paid;
+        $client->bill=$client->bill+$request->get('balance');
+        $client->save();
 
-             $cont =0;
+        $payment->balance_paid=$request->get('balance');
+        $payment->save();
 
-            while ( $cont <  count($idprod) ) {
+        DB::table('order_product')->where('order_id','=',$id)->delete();
+        $idprod = $request->get('dproduct_id');
+        $amount = $request->get('damount');
+        $price = $request->get('dprice');
+
+        $cont =0;
+
+        while ( $cont <  count($idprod) ) {
                 //dd($cont);
-                $detail = new OrderProduct();
-                $detail->order_id=$order->id; //le asignamos el id de la venta a la que pertenece el detail
-                $detail->product_id=$idprod[$cont];
-                $detail->amount=$amount[$cont];
-                $detail->price=$price[$cont];
-                $detail->subTotal=$amount[$cont]*$price[$cont];
+          $detail = new OrderProduct();
+          $detail->order_id=$order->id; //le asignamos el id de la venta a la que pertenece el detail
+          $detail->product_id=$idprod[$cont];
+          $detail->amount=$amount[$cont];
+          $detail->price=$price[$cont];
+          $detail->subTotal=$amount[$cont]*$price[$cont];
 
-                if ($order->total>0){
-                   $detail->save(); 
-                }
+          if ($order->total>0){
+            $detail->save(); 
+          }
                                
-                $cont = $cont+1;
+          $cont = $cont+1;
 
-            }
+        }
 
     
         flash("El pedido N° ". $order->id . " ha sido modificado con éxito" , 'success')->important();
@@ -198,6 +202,12 @@ class OrdersController extends Controller
 
        return redirect()->route('orders.index');
 
+    }
+    else{ 
+        flash("Debe ingresar al menos un producto" , 'success')->important();
+                   return redirect()->route('orders.edit',$id);
+    }
+      
 
   }
   

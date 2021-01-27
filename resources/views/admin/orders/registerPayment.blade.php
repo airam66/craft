@@ -68,7 +68,7 @@
                          </div> 
                          <div class="col-md-4 col-md-offset-0">
                           
-                           <h4>Saldo : {{$order->total-$order->totalPayments()}}</h4>
+                           <h4>Saldo :  ${{$order->total-$order->totalPayments()}}</h4>
 
                          </div>
 
@@ -82,7 +82,7 @@
               <div class="row">
 
               <div class="controls col-md-4">
-              <label>Monto:
+              <label>Monto: $
                <input type="number" id="Rode" name="Rode" value=""  step="any" ></label>
 
                </div>
@@ -95,7 +95,7 @@
              </div>
              <div class="row">
              <div class="controls col-md-4">
-             <label>Saldo:
+             <label>Saldo: $
              <input type="number" id="balance" name="balance" value="{{$order->total-$order->totalPayments()}}" readonly="true" class="mi_factura"  step="any" ></label>
               </div>
              </div>
