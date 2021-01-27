@@ -3,10 +3,13 @@
 @section('content')
  <div class="content-wrap centering">
       <div class="mi_letter text-center">
-                  <h3>Mi Carrito</h3>
+                  <h1>Confirmar pedido</h1>
        <img src="{{ asset('images/line.png')}}" alt=""> 
       <br>
-      Señor/a {{\Auth::user()->name}} Ud. tiene 6 días desde el día de la fecha para acercarse a nuestro local y confirmar su compra. Muchas Gracias.<br>
+      <div style="width: 70%; margin:5px auto;">
+         <img src="{{ asset('images/advertencia.png')}}" alt="" width="40px"> 
+           Señor/a {{\Auth::user()->name}} Ud. tiene 6 días desde el día de la fecha para acercarse a nuestro local y confirmar su pedido. Muchas Gracias.
+      </div>
         </div>
 
 @if($dateNow->diff($user->updated_at)->days>180)
@@ -38,11 +41,12 @@
         
             {!! Form::close() !!}
 @else
-      <hr>
+      <br>
+      <br>
 			<div class="form-group">
             <a href="{{route('my_order.pdf')}}" target="_blank" > 
             <div class="text-center">
-               <button  type="button" class="btn btn-primary "  ><i class="fa fa-print"></i>Imprimir comprobante PDF</button>
+               <button  type="button" class="btn btn-success "><i class="fa fa-print" style="color:#fff;"></i>  Generar comprobante PDF</button>
             </div>
             </a>
       </div>
