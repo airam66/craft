@@ -1,5 +1,5 @@
 const carro = new Carrito();
-const carrito = document.getElementById('carritoId');
+const pedido = document.getElementById('carritoId');
 const productos = document.getElementById('lista-productos');
 const listaProductos = document.querySelector('#lista-carrito tbody');
 const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
@@ -13,7 +13,7 @@ function cargarEventos(){
     productos.addEventListener('click', (e)=>{carro.comprarProducto(e)});
 
     //Cuando se elimina productos del carrito
-    carrito.addEventListener('click', (e)=>{carro.eliminarProducto(e)});
+    pedido.addEventListener('click', (e)=>{carro.eliminarProducto(e)});
 
     //Al vaciar carrito
     vaciarCarritoBtn.addEventListener('click', (e)=>{carro.vaciarCarrito(e)});

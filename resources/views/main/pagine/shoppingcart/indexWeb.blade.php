@@ -3,11 +3,11 @@
 @section('content')
  <div class="content-wrap centering">
 		      <div class="mi_letter text-center">
-                  <h3>Mis pedidos</h3>
+                  <h1>Mis pedidos</h1>
                   <img src="{{ asset('images/line.png')}}" alt=""> 
 		      </div>
 
-     <h2 class="intro text-center">Pedidos confirmados.</h2>
+     <div class="mi_letter"><h3 class="intro text-center">Pedidos confirmados.</h3>
 
 	@if($orders->isNotEmpty()) 
 		<div class="box-body">              
@@ -46,7 +46,7 @@
 	</div>
 	@endif
 	<br>
-	<h2 class="intro text-center">Pedidos a confirmar.</h2>
+	<h3 class="intro text-center">Pedidos a confirmar.</h3>
 	@if($shoppingcarts->isNotEmpty()) 
 
 		<div class="box-body">              
@@ -89,6 +89,7 @@
 		Ud. no tiene pedidos confirmados.
 	</div>
 	@endif
+</div>
 <div class="mi_letter text-center">
      <img src="{{ asset('images/line.png')}}" alt=""> 
 </div>
