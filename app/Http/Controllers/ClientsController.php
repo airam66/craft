@@ -36,7 +36,7 @@ class ClientsController extends Controller
 
         flash("El cliente ". $clients->name . " ha sido registrado con exito" , 'success')->important();
        
-        return redirect()->route('clients.create');
+        return redirect()->route('clients.index');
 
     }
 

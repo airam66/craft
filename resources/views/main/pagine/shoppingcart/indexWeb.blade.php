@@ -28,8 +28,8 @@
 		   @foreach ($orders as $order) 
 		       <tr role="row" class="odd">
 		            <td class="text-center">{{$order->id}}</td>
-		            <td>{{$order->created_at->format('d-m-Y')}}</td>
-		            <td>{{substr($order->delivery_date,0,10)}}</td>
+		            <td>{{$order->created_at->format('d/m/Y')}}</td>
+		            <td>{{date('d/m/Y', strtotime($order->delivery_date))}}</td>
 		            <td>{{ucfirst($order->status)}}</td>
 		            <td>$ {{$order->total}}</td>   
 		            <th>$ {{$order->total-$order->totalPayments()}}</th>  
@@ -68,9 +68,8 @@
 		   @foreach ($shoppingcarts as $cart) 
 		       <tr role="row" class="odd">
 		            <td class="text-center">{{$cart->id}}</td>
-		            <td>{{$cart->created_at->format('d-m-Y')}}</td>
-		            <td>{{date('d-m-Y', strtotime($cart->delivery_date))}}
-		           </td>
+		            <td>{{$cart->created_at->format('d/m/Y')}}</td>
+		            <td>{{date('d/m/Y', strtotime($cart->delivery_date))}}</td>
 		            @if($cart->status=='confirmar')
 		            	<td> A confirmar</td>
 		            @endif

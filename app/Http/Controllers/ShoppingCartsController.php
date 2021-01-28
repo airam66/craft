@@ -33,7 +33,7 @@ class ShoppingCartsController extends Controller
         $dateNow = new DateTime("now");
         $orders=Order::where('client_id','=',$user->client_id)->orderBy('id','ASC')->get();
         $shoppingcarts=ShoppingCart::where('client_id','=',$user->client_id)
-                                    ->where('status','=','confirmar')->orderBy('id','ASC')->get();
+                                   ->where('status','=','confirmar')->orderBy('id','ASC')->get();
         return view('main.pagine.shoppingcart.indexWeb')->with('shoppingcarts',$shoppingcarts)
                                                         ->with('orders',$orders)
                                                         ->with('dateNow',$dateNow);

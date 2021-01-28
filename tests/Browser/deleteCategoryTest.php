@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Category;
 use App\User;
  
-class deleteCategoryTest extends DuskTestCase
+class DeleteCategoryTest extends DuskTestCase
 
 {
    use DatabaseMigrations;
@@ -20,20 +20,17 @@ class deleteCategoryTest extends DuskTestCase
          $category= factory(\App\Category::class)->create(['name'=>'Cumpleaños','description'=>'rgsrrtgcyth',]);
          $this->browse(function (Browser $browser) use($user) {
 
-            $browser->visit('http://localhost/comercio/public/admin/categories')
+            $browser->visit('craft/public/admin/categories')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/categories')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/categories')
                     ->press('.Eliminar')
                     ->acceptDialog()
-                    ->assertPathIs('/comercio/public/admin/categories')
+                    ->assertPathIs('/craft/public/admin/categories')
                     ->assertVisible('.btn-success')
                     ->assertMissing('.btn-danger');
                    
-                    
-
-
         });
 
         

@@ -17,22 +17,22 @@ class mainTest extends DuskTestCase
         $user=factory(User::class)->create(['email'=>'example@gmail.com',]);
 
         $this->browse(function (Browser $browser) use ($user){
-            $browser->visit('http://localhost/comercio/public/admin')
+            $browser->visit('craft/public/admin')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin')
-                    ->press('Lista de productos')
-                    ->assertPathIs('/comercio/public/admin/products')
-                    ->visit('http://localhost/comercio/public/admin')
-                    ->press('Nueva venta')
-                    ->assertPathIs('/comercio/public/admin/invoices/create')
-                    ->visit('http://localhost/comercio/public/admin')
-                    ->press('Nuevo pedido')
-                    ->assertPathIs('/comercio/public/admin/orders/create')
-                    ->visit('http://localhost/comercio/public/admin')
-                    ->press('Calendario')
-                    ->assertPathIs('/comercio/public/admin')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin')
+                    ->press('.Lista_productos')
+                    ->assertPathIs('/craft/public/admin/products')
+                    ->visit('craft/public/admin')
+                    ->press('.Nueva_venta')
+                    ->assertPathIs('/craft/public/admin/invoices/create')
+                    ->visit('craft/public/admin')
+                    ->press('.Nuevo_pedido')
+                    ->assertPathIs('/craft/public/admin/orders/create')
+                    ->visit('craft/public/admin')
+                    ->press('.Calendario')
+                    ->assertPathIs('/craft/public/admin/calendar')
                     ;
         });
 

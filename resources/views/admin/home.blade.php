@@ -26,7 +26,7 @@
                 <div class="icon">
                   <i class="fa fa-truck"></i>
                 </div>
-                <a href="{{route('orders.create')}}" class="small-box-footer">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('orders.create')}}" class="small-box-footer Nuevo_pedido">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-6 col-xs-6">
@@ -39,7 +39,7 @@
                 <div class="icon">
                   <i class="fa fa-money"></i>
                 </div>
-                <a href="{{route('invoices.create')}}" class="small-box-footer">Hacer clik aquí  <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('invoices.create')}}" class="small-box-footer Nueva_venta">Hacer clik aquí  <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->
@@ -54,7 +54,7 @@
                 <div class="icon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <a href="{{route('calendar')}}" class="small-box-footer">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('calendar')}}" class="small-box-footer Calendario">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-6 col-xs-6">
@@ -67,7 +67,7 @@
                 <div class="icon">
                   <i class="fa fa-gift"></i>
                 </div>
-                <a href="{{route('products.index')}}" class="small-box-footer">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('products.index')}}" class="small-box-footer Lista_productos">Hacer click aquí <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->

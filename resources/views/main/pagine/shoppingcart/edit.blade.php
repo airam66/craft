@@ -47,14 +47,14 @@
                         <tr>
                           <th>Fecha de Entrega</th>
                           <td>   <div class="form-group{{ $errors->has('datepicker') ? ' has-error' : '' }}">
-                                  <div class="form-group">
-                                        <div class='input-group date' >
-                                          <input required type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Seleccione una fecha" value="{{ old('datepicker') }}">
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                        </div>
+                                <div class="form-group">
+                                    <div class='input-group date' >
+                                      <input required type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Seleccione una fecha" value="{{ old('datepicker') }}">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
                                     </div>
+                                  </div>
                                   @if ($errors->has('datepicker'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('datepicker') }}</strong>
@@ -100,9 +100,10 @@
     <script>
       $('#datepicker').each(function() {
         $(this).datepicker({
-             language: "es",
-             autoclose: true,
-             format:"yyyy/mm/dd"
+           startDate: new Date(),
+           language: "es",
+           autoclose: true,
+           format:"dd/mm/yyyy"
         });
       }); 
     </script>

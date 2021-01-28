@@ -9,6 +9,12 @@ cargarEventos();
 
 function cargarEventos(){
 
+    let productosLS = carro.obtenerProductosLocalStorage();
+    productosLS.forEach(function (productoLS){
+        let span = document.querySelector('#icono'+productoLS.id);
+        document.getElementById('icono'+productoLS.id).className = 'glyphicon glyphicon-check';
+    });
+    
     //Se ejecuta cuando se presionar agregar carrito
     productos.addEventListener('click', (e)=>{carro.comprarProducto(e)});
 

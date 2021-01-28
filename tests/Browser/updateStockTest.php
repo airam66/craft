@@ -14,10 +14,10 @@ class updateStockTest extends DuskTestCase
     {
         $user=factory(User::class)->create(['email'=>'gaby333@gmail.com',]);
         $this->browse(function (Browser $browser) {
-            $browser->visit('http://localhost/comercio/public/admin/updateStockCreate')
+            $browser->visit('craft/public/admin/updateStockCreate')
                     ->type('email',$user->email)
-                    ->press('Entrar')
-                    ->assertPathIs('http://localhost/comercio/public/admin/updateStockCreate')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/updateStockCreate')
                     ->click('#search')
                     ->assertVisible('#modalProduct')
                     ->type('email',$product->name)

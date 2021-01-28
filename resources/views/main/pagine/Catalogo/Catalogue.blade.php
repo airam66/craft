@@ -23,6 +23,7 @@
 
                    @if (!Auth::guest())
                    <div class="card product mystyle">
+                    <div class="card-body">
                       <div>
                        @if($product->extension!=null)             
                           <img class="img-prod" src="{{ asset('images/products/'.$product->extension)  }}"  width="160" height="150" >
@@ -41,18 +42,18 @@
                                   <span class="">{{$product->wholesale_cant}}</span>
                                </h5>
                            </div>
-                          
                         </div>
                         <a type="submit" id="btn-add" class="btn btn-success agregar-carrito" data-id="{{$product->id}}">
                           Agregar al carrito
-                          <span id="icono" class=""></span>
+                          <span id="icono{{$product->id}}" class="icono"></span>
                         </a>
                         <div class="text-right" >
                             <a data-toggle="modal" id="first" data-title="detail" data-target="#favoritesModalProduct{{$product->id}}">
                               <img class="image-info" src="{{ asset('images/informacion3.png ') }}" width="45" height="45"  >
                             </a>
                         </div>
-                     </div>
+                      </div>
+                    </div>
                    @else
                     <div class="card product my_style">
                       <div>

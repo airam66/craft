@@ -22,6 +22,7 @@ class ProductsTest extends DuskTestCase
    protected $description='osito color morado';
    protected $price=12;
    protected $stock=123;
+   protected $ws=10;
   
 
     public function test_create_a_product()
@@ -39,25 +40,21 @@ class ProductsTest extends DuskTestCase
             $browser->visit('craft/public/admin/products/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
+                    ->press('Iniciar sesión')
                     ->assertPathIs('/craft/public/admin/products/create')
-                     ->type('name',$this->name)
+                    ->type('name',$this->name)
+                   // ->select('category_id')
                     ->type('code',$this->code)
-                    
-                    ->select('category_id',(string)$category->id)
-                    ->select('event_id',(string)$event->id)
-                    ->select('line_id',(string)$line->id)
-                    ->select('brand_id',(string)$brand->id)
+                    ->attach('image','D:\tar\001.png')
+                   // ->select('event_id')
+                   // ->select('line_id')
+                   // ->select('brand_id')
                     ->type('description',$this->description)
-                    ->type('price',$this->price)
-                    ->value('retail_price',($this->price*30/100)+$this->price)
-                    ->value('wholesale_price',($this->price*10/100)+$this->price)
+                    ->type('purchase_price',$this->price)
                     ->type('stock',$this->stock)
                     ->type('wholesale_cant',$this->ws)
-                    ->select('status','active')
-                    ->attach('image','D:\tar\001.png')
-
-                    ->press('Registrar')
+                    ->select('status','activo')
+                    ->press('Guardar')
                     ->assertPathIs('/craft/public/admin/products')
                     ;
            });
@@ -89,12 +86,12 @@ class ProductsTest extends DuskTestCase
       //$category= factory(\App\Category::class)->create(['name'=>'Tarjetas',]);
 
        $this->browse(function (Browser $browser) use ($user){
-            $browser->visit('comercio/public/admin/products/create')
+            $browser->visit('craft/public/admin/products/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/products/create')
-                    ->press('Registrar')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/products/create')
+                    ->press('Guardar')
                     ->assertSeeErrors([
                       'name'=>'El campo nombre es obligatorio',
                       'code'=>'El campo codigo debe contener al menos 3 caracteres',
@@ -112,11 +109,11 @@ class ProductsTest extends DuskTestCase
     $productsToSearch=Product::find(2);
     $this->browse(function (Browser $browser) use ($user,$products){
             
-            $browser->visit('comercio/public/admin/craftProducts')
+            $browser->visit('craft/public/admin/craftProducts')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/craftProducts')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/craftProducts')
                     ->press('#iconSearch')
                     ->whenAvailable('.modal',function($modal){
                            $modal->pause(1000)
@@ -140,11 +137,11 @@ class ProductsTest extends DuskTestCase
      $user=User::find(1);
     
      $this->browse(function (Browser $browser) use ($user){
-            $browser->visit('comercio/public/admin/craftProducts')
+            $browser->visit('craft/public/admin/craftProducts')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/craftProducts')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/craftProducts')
                     ->press('Confirmar')
                     ->assertSeeErrors([
                       'code'=>'El campo codigo es obligatorio',
@@ -161,11 +158,11 @@ class ProductsTest extends DuskTestCase
     $user=User::find(1);
 
      $this->browse(function (Browser $browser) use ($user){
-            $browser->visit('comercio/public/admin/products')
+            $browser->visit('craft/public/admin/products')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/products')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/products')
                     ->click('#first')
                     ->whenAvailable('.modal',function($modal){
                            $modal->pause(1000)

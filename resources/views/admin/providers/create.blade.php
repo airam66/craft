@@ -17,7 +17,7 @@
             
               {!! Field::text('name')!!}
 
-              {!! Field::number('cuil')!!}
+              {!! Field::number('cuit')!!}
               
               {!! Field::text('address')!!}
               <div class="col-md-6">
