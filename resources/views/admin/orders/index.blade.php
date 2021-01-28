@@ -69,7 +69,7 @@
                     <th>Fecha Pedido</th>
                      <th>Fecha Entrega</th>
                     <th>Cliente</th>
-                    <th>Saldo a pagar</th>
+                    <th>Saldo pendiente</th>
                     <th>Estado</th>
                     <th></th>
                     <th></th>
@@ -129,7 +129,7 @@
                                           </button>
                                 </a>
                                 @endif
-                                @if($order->status != "entregado")
+                                
                                 <td style="padding-left: 0px;">
                                  {!!Form::open(['route'=>['orders.destroy',$order->id],'method'=>'DELETE'])!!}
                                       
@@ -139,7 +139,7 @@
                                       
                                    {!!Form::close()!!} 
                                  </td>
-                                 @endif
+                                 
                               </td>
 
                               

@@ -10,7 +10,7 @@
           @if($fecha1 == $fecha2)
              <h2 class="box-title col-md-5">Listado de Pedidos Web</h2>
          @else
-             <h2 class="box-title col-md-8">Listado de Pedidos Web desde {{date("d-m-Y",strtotime($fecha1))}} hasta {{date("d-m-Y",strtotime($fecha2))}}.</h2>
+             <h2 class="box-title col-md-8">Listado de Pedidos Web desde {{$fecha1}} hasta {{$fecha2}}.</h2>
          @endif
       </div>
 
@@ -39,7 +39,7 @@
                   <input type="text" class="form-control" name="fecha2" data-date-end-date="0d" placeholder="Seleccione una fecha">
                   <div class="input-group-addon">
                         <button type="submit" class="btn btn-primary">
-                                  <i class="fa fa-calendar"></i>
+                                  <i class="fa fa-search"></i>
                                   </button>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ $('.input-daterange input').each(function() {
     $(this).datepicker({
          language: "es",
          autoclose: true,
-         format:"yyyy/mm/dd"
+         format:"dd/mm/yyyy"
     });
 });
 
