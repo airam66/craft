@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\User;
 use App\Provider;
-class providerTest extends DuskTestCase
+class ProviderTest extends DuskTestCase
 {
    protected $name='Gabriel Lamas'; 
    protected $cuit='20369129653';
@@ -25,11 +25,11 @@ class providerTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($user){
 
-            $browser->visit('http://localhost/comercio/public/admin/providers/create')
+            $browser->visit('craft/public/admin/providers/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/providers/create')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/providers/create')
                     ->type('name',$this->name)
                     ->type('cuit',$this->cuit)
                     ->type('address',$this->address)
@@ -37,21 +37,21 @@ class providerTest extends DuskTestCase
                     ->type('province',$this->province)
                     ->type('phone',$this->phone)
                     ->type('email',$this->email)
-                    ->press('Registrar')
-                    ->assertPathIs('/comercio/public/admin/providers/create')
+                    ->press('Guardar')
+                    ->assertPathIs('/craft/public/admin/providers')
                     ;
            });
 
-        /*$this->assertDatabaseHas('providers',[
+        $this->assertDatabaseHas('providers',[
                    
                    'name'=>$this->name,
-                   'cuil'=>$this->cuil,
+                   'cuit'=>$this->cuit,
                    'address'=>$this->address,
                    'location'=>$this->location,
                    'province'=>$this->province,
                    'phone'=>$this->phone,
                    'email'=>$this->email,
                     
-                ]);*/
+                ]);
     }
 }

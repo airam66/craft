@@ -7,9 +7,7 @@ class Carrito {
         if(e.target.classList.contains('agregar-carrito')){
             const producto = e.target.parentElement.parentElement;
             //Enviamos el producto seleccionado para tomar sus datos
-            this.leerDatosProducto(producto);
-            document.getElementById("icono").className = 'glyphicon glyphicon-check';
-            document.getElementById("btn-add").disabled = true;
+            this.leerDatosProducto(producto);        
         }
  
     }
@@ -46,6 +44,8 @@ class Carrito {
         }
         else {
             this.insertarCarrito(infoProducto);
+            document.getElementById('icono'+infoProducto.id).className='glyphicon glyphicon-check';
+
         }
 
         
@@ -144,25 +144,37 @@ class Carrito {
     leerLocalStorageCompra(){
         let productosLS;
         productosLS = this.obtenerProductosLocalStorage();
-        productosLS.forEach(function (producto){
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>
-                    <input type="hidden"  name="idproductos[]" readonly value=${producto.id}>
-                    <img src="${producto.imagen}" width="40" height="40" >
-                </td>
-                <td>${producto.titulo}</td>
-                <td id='precios'> $${producto.precio}</td>
-                <td>
-                    <input type="number" class="form-control cantidad" name="cantidad[]" min="1" value=${producto.cantidad}>
-                </td>
-                <td id='subtotales'>$${producto.precio * producto.cantidad}</td>
-                <td>
-                    <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${producto.id}"></a>
-                </td>
-            `;
-            listaCompra.appendChild(row);
-        }); 
+        if (productosLS.length === 0) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'No hay productos, selecciona alguno',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(function () {
+                window.location = baseUrl("catalogue");
+            })
+        }else{
+            productosLS.forEach(function (producto){
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <input type="hidden"  name="idproductos[]" readonly value=${producto.id}>
+                        <img src="${producto.imagen}" width="40" height="40" >
+                    </td>
+                    <td>${producto.titulo}</td>
+                    <td id='precios'> $${producto.precio}</td>
+                    <td>
+                        <input type="number" class="form-control cantidad" name="cantidad[]" min="1" value=${producto.cantidad}>
+                    </td>
+                    <td id='subtotales'>$${producto.precio * producto.cantidad}</td>
+                    <td>
+                        <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${producto.id}"></a>
+                    </td>
+                `;
+                listaCompra.appendChild(row);
+            }); 
+        }
     }
 
     //Eliminar producto por ID del LS

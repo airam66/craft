@@ -32,11 +32,11 @@ class InvoiceTest extends DuskTestCase
        
 
         $this->browse(function (Browser $browser) use ($user,$category,$event,$brand,$line,$product1,$product2){
-            $browser->visit('http://localhost/comercio/public/admin/invoices/create')
+            $browser->visit('craft/public/admin/invoices/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/invoices/create')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/invoices/create')
                     //producto 1 minorista
                     ->type('code',$product1->code)
                     ->select('code',$product1->code)

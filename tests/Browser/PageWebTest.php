@@ -13,7 +13,7 @@ class PageWebTest extends DuskTestCase
     public function test_index()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('comercio/public/index')
+            $browser->visit('craft/public/index')
                     ->assertSee('Bienvenido');
         });
     }
@@ -21,7 +21,7 @@ class PageWebTest extends DuskTestCase
      public function test_about_us()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('comercio/public/aboutUs')
+            $browser->visit('craft/public/aboutUs')
                     ->assertSee('Sobre Nosotros');
         });
     }

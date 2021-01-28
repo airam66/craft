@@ -146,9 +146,6 @@ class ProductsController extends Controller
           'stock'=>'required',
           'wholesale_cant'=>'required',
           'description'=>'required',
-          'retail_price'=>'required',
-          'purchase_price'=>'required',
-          'wholesale_price'=>'required',
         ]);
 
         $products= Product::find($id);

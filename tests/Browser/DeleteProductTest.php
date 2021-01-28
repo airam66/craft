@@ -14,7 +14,7 @@ use App\Porcentage;
 use App\User;
 use App\Product;
 
-class DeleteTest extends DuskTestCase
+class DeleteProductTest extends DuskTestCase
 {
    protected $code= 12345;
    protected $name='oso';
@@ -36,16 +36,16 @@ class DeleteTest extends DuskTestCase
         $porcentage= factory(\App\Porcentage::class)->create();
 
         $this->browse(function (Browser $browser) use ($user,$category,$event,$brand,$line){
-            $browser->visit('http://localhost/comercio/public/admin/products')
+            $browser->visit('/craft/public/admin/products')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/products')
-                    ->press('Eliminar')
-                 //   ->assertSee('¿Seguro dara de baja el producto?')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/products')
+                    ->press('.Eliminar')
                     ->acceptDialog()
-                   // ->assertSee('active')
-                    ->assertPathIs('/comercio/public/admin/products')
+                    ->assertPathIs('/craft/public/admin/products')
+                    ->assertVisible('.btn-success')
+                    ->assertMissing('.btn-danger')                    
                     ;
         });
     }
