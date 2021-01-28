@@ -72,10 +72,8 @@ class ShoppingCartsController extends Controller
          }
       }
 
-      if($request->fecha1!='' and $request->fecha2!=''){
-         $fecha1=$request->fecha1;
-         $fecha2=$request->fecha2;
-         $shoppingcarts=ShoppingCart::SearchOrder($request->fecha1,$request->fecha2)
+      if($fecha1!='' and $fecha2!=''){
+         $shoppingcarts=ShoppingCart::SearchOrder($fecha1,$fecha2)
                                     ->where('status','=','confirmar')
                                     ->orderBy('id','DESC')->paginate(15);
       }
@@ -87,6 +85,9 @@ class ShoppingCartsController extends Controller
     {
         $shoppingcart=ShoppingCart::find($id);
         $shoppingcartproducts=$shoppingcart->ShoppingCartProducts()->get();
+
+        $shoppingcart->delivery_date= str_replace('/','-', $shoppingcart->delivery_date);
+        $shoppingcart->delivery_date=date("Y-m-d",strtotime($shoppingcart->delivery_date));
         
         $order=Order::create([
             'client_id'=>$shoppingcart->client_id,

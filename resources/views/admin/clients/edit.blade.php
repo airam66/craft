@@ -30,7 +30,6 @@
               <div class="col-md-6 mov-right">
               {!! Field::number('phone')!!}
               </div>
-              {!! Form::hidden('bill',0)!!}
 
               <div class="form-group text-center">
               {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}

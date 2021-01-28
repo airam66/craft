@@ -69,7 +69,7 @@
 
 
 
-
+        var today = moment().day();
         $('#calendar').fullCalendar({
 
             header: {
@@ -77,7 +77,7 @@
                 center: 'title',
                 right: 'month,basicWeek,basicDay'
             },
-            defaultDate: '2017-09-12',
+            defaultDate: $('#calendar').fullCalendar('today'),
             locale:initialLocaleCode,
             navLinks: true, // can click day/week names to navigate views
             editable: false,
@@ -190,12 +190,20 @@ body {
 
 </style>
 </head>
-<body style="background-color: #dfefff;">
+<body style="background-color: #dfefff;background:url('/../craft/public/images/fondo5.jpg') no-repeat center center fixed;  -webkit-background-size: cover;
+
+  -moz-background-size: cover;
+
+  -o-background-size: cover;
+
+  background-size: cover;">
+  <div> <h1 style="color:white; -webkit-text-stroke: 2px black; font-size: 300%">CALENDARIO DE PEDIDOS</h1></div>
 <div id='wrap'>
 
         @include('admin.orders.asideStatus')
 
-    <div id='calendar' style="background-color: #FFFFFF;"></div>
+    <div id='calendar' style="background-color: #FFFFFF;border: inset;
+    border-color: springgreen;border-width: 9px;"></div>
 <div style='clear:both'></div>
 
 </div>
