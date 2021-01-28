@@ -89,13 +89,13 @@
             @if ($product->status!='inactivo')
              
                 <a href="{{route('products.edit',$product->id)}}" title="Editar"  >
-                        <button type="submit" class="btn btn-warning">
+                        <button type="submit" class="btn btn-warning Editar">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                             
                         </button>
                      </a>
                 <a href="{{route('products.desable',$product->id)}}" title="Deshabilitar" onclick="return confirm('¿Seguro desea dar de baja el producto?')">
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger Eliminar">
                           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                         </button>
                      </a>

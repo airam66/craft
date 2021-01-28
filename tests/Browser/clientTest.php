@@ -9,7 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\User;
 use App\Client;
-class clientTest extends DuskTestCase
+
+class ClientTest extends DuskTestCase
 {
    // use DatabaseMigrations;
    protected $name='Gabriel Lamas'; 
@@ -21,27 +22,27 @@ class clientTest extends DuskTestCase
 
     public function test_create_client()
     {
-        $user=factory(User::class)->create(['email'=>'fairam666@gmail.com',]);
+        $user=factory(User::class)->create(['email'=>'fairam@gmail.com',]);
 
         $this->browse(function (Browser $browser) use ($user){
 
-            $browser->visit('http://localhost/comercio/public/admin/clients/create')
+            $browser->visit('craft/public/admin/clients/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/clients/create')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/clients/create')
                     ->type('name',$this->name)
                     ->type('cuil',$this->cuil)
                     ->type('address',$this->address)
                     ->type('location',$this->location)
-                    ->type('phone',$this->phone)
                     ->type('email',$this->email)
+                    ->type('phone',$this->phone)
                     ->press('Registrar')
-                    ->assertPathIs('/comercio/public/admin/clients/create')
+                    ->assertPathIs('/craft/public/admin/clients')
                     ;
            });
 
-        /*$this->assertDatabaseHas('clients',[
+        $this->assertDatabaseHas('clients',[
                    
                    'name'=>$this->name,
                    'cuil'=>$this->cuil,
@@ -50,6 +51,6 @@ class clientTest extends DuskTestCase
                    'phone'=>$this->phone,
                    'email'=>$this->email,
                     
-                ]);*/
+                ]);
     }
 }

@@ -14,7 +14,7 @@ class BrandsTest extends DuskTestCase
 {
    use DatabaseMigrations;
 
-   protected $name='CreaTu';
+   protected $name='CREATU';
   
 
     public function test_create_a_brand()
@@ -24,21 +24,21 @@ class BrandsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user){
 
                      //When
-            $browser->visit('comercio/public/admin/brands/create')
+            $browser->visit('craft/public/admin/brands/create')
                     ->type('email',$user->email)
                     ->type('password','secret')
-                    ->press('Entrar')
-                    ->assertPathIs('/comercio/public/admin/brands/create')
+                    ->press('Iniciar sesión')
+                    ->assertPathIs('/craft/public/admin/brands/create')
                     ->type('name',$this->name)
-                    ->press('Registrar')
-                    ->assertPathIs('/comercio/public/admin/brands')
+                    ->press('Guardar')
+                    ->assertPathIs('/craft/public/admin/brands')
                     ;
            });
 
               $this->assertDatabaseHas('brands',[
                    
                    'name'=>$this->name,
-                   'status'=>'active',
+                   'status'=>'activo',
                     
                 ]);       
        
