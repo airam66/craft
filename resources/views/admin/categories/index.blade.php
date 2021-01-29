@@ -84,7 +84,7 @@
                      </a>
 
                      <a href="{{route('categories.desable',$category->id)}}" title="Deshabilitar" onclick="return confirm('¿Seguro desea dar de baja esta categoria?')">
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger Eliminar">
                             <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                         </button>
                      </a>
