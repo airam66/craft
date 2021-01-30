@@ -255,8 +255,13 @@ class OrdersController extends Controller
          $client=Client::find($order->client_id);
                  $payment=new Payment;
                  $payment->order_id=$order->id;
-                 $payment->amount_paid=$request->get('Rode');
-                 $payment->balance_paid=($order->total-$order->totalPayments())-$payment->amount_paid;
+                 if($request->get('totalPayment')=='on'){
+                     $payment->amount_paid= $order->total-$order->totalPayments();
+                 }else{
+                      $payment->amount_paid=$request->get('Rode');
+                 }
+                 
+                 $payment->balance_paid=($order->total-$order->totalPayments())-$payment->amount_paid;//
                  $client->bill=$client->bill-$payment->amount_paid;
                  $payment->save();
                  $client->save();
