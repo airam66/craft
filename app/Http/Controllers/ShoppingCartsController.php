@@ -119,11 +119,13 @@ class ShoppingCartsController extends Controller
     public function store(Request $request){
         $user=\Auth::user();
 
+        //$delivery_date= str_replace('/','-', $request->datepicker);      
+
         $shoppingcart=ShoppingCart::create([
             'status'=>'confirmar',
             'client_id'=>$user->client_id,
             'total'=>$request->total,
-            'delivery_date'=>$request->datepicker,
+            'delivery_date'=>date("Y-m-d",strtotime(str_replace('/','-', $request->datepicker))),
         ]);
 
         $idarticulo = $request->get('idproductos');
