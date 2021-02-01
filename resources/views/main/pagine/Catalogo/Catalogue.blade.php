@@ -93,6 +93,5 @@
 @endsection
 
 @section('js')
- <script src="{{asset('js/carrito.js')}}"></script>
  <script src="{{asset('js/pedido.js')}}"></script>
 @endsection
