@@ -36,16 +36,16 @@ class Carrito {
         if(productosLS === infoProducto.id){
             Swal.fire({
                 type: 'info',
-                title: 'Oops...',
-                text: 'El producto ya está agregado',
+                title: 'El producto ya está agregado',
                 showConfirmButton: false,
-                timer: 1000
+                timer: 2000
             })
         }
         else {
             this.insertarCarrito(infoProducto);
             document.getElementById('icono'+infoProducto.id).className='glyphicon glyphicon-check';
-
+            let count=document.getElementById('cantidad');
+            count.innerHTML=productosLS.length+1;
         }
 
         
@@ -147,10 +147,9 @@ class Carrito {
         if (productosLS.length === 0) {
             Swal.fire({
                 type: 'error',
-                title: 'Oops...',
-                text: 'No hay productos, selecciona alguno',
+                title: 'No hay productos, selecciona alguno',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3000
             }).then(function () {
                 window.location = baseUrl("catalogue");
             })
@@ -180,16 +179,22 @@ class Carrito {
     //Eliminar producto por ID del LS
     eliminarProductoLocalStorage(productoID){
         let productosLS;
+        let count=document.getElementById('cantidad');
         //Obtenemos el arreglo de productos
         productosLS = this.obtenerProductosLocalStorage();
         //Comparar el id del producto borrado con LS
         productosLS.forEach(function(productoLS, index){
             if(productoLS.id === productoID){
                 productosLS.splice(index, 1);
+                count.innerHTML=productosLS.length;
             }
         }); 
         //Añadimos el arreglo actual al LS
         localStorage.setItem('productos', JSON.stringify(productosLS));
+
+        if (productosLS.length==0){
+              location.href = baseUrl("catalogue");  
+        }
     }
 
     //Eliminar todos los datos del LS
@@ -204,10 +209,9 @@ class Carrito {
         if(this.obtenerProductosLocalStorage().length === 0){
             Swal.fire({
                 type: 'error',
-                title: 'Oops...',
-                text: 'El carrito está vacío, agrega algún producto',
+                title: 'El carrito está vacío, agrega algún producto',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3000
             })
         }
         else {

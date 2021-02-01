@@ -1,4 +1,4 @@
-const carro = new Carrito();
+const shopping = new Carrito();
 const pedido = document.getElementById('carritoId');
 const productos = document.getElementById('lista-productos');
 const listaProductos = document.querySelector('#lista-carrito tbody');
@@ -9,25 +9,26 @@ cargarEventos();
 
 function cargarEventos(){
 
-    let productosLS = carro.obtenerProductosLocalStorage();
+    let productosLS = shopping.obtenerProductosLocalStorage();
+    document.getElementById('cantidad').innerHTML = productosLS.length;
     productosLS.forEach(function (productoLS){
         let span = document.querySelector('#icono'+productoLS.id);
         document.getElementById('icono'+productoLS.id).className = 'glyphicon glyphicon-check';
     });
     
     //Se ejecuta cuando se presionar agregar carrito
-    productos.addEventListener('click', (e)=>{carro.comprarProducto(e)});
+    productos.addEventListener('click', (e)=>{shopping.comprarProducto(e)});
 
     //Cuando se elimina productos del carrito
-    pedido.addEventListener('click', (e)=>{carro.eliminarProducto(e)});
+    pedido.addEventListener('click', (e)=>{shopping.eliminarProducto(e)});
 
     //Al vaciar carrito
-    vaciarCarritoBtn.addEventListener('click', (e)=>{carro.vaciarCarrito(e)});
+    vaciarCarritoBtn.addEventListener('click', (e)=>{shopping.vaciarCarrito(e)});
 
     //Al cargar documento se muestra lo almacenado en LS
-    document.addEventListener('DOMContentLoaded', carro.leerLocalStorage());
+    document.addEventListener('DOMContentLoaded', shopping.leerLocalStorage());
 
     //Enviar pedido a otra pagina
-    procesarPedidoBtn.addEventListener('click', (e)=>{carro.procesarPedido(e)});
+    procesarPedidoBtn.addEventListener('click', (e)=>{shopping.procesarPedido(e)});
 
 }
