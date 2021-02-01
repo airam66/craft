@@ -107,12 +107,13 @@
 </div>              
               
              
-              <div class="form-group">
+              <div class="form-group text-center">
               
                                           <button type="submit" class="btn btn-primary " name="Registrar Pago">
                                               Registrar Pago
                                       
                                           </button>
+                                          <a class="btn btn-danger" href="{{ route('orders.index') }}">Cancelar</a>
                                
                                
               </div>
@@ -143,6 +144,7 @@ $('#Rode').on('keyup', function(){
     $('#balance').val($balance);
   }else{
     $balance=$balance-$rode;
+    $balance=Math.round($balance*100)/100;
   $('#balance').val($balance);
   }
   

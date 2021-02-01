@@ -63,33 +63,33 @@
       
         <table id="table table-striped" class="display table table-hover" cellspacing="0" width="100%">
           
-		        <thead>
-		            <tr>
-		                <th>N° Pedido</th>
-		                <th>Fecha Pedido</th>
-		                 <th>Fecha Entrega</th>
-		                <th>Cliente</th>
-                    <th>Saldo a pagar</th>
-		                <th>Estado</th>
-		                <th></th>
+            <thead>
+                <tr>
+                    <th>N° Pedido</th>
+                    <th>Fecha Pedido</th>
+                     <th>Fecha Entrega</th>
+                    <th>Cliente</th>
+                    <th>Saldo pendiente</th>
+                    <th>Estado</th>
+                    <th></th>
                     <th></th>
                </tr>
-		        </thead>
-		     
+            </thead>
+         
        
                 <tbody id="mostrar">
                    @if($orders->isNotEmpty()) 
                    @foreach ($orders as $order) 
                          
-			                <tr>
-			                        <td>{{$order->id}}</td>
+                      <tr>
+                              <td>{{$order->id}}</td>
                               <td>{{$order->created_at->format('d/m/Y')}}</td>
                               <td>{{date('d/m/Y', strtotime($order->delivery_date))}}</td>
                               <td>{{$order->client->name}}</td>
                               <td>${{$order->total-$order->totalPayments()}}</td>
                               <td>
                               {!! Form::open(['route'=>['orders.changeStatus',$order->id],'method'=> 'PUT']) !!}         
-			                        
+                              
                               @if($order->status=="pendiente")
                                 {!! Form::select('status',['pendiente'=>'Pendiente','proceso'=>'En proceso','preparado'=>'Preparado','entregado'=>'Entregado'],$order->status,['class'=>'label label-danger'])!!} 
                               @endif
@@ -110,34 +110,40 @@
                                  <span class="label label-success">Entregado</span>
                               @endif
                               </td>
-			                     
+                           
                               {!!Form::close()!!}
                              
-			                        <td> 
+                              <td style="padding-right: 0px;"> 
                                 
                                 <a href="{{route('orders.show',$order->id)}}" > <button  type="button" class="btn btn-info " title="Ver detalle del pedido." ><span class="fa fa-list" aria-hidden="true" ></span></button></a>
-                                <a href="{{route('orderPayment.register',$order->id)}}" > <button  type="button" class="btn btn-primary " title="Registrar un pago."  ><span class="fa fa-usd" aria-hidden="true" ></span></button></a>
+                                <a href="{{route('orderPayment.register',$order->id)}}" > <button  type="button" class="btn btn-success " title="Registrar un pago."  ><span class="fa fa-usd" aria-hidden="true" ></span></button></a>
                       
-                                 <a href="{{route('orders.pdf',$order->id)}}" target="_blank" > <button  type="button" title="Imprimir comprobante." class="btn btn-primary "  ><i class="fa fa-print"></i> 
+                                 <a href="{{route('orders.pdf',$order->id)}}" target="_blank" > <button  type="button" title="Generar PDF." class="btn btn-primary "  ><i class="fa fa-file-pdf-o"></i> 
                                  </button></a>
+                                 @if($order->status=="pendiente")
+
                                 <a href="{{route('orders.edit',$order->id)}}"  >
                                           <button type="submit" class="btn btn-warning" title="Modificar el pedido."name="edit">
                                               <span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
                                       
                                           </button>
                                 </a>
-                               
-                                </td><td>
-                                  {!!Form::open(['route'=>['orders.destroy',$order->id],'method'=>'DELETE'])!!}
+                                @endif
+                                
+                                <td style="padding-left: 0px;">
+                                 {!!Form::open(['route'=>['orders.destroy',$order->id],'method'=>'DELETE'])!!}
                                       
                                         <button type="submit" onclick="return confirm('¿Seguro dará de baja esta pedido?')" class="btn btn-danger"  title="Dar de baja el pedido." name="delete">
                                           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ></span>
                                         </button>
                                       
-                                   {!!Form::close()!!}
-                               
-			                        </td>
-			               </tr>
+                                   {!!Form::close()!!} 
+                                 </td>
+                                 
+                              </td>
+
+                              
+                     </tr>
 
                  
                          
@@ -161,7 +167,6 @@
 
 @section('js')
  <script type="text/javascript">
-
 $('.input-daterange input').each(function() {
     $(this).datepicker({
          language: "es",
@@ -169,20 +174,14 @@ $('.input-daterange input').each(function() {
          format:"dd/mm/yyyy"
     });
 });
-
-
 </script>
 
 <script type="text/javascript">
-
 $('#favoritesModalStatus').on('shown.bs.modal', function () {
   $('.yo').focus()
 })
-
 function productStockProvider(){
 }
-
-
 </script>
 
 @endsection
