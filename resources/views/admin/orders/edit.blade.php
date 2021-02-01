@@ -153,9 +153,9 @@
                           <td>{{$detail->product_code}}</td> 
                           <td> <input readonly type="hidden" name="dproduct_id[]" value="{{$detail->product_id}}">{{$detail->product_name}}</td>  
 
-                          <td>$<input readonly type="number" name="dprice[]" value="{{$detail->price}}" class="mi_factura"></td> 
+                          <td>$ <input readonly type="number" name="dprice[]" value="{{$detail->price}}" class="mi_factura"></td> 
                          <td><input readonly type="number" name="damount[]" value="{{$detail->amount}}" class="mi_factura"></td> 
-                         <td>$<input id="dsubTotal{{$a}}" name="dsubtTotal" class="mi_factura" type="number" value="{{$detail->subTotal}}"></td>
+                         <td>${{$detail->subTotal}}</td>
                        </tr>
 
                         @php ($a++) 
@@ -176,8 +176,17 @@
                     <div class="table-responsive">
                       <table class="table" id="table-total">
                         <tr>
-                          <th style="width:60%">Total:</th>
+                          <th style="width:60%">Total  @if ($order->discount <> 0 )(-10%)@endif:</th>
                           <td>$<input type="number" name="total" id="total"  value="{{$order->total}}" step="any" class="mi_factura"></td>
+                        </tr>
+                        <tr style="display:none;">
+                          <th>Descuento</th>
+                          <td><div class="checkbox">
+                                  <label>
+                                      <input id="discount" name="discount" type="checkbox" value="10" @if ($order->discount <> 0 ) checked @endif:>
+                                      10%
+                                  </label>
+                              </div></td>
                         </tr>
                         <tr>
                           <th>Adelanto</th>
@@ -330,6 +339,7 @@ $('#search').on('keyup', function(){
   var cont=2000;
   var Totalventa=0;
   var Subtotal=[];
+  var TotalventaDisc = 0;
 
   function invoice_detail(){
     stock=$('#stock').val();
@@ -348,12 +358,18 @@ $('#search').on('keyup', function(){
           
       cont++;
       $('#details').append(fila);
-      clear();
-      TotalVenta= $('#total').val()+Subtotal[cont];//calcularSubtotal();parseFloat(
+      clear(); 
+      TotalVenta= calcularSubtotal(); 
       TotalVenta= Math.round(TotalVenta*100)/100;
-      $('#total').val(TotalVenta);
-      Balance=parseFloat($('#total').val())-parseFloat($('#advance').val());
-      $('#balance').val(Balance);
+      TotalventaDisc= TotalVenta;
+      if($('#discount').is(':checked')){
+          TotalventaDisc = TotalventaDisc - parseFloat(TotalventaDisc*0.1);
+          TotalventaDisc= Math.round(TotalventaDisc*100)/100; console.log('entro');
+      } 
+      $('#total').val(TotalventaDisc);
+      Balance=parseFloat(TotalventaDisc)-parseFloat($('#advance').val());
+      Balance=Math.round(Balance*100)/100;
+      $('#balance').val(Balance); 
       
 
 
@@ -367,27 +383,37 @@ var total = 0;
   // Aplico un ciclo para recorrer todos los elementos del tag th
 $('#details tbody tr').each(function() { 
      
-    var columnas = $(this).find("td"); 
-    var subtotal= $(columnas[5]).text();
+    var columnas = $(this).find("td");
+    var subtotal= $(columnas[5]).text(); console.log(subtotal.substr(1));
      total += parseFloat(subtotal.substr(1)) 
           
    });
- 
+
   return total
 }
 
 function deletefila(index,subTotal){
-   total=Math.round((parseFloat($('#total').val())-subTotal)*100)/100;
-  $('#total').val(total);
   $('#'+index).remove();
-
-  if($('#total').val() != 0){
-  Balance=parseFloat($('#total').val())-parseFloat($('#advance').val());
-          $('#balance').val(Balance);
+  total=calcularSubtotal();
+  if(total != 0){
+      if($('#discount').is(':checked')){
+        TotalDisc =  total - parseFloat( total * 0.1);
+        TotalDisc= Math.round(TotalDisc*100)/100;
+        total=TotalDisc;
+      
+      } 
+      $('#total').val(total);
+       Balance=parseFloat(total)-parseFloat($('#advance').val());
+       Balance=Math.round(Balance*100)/100;
+       $('#balance').val(Balance);
   }
+
   else{
      $('#balance').val(0);
+     $('#total').val(0);
   }
+
+  
 
  }
 
@@ -403,7 +429,7 @@ function deletefila(index,subTotal){
     $('#amount').val('');
  }
 </script>
- 
+
  <script>
   function SearchLetter($letter){
   $value=$letter;

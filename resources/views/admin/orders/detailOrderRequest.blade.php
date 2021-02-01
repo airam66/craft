@@ -142,6 +142,10 @@
                           <td>${{$order->total}}</td>
                         </tr>
                         <tr>
+                          <th>Adelanto</th>
+                          <td>${{$order->totalPayments()}}</td>
+                        </tr>
+                        <tr>
                           <th>Saldo a pagar:</th>
                           <td>${{$order->total-$order->totalPayments()}}</td>
                         </tr>
@@ -154,7 +158,7 @@
                 <div class="row no-print">
                   <div class="col-xs-12">
 
-                      <div class="form-group">
+                      <div class="form-group text-center">
                        <!--Boton generar PDF-->
                         <a href="{{route('orders.pdf',$order->id)}}" target="_blank" > 
                               <button  type="button" class="btn btn-primary "  >
@@ -168,6 +172,8 @@
                             
                                 </button>
                         </a>
+                        <!--Boton generar Cancelar-->
+                        <a class="btn btn-danger" href="{{ route('orders.index') }}">Cancelar</a>
                        </div>
                   </div>
                 </div>
