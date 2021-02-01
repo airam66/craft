@@ -31,10 +31,9 @@ function procesarCompra() {
     if (compra.obtenerProductosLocalStorage().length === 0) {
         Swal.fire({
             type: 'error',
-            title: 'Oops...',
-            text: 'No hay productos, selecciona alguno',
+            title: 'No hay productos, selecciona alguno',
             showConfirmButton: false,
-            timer: 2000
+            timer: 3000
         }).then(function () {
             window.location = baseUrl("catalogue");
         })
@@ -42,10 +41,9 @@ function procesarCompra() {
     else if (fecha.value === '') {
         Swal.fire({
             type: 'error',
-            title: 'Oops...',
-            text: 'Ingrese la fecha de pedido',
+            title: 'Ingrese la fecha de pedido',
             showConfirmButton: false,
-            timer: 2000
+            timer: 3000
         })
     }
     else {

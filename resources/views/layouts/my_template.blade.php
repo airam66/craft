@@ -54,8 +54,8 @@ margin:auto;
 
    @else
     <li>
-      <a href="{{route('carrito')}}" id="procesar-pedido">
-        <b> Mi Carrito 
+      <a href="#" id="procesar-pedido">
+        <b> Mi Carrito <span class="cantidad" id="cantidad"></span>
           <span class="glyphicon glyphicon-shopping-cart"></span>
 
           <div id="carritoId" class="dropdown-menu" aria-labelledby="navbarCollapse">
@@ -162,12 +162,15 @@ margin:auto;
  <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
  <script src="{{asset('plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
  <script src="{{asset('js/sweetalert2.min.js')}}"></script>
+ <script src="{{asset('js/carrito.js')}}"></script>
+ <script src="{{asset('js/introCarrito.js')}}"></script>
+
  <script>
   function baseUrl(url){
     return "{{url('')}}/"+url;
   }
 </script>
 @yield('js')
- 
+
 </body>
 </html>
